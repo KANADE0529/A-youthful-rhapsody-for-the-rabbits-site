@@ -1,8 +1,9 @@
-/* --- 基礎設定 --- */
+/* --- 基礎變數與設定 --- */
 :root {
-    --main-bg: #FFC3C7;
-    --main-text: #3B2B2C;
-    --point-pink: #FF2B5D;
+    --main-bg: #FFC3C7;       /* 主色調：粉色 */
+    --main-text: #3B2B2C;     /* 文字顏色：深咖啡 */
+    --point-pink: #FF2B5D;    /* 強調色：桃紅 */
+    --navbar-bg: rgba(255, 195, 199, 0.95);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -10,79 +11,114 @@ body {
     font-family: 'Noto Sans TC', sans-serif; 
     background: var(--main-bg); 
     color: var(--main-text); 
+    line-height: 1.6;
 }
 
-/* --- 導覽列 --- */
+/* --- 導覽列：實現選單靠右 --- */
 .navbar { 
     position: fixed; top: 0; width: 100%; 
     display: flex; align-items: center; 
     padding: 10px 50px; 
-    background: rgba(255, 195, 199, 0.95); 
+    background: var(--navbar-bg); 
     z-index: 1000; 
     border-bottom: 2px solid var(--point-pink);
 }
+
+.logo-img { height: 45px; width: auto; display: block; }
 
 .nav-links { 
     list-style: none; 
     display: flex; 
     gap: 25px; 
-    margin-left: auto; 
+    margin-left: auto; /* 將選單推向右邊 */
     margin-right: 30px; 
 }
-.nav-links a { text-decoration: none; color: var(--main-text); font-weight: bold; }
 
-/* 下拉選單 */
+.nav-links a { 
+    text-decoration: none; 
+    color: var(--main-text); 
+    font-weight: bold; 
+    transition: 0.3s;
+}
+
+.nav-links a:hover { color: white; }
+
+/* 下拉選單樣式 */
 .dropdown { position: relative; }
 .submenu { 
     position: absolute; top: 100%; left: 0; 
     background: white; min-width: 160px; 
     display: none; padding: 5px 0; 
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-top: 2px solid var(--point-pink);
 }
 .dropdown:hover .submenu { display: block; }
-.submenu li a { display: block; padding: 10px 20px; color: #333; font-size: 14px; }
+.submenu li a { display: block; padding: 12px 20px; color: #333; font-size: 14px; }
+.submenu li a:hover { background: #f8f8f8; }
 
-/* --- 公告區塊修正 --- */
-.content-wrapper { padding: 80px 0; }
+/* --- 首頁 Hero 區域 --- */
+.hero-section { 
+    height: 65vh; 
+    background: linear-gradient(rgba(255,195,199,0.2), rgba(255,195,199,0.4)), 
+                url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
+    background-size: cover; background-position: center 30%; 
+    display: flex; justify-content: center; align-items: center; margin-top: 65px;
+}
+.hero-section h2 { 
+    font-size: 3.5rem; color: white; 
+    text-shadow: 2px 2px 10px rgba(59, 43, 44, 0.4);
+    letter-spacing: 5px; 
+}
+
+/* --- 公告區塊：4:3 橫向排版按鍵 --- */
+.content-wrapper { padding: 60px 0; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 .section-title { 
-    font-size: 2.2rem; /* 稍微加大主標題 */
-    border-left: 6px solid var(--point-pink); 
-    padding-left: 15px; margin-bottom: 40px; 
-    font-weight: bold;
+    font-size: 2.2rem; border-left: 6px solid var(--point-pink); 
+    padding-left: 15px; margin-bottom: 40px; font-weight: bold;
 }
 
 .update-grid { 
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
-    gap: 40px; /* 增加間距讓畫面更開闊 */
+    gap: 30px; 
 }
 
-.update-item { text-decoration: none; color: inherit; display: block; }
+/* 區塊按鍵本體 */
+.update-item { 
+    text-decoration: none; 
+    color: inherit; 
+    display: block; 
+    padding: 10px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
 
-/* 修正圖片比例為 4:3 */
+.update-item:hover { 
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(59, 43, 44, 0.1);
+}
+
 .update-img-box { 
     width: 100%; 
-    aspect-ratio: 4 / 3; /* 設定 4:3 比例 */
+    aspect-ratio: 4 / 3; /* 4:3 比例 */
     background: #fff; 
-    border-radius: 4px; /* 稍微圓角更有質感 */
+    border-radius: 8px; 
     overflow: hidden; 
     margin-bottom: 15px;
-    box-shadow: 0 4px 15px rgba(59, 43, 44, 0.1);
 }
 
-.update-img-box img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    transition: 0.5s;
-}
+.update-img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-.update-item:hover img { transform: scale(1.05); }
-
-/* 公告標題：靠左 + 大字 */
 .update-item h3 { 
-    font-size: 1.4rem; /* 加大標題字體 */
-    text-align: left;  /* 文字靠左 */
-    line-height: 1.4;
+    font-size: 1.5rem; /* 大字標題 */
+    text-align: left;  /* 靠左對齊 */
+    font-weight: bold;
+}
+
+/* 搜尋框 */
+.search-container { display: flex; align-items: center; border-bottom: 2px solid var(--main-text); }
+.search-input { background: transparent; border: none; padding: 5px; outline: none; width: 100px; color: var(--main-text); }
+.search-btn { background: transparent; border: none; cursor: pointer; color: var(--main-text); }
