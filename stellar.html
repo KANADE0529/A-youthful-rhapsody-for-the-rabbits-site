@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>星異界藝能 | Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 針對星異界微調風格：強調點綴粉色 */
+        .section-title { border-left-color: var(--point-pink); }
+        .section-title span { color: var(--point-pink); }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo-link">
+            <img src="https://via.placeholder.com/150x50?text=PORTAL" alt="LOGO" class="logo-img">
+        </a>
+        <ul class="nav-links">
+            <li class="dropdown">
+                <a href="index.html">首頁介紹</a>
+            </li>
+            <li class="dropdown">
+                <a href="#">藝能事務所</a>
+                <ul class="submenu">
+                    <li><a href="polaris.html">波拉里斯藝能</a></li>
+                    <li><a href="stellar.html">星異界藝能</a></li>
+                    <li><a href="others.html">其他或位置</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="search-container">
+            <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
+            <button class="search-btn">🔍</button>
+        </div>
+    </nav>
+
+    <main class="content-wrapper" style="margin-top: 100px;">
+        <section class="container">
+            <h2 class="section-title">STELLAR <span>星異界藝能</span></h2>
+            <div class="char-display-box">
+                <div class="char-image-area">
+                    <img id="char-img" src="https://via.placeholder.com/500x700/000/FF2B5D?text=STELLAR+B" alt="Character">
+                </div>
+                <div class="char-info-area">
+                    <div class="info-content">
+                        <h3 id="char-name">藝人檔案預載中</h3>
+                        <p id="char-desc">星異界的藝人通常具備強烈的次元感與叛逆的視覺風格，請選擇下方頭像查看細節。</p>
+                    </div>
+                    <div class="char-nav-buttons">
+                        <button onclick="updateChar('B1')"><img src="https://via.placeholder.com/100?text=Stellar+1"></button>
+                        <button onclick="updateChar('B2')"><img src="https://via.placeholder.com/100?text=Stellar+2"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const stellarData = {
+            'B1': { 
+                name: '星異界 - 核心角色 B1', 
+                desc: '來自次元裂縫的神秘藝人，造型上融合了大量電子元素。', 
+                img: 'https://via.placeholder.com/500x700/000/FF2B5D?text=Stellar+B1' 
+            },
+            'B2': { 
+                name: '星異界 - 支援型 B2', 
+                desc: '擅長高頻率電音演出，是星異界藝能的技術核心。', 
+                img: 'https://via.placeholder.com/500x700/000/FF2B5D?text=Stellar+B2' 
+            }
+        };
+        function updateChar(k) {
+            const char = stellarData[k];
+            document.getElementById('char-name').innerText = char.name;
+            document.getElementById('char-desc').innerText = char.desc;
+            document.getElementById('char-img').src = char.img;
+        }
+    </script>
+</body>
+</html>

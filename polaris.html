@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>波拉里斯藝能 | Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo-link">
+            <img src="https://via.placeholder.com/150x50?text=PORTAL" alt="LOGO" class="logo-img">
+        </a>
+        <ul class="nav-links">
+            <li class="dropdown">
+                <a href="index.html">首頁介紹</a>
+            </li>
+            <li class="dropdown">
+                <a href="#">藝能事務所</a>
+                <ul class="submenu">
+                    <li><a href="polaris.html">波拉里斯藝能</a></li>
+                    <li><a href="stellar.html">星異界藝能</a></li>
+                    <li><a href="others.html">其他或位置</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="search-container">
+            <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
+            <button class="search-btn">🔍</button>
+        </div>
+    </nav>
+
+    <main class="content-wrapper" style="margin-top: 100px;">
+        <section class="container">
+            <h2 class="section-title">POLARIS <span>波拉里斯藝能</span></h2>
+            
+            <div class="char-display-box">
+                <div class="char-image-area">
+                    <img id="char-img" src="https://via.placeholder.com/500x700/000/FFB957?text=POLARIS+CHAR" alt="Character">
+                </div>
+
+                <div class="char-info-area">
+                    <div class="info-content">
+                        <h3 id="char-name">藝人檔案載入中</h3>
+                        <p id="char-desc">波拉里斯藝能以「知性」與「海軍威嚴」為核心風格。請點擊下方頭像按鍵查看細節。</p>
+                    </div>
+                    
+                    <div class="char-nav-buttons">
+                        <button onclick="updateChar('P1')"><img src="https://via.placeholder.com/100?text=Polaris+1"></button>
+                        <button onclick="updateChar('P2')"><img src="https://via.placeholder.com/100?text=Polaris+2"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const polarisData = {
+            'P1': { 
+                name: '波拉里斯 - 旗艦藝人 P1', 
+                desc: '具備海軍艦長風範
