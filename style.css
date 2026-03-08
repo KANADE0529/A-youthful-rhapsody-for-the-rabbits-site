@@ -1,65 +1,51 @@
 :root {
-    --bg-black: #000000;
+    --main-bg: #FFC3C7;       /* 1. 主色調粉色 */
+    --main-text: #3B2B2C;     /* 2. 文字深色 */
     --accent-gold: #FFB957;
     --point-pink: #FF2B5D;
-    --text-white: #ffffff;
-    --search-blue: #80D4FF;
+    --stella-green: #67ECC1;  /* 星異界專屬色 */
+    --others-blue: #96E8FF;   /* 其他單位專屬色 */
+    --search-line: rgba(59, 43, 44, 0.5);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg-black); color: var(--text-white); overflow-x: hidden; }
+body { 
+    font-family: 'Noto Sans TC', sans-serif; 
+    background: var(--main-bg); 
+    color: var(--main-text); 
+    overflow-x: hidden; 
+}
 
-/* 導航列 */
-.navbar { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background: rgba(0,0,0,0.95); z-index: 1000; border-bottom: 1px solid var(--accent-gold); }
-.logo-img { height: 40px; }
+/* 導航列：改為淺色半透明 */
+.navbar { 
+    position: fixed; top: 0; width: 100%; 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: 15px 50px; 
+    background: rgba(255, 195, 199, 0.9); 
+    z-index: 1000; 
+    border-bottom: 1px solid rgba(59, 43, 44, 0.1); 
+}
+
+.logo-img { height: 45px; width: auto; }
 .nav-links { list-style: none; display: flex; gap: 30px; margin-right: auto; margin-left: 50px; }
-.nav-links a { text-decoration: none; color: white; transition: 0.3s; }
-.nav-links a:hover { color: var(--accent-gold); }
+.nav-links a { text-decoration: none; color: var(--main-text); font-weight: bold; transition: 0.3s; }
+.nav-links a:hover { color: white; }
 
-/* 透明底線搜尋框 */
-.search-container { display: flex; align-items: center; border-bottom: 2px solid var(--search-blue); background: transparent; padding: 2px 5px; }
-.search-input { background: transparent; border: none; color: white; padding: 5px; outline: none; width: 120px; }
-.search-btn { background: transparent; border: none; color: white; cursor: pointer; }
+/* 搜尋框：配合深色文字 */
+.search-container { 
+    display: flex; align-items: center; 
+    border-bottom: 2px solid var(--search-line); 
+    background: transparent; padding: 2px 5px; 
+}
+.search-input { 
+    background: transparent; border: none; 
+    color: var(--main-text); padding: 5px; outline: none; width: 120px; 
+}
+.search-input::placeholder { color: rgba(59, 43, 44, 0.5); }
+.search-btn { background: transparent; border: none; color: var(--main-text); cursor: pointer; }
 
 /* 下拉選單 */
 .dropdown { position: relative; }
-.submenu { position: absolute; top: 100%; left: 0; background: #111; list-style: none; min-width: 160px; display: none; padding: 10px 0; border-top: 2px solid var(--point-pink); }
-.submenu li a { padding: 10px 20px; display: block; font-size: 14px; }
-.dropdown:hover .submenu { display: block; }
-
-/* --- 背景圖修復區塊 --- */
-.hero-section { 
-    height: 75vh; 
-    /* 使用你提供的 Plurk 直連圖片 */
-    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
-                url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
-    background-size: cover;
-    background-position: center 30%; /* 調整位置，讓兔女郎們的臉更清晰 */
-    background-repeat: no-repeat;
-    background-attachment: fixed; /* 增加捲動時的高級感 */
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    margin-top: 60px;
-}
-
-.hero-section h2 { 
-    font-size: 3.5rem; 
-    color: var(--accent-gold); 
-    text-shadow: 2px 2px 15px rgba(0,0,0,0.9), 0 0 10px var(--accent-gold);
-    letter-spacing: 6px;
-    font-weight: bold;
-}
-
-/* 內容區塊 */
-.content-wrapper { padding: 60px 0; }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-.section-title { font-size: 2rem; border-left: 5px solid var(--point-pink); padding-left: 15px; margin-bottom: 40px; }
-.section-title span { color: var(--accent-gold); }
-
-/* 更新事項網格 */
-.update-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.update-item { text-decoration: none; color: white; text-align: center; }
-.update-img-box { aspect-ratio: 1/1; background: #222; border: 2px solid #333; transition: 0.3s; margin-bottom: 10px; overflow: hidden; }
-.update-item:hover .update-img-box { border-color: var(--accent-gold); transform: translateY(-5px); }
-.update-img-box img { width: 100%; height: 100%; object-fit: cover; }
+.submenu { 
+    position: absolute; top: 100%; left: 0; 
+    background: white; list-style: none; min-width: 160px;
