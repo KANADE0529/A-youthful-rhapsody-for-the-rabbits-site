@@ -7,12 +7,12 @@ const newsData = [
     },
     {
         title: "近期公告 B",
-        img: "https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png",
+        img: "https://images.plurk.com/3QiuSynz4HmCSdgxZgplaj.jpg",
         link: "news-b.html"
     },
     {
         title: "近期公告 C",
-        img: "https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png",
+        img: "https://images.plurk.com/3QiuSynz4HmCSdgxZgplaj.jpg",
         link: "news-c.html"
     }
 ];
