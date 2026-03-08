@@ -1,3 +1,4 @@
+/* style.css 全體覆蓋版 */
 :root {
     --bg-black: #000000;
     --accent-gold: #FFB957;
@@ -7,15 +8,17 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg-black); color: var(--text-white); }
+body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg-black); color: var(--text-white); overflow-x: hidden; }
 
-/* 導航列與透明底線搜尋框 */
+/* 導航列 */
 .navbar { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background: rgba(0,0,0,0.9); z-index: 1000; border-bottom: 1px solid var(--accent-gold); }
 .logo-img { height: 40px; }
 .nav-links { list-style: none; display: flex; gap: 30px; margin-right: auto; margin-left: 50px; }
 .nav-links a { text-decoration: none; color: white; transition: 0.3s; }
 .nav-links a:hover { color: var(--accent-gold); }
-.search-container { display: flex; border-bottom: 2px solid var(--search-blue); background: transparent; }
+
+/* 透明底線搜尋框 */
+.search-container { display: flex; align-items: center; border-bottom: 2px solid var(--search-blue); background: transparent; padding: 2px 5px; }
 .search-input { background: transparent; border: none; color: white; padding: 5px; outline: none; width: 120px; }
 .search-btn { background: transparent; border: none; color: white; cursor: pointer; }
 
@@ -25,14 +28,15 @@ body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg-black); col
 .submenu li a { padding: 10px 20px; display: block; font-size: 14px; }
 .dropdown:hover .submenu { display: block; }
 
-/* 內容區通用樣式 */
+/* 首頁大圖與更新事項 */
+.hero-section { height: 60vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1920x1080'); background-size: cover; background-attachment: fixed; display: flex; justify-content: center; align-items: center; }
+.hero-section h2 { font-size: 3rem; color: var(--accent-gold); }
 .content-wrapper { padding: 80px 0; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .section-title { font-size: 2rem; border-left: 5px solid var(--point-pink); padding-left: 15px; margin-bottom: 50px; }
 .section-title span { color: var(--accent-gold); }
-.char-display-box { display: flex; gap: 50px; align-items: center; }
-.char-image-area img { max-width: 100%; border-radius: 8px; filter: drop-shadow(0 0 10px var(--accent-gold)); }
-.char-info-area { flex: 1; }
-.char-nav-buttons { display: flex; gap: 15px; margin-top: 30px; }
-.char-nav-buttons button { width: 80px; height: 80px; background: #111; border: 2px solid #333; cursor: pointer; overflow: hidden; }
-.char-nav-buttons button img { width: 100%; height: 100%; object-fit: cover; }
+.update-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.update-item { text-decoration: none; color: white; text-align: center; }
+.update-img-box { aspect-ratio: 1/1; overflow: hidden; border: 2px solid #333; transition: 0.3s; margin-bottom: 10px; }
+.update-item:hover .update-img-box { border-color: var(--accent-gold); transform: translateY(-5px); }
+.update-img-box img { width: 100%; height: 100%; object-fit: cover; }
