@@ -2,17 +2,12 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Showcase | Portal</title>
+    <title>Portal | Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <nav class="navbar">
-        <a href="index.html" class="logo-link">
-            <img src="https://via.placeholder.com/150x50?text=PORTAL" alt="LOGO" class="logo-img">
-        </a>
-        
+        <a href="index.html"><img src="https://via.placeholder.com/150x50?text=PORTAL" class="logo-img"></a>
         <ul class="nav-links">
             <li class="dropdown">
                 <a href="#">介紹</a>
@@ -24,48 +19,40 @@
             <li class="dropdown">
                 <a href="#">藝能事務所</a>
                 <ul class="submenu">
-                    <li><a href="#">波拉里斯藝能</a></li>
-                    <li><a href="#">星異界藝能</a></li>
-                    <li><a href="#">其他或位置</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">角色</a>
-                <ul class="submenu">
-                    <li><a href="#">角色列表</a></li>
-                    <li><a href="#">技能展示</a></li>
+                    <li><a href="polaris.html">波拉里斯藝能</a></li>
+                    <li><a href="stellar.html">星異界藝能</a></li>
+                    <li><a href="others.html">其他或位置</a></li>
                 </ul>
             </li>
         </ul>
-
         <div class="search-container">
             <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
-            <button class="search-btn" onclick="executeSearch()">🔍</button>
+            <button class="search-btn">🔍</button>
         </div>
     </nav>
 
     <header class="hero-section">
-        <div class="hero-content">
-            <h2>BEYOND THE LIMIT</h2>
-            <p>探索未知的次元力量</p>
-        </div>
+        <div class="hero-content"><h2>BEYOND THE LIMIT</h2></div>
     </header>
 
     <main class="content-wrapper">
-        <section class="container update-section">
+        <section class="container">
             <h2 class="section-title">RECENT <span>UPDATES</span></h2>
             <div class="update-grid">
                 <a href="#" class="update-item">
-                    <div class="update-img-box"><img src="https://via.placeholder.com/300x300?text=Update+1" alt="更新1"></div>
+                    <div class="update-img-box"><img src="https://via.placeholder.com/300x300?text=News+1"></div>
                     <h3>近期公告事項</h3>
                 </a>
                 <a href="#" class="update-item">
-                    <div class="update-img-box"><img src="https://via.placeholder.com/300x300?text=Update+2" alt="更新2"></div>
+                    <div class="update-img-box"><img src="https://via.placeholder.com/300x300?text=News+2"></div>
                     <h3>世界觀擴充</h3>
                 </a>
                 <a href="#" class="update-item">
-                    <div class="update-img-box"><img src="https://via.placeholder.com/300x300?text=Update+3" alt="更新3"></div>
+                    <div class="update-img-box"><img src="https://via.placeholder.com/300x300?text=News+3"></div>
                     <h3>新角色預告</h3>
                 </a>
             </div>
         </section>
+    </main>
+</body>
+</html>
