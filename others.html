@@ -6,29 +6,43 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main class="content-wrapper" style="margin-top: 100px;">
+    <nav class="navbar">
+        <a href="index.html" class="logo-link"><img src="https://via.placeholder.com/150x50?text=PORTAL" class="logo-img"></a>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li class="dropdown"><a href="#">藝能事務所</a>
+                <ul class="submenu">
+                    <li><a href="polaris.html">波拉里斯藝能</a></li>
+                    <li><a href="stellar.html">星異界藝能</a></li>
+                    <li><a href="others.html">其他或未知</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="search-container">
+            <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
+            <button class="search-btn">🔍</button>
+        </div>
+    </nav>
+
+    <main class="content-wrapper" style="margin-top: 80px;">
         <section class="container">
             <h2 class="section-title">OTHERS <span>其他或未知</span></h2>
             <div class="char-display-box">
-                <div class="char-image-area">
-                    <img id="char-img" src="https://via.placeholder.com/500x700/111/666?text=UNKNOWN" alt="Character">
-                </div>
+                <div class="char-image-area"><img id="char-img" src="https://via.placeholder.com/500x700/111/999?text=UNKNOWN"></div>
                 <div class="char-info-area">
-                    <div class="info-content">
-                        <h3 id="char-name">分類：未定</h3>
-                        <p id="char-desc">此處記錄了不屬於任何事務所的流浪藝人或是觀察對象。</p>
-                    </div>
+                    <h3 id="char-name">分類：未定</h3>
+                    <p id="char-desc">此處記錄了不屬於任何事務所的觀察對象，資料檔案目前受損中。</p>
                     <div class="char-nav-buttons">
-                        <button onclick="updateChar('X')"><img src="https://via.placeholder.com/100?text=X"></button>
+                        <button onclick="update('X')"><img src="https://via.placeholder.com/100?text=X"></button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
     <script>
-        function updateChar(k) {
+        function update(k) {
             document.getElementById('char-name').innerText = "未知對象 X";
-            document.getElementById('char-desc').innerText = "資料檔案受損，目前無法解析詳細世界觀背景。";
+            document.getElementById('char-desc').innerText = "這是一位背景神祕的角色，尚未被任何事務所收編。";
             document.getElementById('char-img').src = "https://via.placeholder.com/500x700/111/999?text=X_FILES";
         }
     </script>
