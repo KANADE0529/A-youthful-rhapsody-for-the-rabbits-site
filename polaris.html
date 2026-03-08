@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project POLARIS | 導覽列修復版</title>
+    <title>Project POLARIS | 官方角色展示</title>
     <style>
         :root {
             --polaris-pink: #FF2B5D;
@@ -15,17 +15,17 @@
 
         body { background-color: #fcfcfc; margin: 0; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; overflow-x: hidden; }
 
-/* 導覽列與下拉選單專屬樣式 */
-/* 導覽列核心樣式：確保 LOGO 與文字靠左，搜尋靠右 */
+        /* --- 導覽列修復：文字靠左，搜尋靠右 --- */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: 70px;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            background: var(--nav-bg); backdrop-filter: blur(10px);
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 40px; box-sizing: border-box; z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .nav-left-area { display: flex; align-items: center; gap: 40px; }
-        .nav-links { display: flex; list-style: none; gap: 35px; margin: 0; padding: 0; }
+        .nav-left-group { display: flex; align-items: center; gap: 40px; }
+        .logo-img { height: 40px; width: auto; }
+        .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
         .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 1.1rem; }
 
         /* 下拉選單 */
@@ -37,76 +37,44 @@
         }
         .dropdown:hover .submenu { display: block; }
         .submenu li a { padding: 10px 20px; display: block; font-weight: 500; font-size: 1rem; color: #444 !important; }
+        .submenu li a:hover { background: #fff0f3; color: var(--polaris-pink) !important; }
 
         /* 搜尋框 */
-        .search-bar { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; width: 180px; }
-
-        /* 關鍵：確保下方的內容（8人Icon、說明）不會被導覽列遮住 */
-        .page-container { margin-top: 110px !important; }
-
-        /* 下拉選單容器 */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%; left: 50%;
-            transform: translateX(-50%);
-            background: #fff;
-            min-width: 180px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            padding: 10px 0;
-            margin-top: 15px; /* 與導覽列留一點空隙 */
-            border-top: 4px solid var(--polaris-pink);
-        }
-
-        /* 下拉選單的小箭頭裝飾 */
-        .dropdown-content::before {
-            content: '';
-            position: absolute;
-            top: -10px; left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 8px 10px 8px;
-            border-style: solid;
-            border-color: transparent transparent var(--polaris-pink) transparent;
-        }
-
-        .dropdown-content a {
-            padding: 12px 20px;
-            font-size: 1.05rem;
-            display: block;
-            color: #444 !important;
-            font-weight: 500;
-            text-align: center;
-        }
-        .dropdown-content a:hover { background: #fff0f3; color: var(--polaris-pink) !important; }
-
-        /* 滑動顯示選單 */
-        .nav-links li:hover .dropdown-content { display: block; }
+        .search-input { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; width: 180px; }
 
         /* --- 背景與灰階變換 --- */
         #dynamic-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center; z-index: -2;
             transition: filter 0.6s ease, opacity 0.6s ease;
-            opacity: 0.8;
         }
-        #dynamic-bg.switching { filter: brightness(0.3) grayscale(1); opacity: 0.5; }
+        #dynamic-bg.switching { filter: brightness(0.3) grayscale(1); opacity: 0.6; }
 
-        /* --- 1.2 倍內容比例 --- */
-        .page-container { display: flex; flex-direction: column; align-items: center; margin-top: 140px; width: 100%; }
-        
-        .char-nav-wrapper { display: flex; gap: 15px; margin-bottom: 30px; }
-        .char-btn { width: 72px; height: 72px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; overflow: hidden; }
+        /* --- 角色展示區塊 (1.2倍) --- */
+        .page-container { display: flex; flex-direction: column; align-items: center; margin-top: 110px; width: 100%; }
+
+        .char-main-section {
+            display: flex; align-items: center; justify-content: center; 
+            width: 95%; max-width: 1500px; height: 607px; gap: 60px; perspective: 2500px;
+        }
+
+        .flip-card-container { width: 456px; height: 607px; flex-shrink: 0; z-index: 10; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; overflow: hidden; background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+        .card-back { transform: rotateY(180deg); }
+
+        .char-info-area { width: 540px; z-index: 15; color: #333; }
+        .name-ruby { display: inline-block; background: var(--polaris-pink); color: white; font-size: 0.95rem; padding: 4px 14px; border-radius: 4px; margin-bottom: 12px; }
+        #char-name { font-size: 4.2rem; margin: 0; font-weight: bold; }
+        #char-desc { font-size: 1.15rem; line-height: 1.8; margin-top: 20px; }
+
+        /* --- 8人按鈕列 --- */
+        .char-nav-wrapper { display: flex; justify-content: center; gap: 18px; width: 100%; padding: 40px 0; }
+        .char-btn { width: 72px; height: 72px; border-radius: 50%; border: 2px solid #fff; overflow: hidden; cursor: pointer; transition: 0.3s; background: none; padding: 0; }
         .char-btn.active { border-color: var(--polaris-pink); transform: scale(1.1); }
+        .char-btn img { width: 100%; height: 100%; object-fit: cover; }
 
-        .char-main-section { display: flex; align-items: flex-start; justify-content: center; height: 607px; gap: 60px; }
-        .char-info-area { width: 660px; height: 607px; padding: 50px; background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: var(--glass-border); border-radius: 20px; box-sizing: border-box; }
-        .flip-card-container { width: 456px; height: 607px; flex-shrink: 0; position: relative; }
-        .card-face { position: absolute; width: 100%; height: 100%; border-radius: 20px; overflow: hidden; }
-        .card-face img { width: 100%; height: 100%; object-fit: cover; }
-        
-        #char-name { font-size: 4.8rem; margin: 0; font-weight: bold; line-height: 1; }
-        #char-desc { font-size: 1.2rem; line-height: 2; color: #333; margin-top: 30px; }
         .fade-out { opacity: 0; transition: 0.3s; }
     </style>
 </head>
@@ -114,11 +82,9 @@
 
     <div id="dynamic-bg"></div>
 
-<nav class="navbar">
-        <div class="nav-left-area">
-            <a href="index.html" class="logo-link">
-                <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" style="height: 40px; width: auto;" alt="LOGO">
-            </a>
+    <nav class="navbar">
+        <div class="nav-left-group">
+            <a href="index.html"><img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="LOGO"></a>
             <ul class="nav-links">
                 <li><a href="news.html">公告事項</a></li>
                 <li class="dropdown">
@@ -138,67 +104,84 @@
                 </li>
             </ul>
         </div>
-        <div class="search-container">
-            <input type="text" class="search-bar" placeholder="搜尋角色...">
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="搜尋角色...">
         </div>
     </nav>
-    
-    <div class="page-container">
-        <div class="char-nav-wrapper" id="icon-list"></div>
 
+    <div class="page-container">
         <div class="char-main-section">
-            <div class="char-info-area" id="info-box">
-                <h3 id="char-name">立花 つばめ</h3>
-                <p id="char-desc">內容載入中...</p>
-            </div>
             <div class="flip-card-container">
-                <div id="flip-inner" style="position:relative; width:100%; height:100%; transition:0.8s; transform-style:preserve-3d;">
-                    <div class="card-face"><img id="img-front" src="https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png"></div>
+                <div class="flip-card-inner" id="flip-inner">
+                    <div class="card-face card-front"><img id="img-front" src=""></div>
+                    <div class="card-face card-back"><img id="img-back" src=""></div>
                 </div>
             </div>
+            <div class="char-info-area" id="info-box">
+                <span class="name-ruby" id="char-ruby"></span>
+                <h3 id="char-name"></h3>
+                <p id="char-desc"></p>
+            </div>
         </div>
+        <div class="char-nav-wrapper" id="icon-list"></div>
     </div>
 
     <script>
-        // ... (保持原本的 charData 與 updateDisplay 邏輯，加入灰階切換)
         const charData = [
-            { name: '立花 つばめ', desc: 'Project POLARIS 的核心人物...', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' },
-            { name: '咲丹 マリア', desc: '視覺擔當，優雅且神祕...', img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png', bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' }
+            { ruby: 'TACHIBANA TSUBAME', name: '立花 つばめ', desc: 'Project POLARIS 的核心人物，引領團隊前進的北極星。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' },
+            { ruby: 'SA-TAN MARRY', name: '咲丹 マリア', desc: '視覺擔當，優雅且神祕。', img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png', bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' },
+            { ruby: 'RAIKA ANZU', name: '雷火 杏', desc: '團隊中的帥氣擔當。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'UNABARA NAGISA', name: '海原 凪沙', desc: '活潑好動的氣氛帶動者。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'HIMURO REINA', name: '氷室 玲奈', desc: '冷靜沉著的高冷才女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'MOMONO MONAMI', name: '桃乃 萌波', desc: '正統派小惡魔系少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'KAMI SHIRO HISUI', name: '神代 翡翠', desc: '充滿神祕感的少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'KOHAKU RUI', name: '琥珀 琉衣', desc: '性格率直的陽光女孩。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' }
         ];
 
-        let currentIndex = -1; 
+        let currentIndex = -1;
+        let isFlipped = false;
         const bgElement = document.getElementById('dynamic-bg');
-
-        function updateDisplay(index) {
-            if (index === currentIndex) return;
-            bgElement.classList.add('switching'); // 觸發灰階
-            document.getElementById('info-box').classList.add('fade-out');
-
-            setTimeout(() => {
-                const data = charData[index];
-                document.getElementById('char-name').innerText = data.name;
-                document.getElementById('char-desc').innerText = data.desc;
-                document.getElementById('img-front').src = data.img;
-                bgElement.style.backgroundImage = `url('${data.bg}')`;
-                bgElement.classList.remove('switching');
-                document.getElementById('info-box').classList.remove('fade-out');
-            }, 300);
-            currentIndex = index;
-        }
-        
-        // 生成按鈕
         const iconList = document.getElementById('icon-list');
+
         charData.forEach((char, i) => {
             const btn = document.createElement('button');
             btn.className = 'char-btn';
-            btn.innerHTML = `<img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png" style="width:100%">`;
+            btn.innerHTML = `<img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png">`;
             btn.onclick = () => updateDisplay(i);
             iconList.appendChild(btn);
         });
+
+        function updateDisplay(index) {
+            if (index === currentIndex) return;
+            const data = charData[index];
+            bgElement.classList.add('switching');
+            document.getElementById('info-box').classList.add('fade-out');
+
+            setTimeout(() => {
+                bgElement.style.backgroundImage = `url('${data.bg}')`;
+                bgElement.classList.remove('switching');
+                document.getElementById('char-ruby').innerText = data.ruby;
+                document.getElementById('char-name').innerText = data.name;
+                document.getElementById('char-desc').innerText = data.desc;
+                
+                if (!isFlipped) {
+                    document.getElementById('img-back').src = data.img;
+                    document.getElementById('flip-inner').style.transform = "rotateY(180deg)";
+                } else {
+                    document.getElementById('img-front').src = data.img;
+                    document.getElementById('flip-inner').style.transform = "rotateY(0deg)";
+                }
+                isFlipped = !isFlipped;
+                document.getElementById('info-box').classList.remove('fade-out');
+            }, 300);
+
+            const btns = document.querySelectorAll('.char-btn');
+            if (currentIndex >= 0) btns[currentIndex].classList.remove('active');
+            btns[index].classList.add('active');
+            currentIndex = index;
+        }
+
         updateDisplay(0);
     </script>
 </body>
 </html>
-
-
-
