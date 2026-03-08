@@ -11,8 +11,26 @@
             --polaris-gold: #FFD666;
         }
 
-        body { background-color: #fcfcfc; margin: 0; font-family: sans-serif; overflow-x: hidden; }
-        .logo-img { height: 45px; width: auto; display: block; }
+        /* --- 全局背景圖容器 --- */
+        #dynamic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            transition: 0.8s ease-in-out; /* 背景淡入淡出 */
+            filter: brightness(0.9); /* 稍微調暗一點讓前景更清晰 */
+        }
+
+        body { 
+            background-color: #fcfcfc; 
+            margin: 0; 
+            font-family: sans-serif; 
+            overflow-x: hidden; 
+        }
 
         .page-container {
             display: flex;
@@ -22,15 +40,26 @@
             margin-top: 100px;
             width: 100%;
             box-sizing: border-box;
+            min-height: 100vh;
         }
 
-        .page-title {
-            align-self: flex-start;
-            margin-left: 5%;
-            margin-bottom: 20px;
+        /* --- 1. 背景半透明字加大 (佔據畫面一半) --- */
+        .bg-name-deco {
+            position: fixed; /* 改為 fixed 讓它在大圖上方漂浮 */
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) translateZ(-300px); 
+            font-size: 35vw; /* 使用 vw 讓它寬度佔據螢幕大半 */
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.15); /* 因為有背景圖，改用白色透明更有層次 */
+            white-space: nowrap;
+            z-index: -1;
+            pointer-events: none;
+            text-transform: uppercase;
+            transition: 0.5s opacity;
         }
 
-        /* --- 主展示區域 (高度縮減以騰出空間給 ICON) --- */
+        /* --- 主展示區域 --- */
         .char-main-section {
             display: flex;
             align-items: center;
@@ -42,13 +71,13 @@
             position: relative;
             gap: 40px;
             perspective: 2500px;
-            z-index: 5; /* 提升主區域層級 */
+            z-index: 5;
         }
 
-        /* --- 1. 高清透明角色卡 --- */
+        /* --- 高清透明角色卡 --- */
         .flip-card-container {
             width: 400px; 
-            height: 533px; /* 3:4 比例微調 */
+            height: 533px;
             flex-shrink: 0;
             z-index: 10;
         }
@@ -69,52 +98,23 @@
             border-radius: 20px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(4px);          
-            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(5px);          
+            -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transform: translateZ(0); 
         }
 
         .card-face img { width: 100%; height: 100%; object-fit: cover; }
         .card-back { transform: rotateY(180deg) translateZ(0); }
 
-        /* --- 2. 角色背後半透明大字 --- */
-        .bg-name-deco {
-            position: absolute;
-            left: 50%;
-            top: 40%;
-            transform: translate(-50%, -50%) translateZ(-300px); 
-            font-size: 14rem;
-            font-weight: 900;
-            color: rgba(0,0,0,0.1); 
-            white-space: nowrap;
-            z-index: 1;
-            pointer-events: none;
-            text-transform: uppercase;
-        }
-
-        .side-nav-btn {
-            background: #fff;
-            border: 1px solid #eee;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: 0.3s;
-            z-index: 20;
-        }
-        .side-nav-btn:hover { background: var(--polaris-pink); color: white; }
-
+        /* 文字資訊區 (增加陰影確保在背景圖上清晰) */
         .char-info-area {
             flex: 1;
             max-width: 450px;
             z-index: 15;
+            color: #333;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.8);
         }
 
         .name-ruby {
@@ -125,19 +125,34 @@
             padding: 3px 12px;
             border-radius: 4px;
             margin-bottom: 10px;
+            text-shadow: none;
         }
 
-        #char-name { font-size: 3.5rem; color: #333; margin: 0; font-weight: bold; }
-        #char-title { font-size: 1.3rem; color: #999; margin: 15px 0; display: block; }
+        #char-name { font-size: 3.5rem; margin: 0; font-weight: bold; }
+        #char-title { font-size: 1.3rem; color: #444; margin: 15px 0; display: block; font-weight: 500; }
 
         .desc-scroll-box {
             height: 180px;
             overflow-y: auto;
             padding-right: 15px;
         }
-        #char-desc { font-size: 1rem; line-height: 1.8; color: #555; margin: 0; }
+        #char-desc { font-size: 1rem; line-height: 1.8; color: #222; margin: 0; }
 
-        /* --- 3. 8人 ICON 列 (修正：確保 z-index 最高) --- */
+        .side-nav-btn {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid #eee;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+        }
+
+        /* 8人 ICON 列 */
         .char-nav-wrapper {
             display: flex;
             justify-content: center;
@@ -146,20 +161,18 @@
             width: 100%;
             padding-bottom: 40px;
             position: relative;
-            z-index: 100; /* 強制置頂 */
+            z-index: 100;
         }
 
         .char-btn {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: 2px solid #fff;
+            border: 2px solid rgba(255,255,255,0.5);
             overflow: hidden;
             cursor: pointer;
-            padding: 0;
             background: none;
             transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .char-btn.active { border-color: var(--polaris-pink); transform: scale(1.1); }
         .char-btn img { width: 100%; height: 100%; object-fit: cover; }
@@ -169,37 +182,23 @@
 </head>
 <body>
 
+    <div id="dynamic-bg"></div>
+
     <nav class="navbar">
         <a href="index.html" class="logo-link">
             <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
         </a>
-        <ul class="nav-links">
-            <li><a href="news.html">公告事項</a></li>
-            <li class="dropdown">
-                <a href="#">介紹</a>
-                <ul class="submenu">
-                    <li><a href="world.html">世界觀背景</a></li>
-                    <li><a href="story.html">故事背景</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">藝能事務所</a>
-                <ul class="submenu">
-                    <li><a href="polaris.html">波拉里斯藝能</a></li>
-                    <li><a href="stellar.html">星異界藝能</a></li>
-                    <li><a href="others.html">其他或未知</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+        </nav>
 
     <div class="page-container">
-        <h2 class="page-title">Project POLARIS <span style="color: var(--polaris-gold);">波拉里斯藝能</span></h2>
+        <h2 class="page-title" style="color: #333; background: rgba(255,255,255,0.6); padding: 5px 15px; border-radius: 8px;">
+            Project POLARIS <span style="color: var(--polaris-pink);">波拉里斯藝能</span>
+        </h2>
 
         <div class="char-main-section">
             <button class="side-nav-btn" onclick="prevChar()">&#10094;</button>
 
-            <div class="bg-name-deco" id="bg-name">SHIORI</div>
+            <div class="bg-name-deco" id="bg-name">TSUBAME</div>
 
             <div class="flip-card-container">
                 <div class="flip-card-inner" id="flip-inner">
@@ -213,12 +212,12 @@
             </div>
 
             <div class="char-info-area" id="info-box">
-                <span class="name-ruby" id="char-ruby">AMANO GAWA SHIORI</span>
-                <h3 id="char-name">天ノ川 詩織</h3>
+                <span class="name-ruby" id="char-ruby">TACHIBANA TSUBAME</span>
+                <h3 id="char-name">立花 つばめ</h3>
                 <span id="char-title">CV. 佐藤利奈 / Center</span>
                 <div class="desc-scroll-box">
                     <p id="char-desc">
-                        Project POLARIS 的中心人物。引領團隊前進的北極星。她擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。
+                        Project POLARIS 的中心人物。引領團隊前進的北極星。
                     </p>
                 </div>
             </div>
@@ -231,19 +230,33 @@
 
     <script>
         const charData = [
-            { ruby: 'AMANO GAWA SHIORI', short: 'SHIORI', name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。引領團隊前進的北極星。她擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。作為團隊的精神支柱，她總是在成員們感到迷茫時給予最堅定的支持。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'YOZAKURA MASHIRO', short: 'MASHIRO', name: '夜桜 真白', title: 'CV. 花澤香菜 / Visual', desc: '溫柔優雅的大家閨秀，在舞台上展現出月下的精靈般的爆發力。她是團隊中不可或缺的視覺與優雅擔當。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'RAIKA ANZU', short: 'ANZU', name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '團隊中的帥氣擔當，精通各類現代舞。她的動作充滿力量感與節奏感。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'UNABARA NAGISA', short: 'NAGISA', name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。運動神經發達，總是充滿活力。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'HIMURO REINA', short: 'REINA', name: '氷室 玲奈', title: 'CV. 石川由依 / Vocal', desc: '冷靜沉著的高冷才女，負責團隊的編曲工作。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'MOMONO MONAMI', short: 'MONAMI', name: '桃乃 萌波', title: 'CV. 小倉唯 / Cute', desc: '正統派小惡魔系少女。外表甜美，內心是努力家。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'KAMI SHIRO HISUI', short: 'HISUI', name: '神代 翡翠', title: 'CV. 早見沙織 / Mystery', desc: '充滿神祕感的少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'KOHAKU RUI', short: 'RUI', name: '琥珀 琉衣', title: 'CV. 內田真禮 / Energy', desc: '性格率直的陽光女孩。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' }
+            { 
+                ruby: 'TACHIBANA TSUBAME', short: 'TSUBAME', name: '立花 つばめ', title: 'CV. 佐藤利奈 / Center', 
+                desc: 'Project POLARIS 的核心，擁有如雨後陽光般的渲染力。', 
+                img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png',
+                bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' 
+            },
+            { 
+                ruby: 'SA-TAN MARRY', short: 'MARRY', name: '咲丹 マリア', title: 'CV. 花澤香菜 / Visual', 
+                desc: '雖然名字帶點惡魔的氣息，卻是舞台上最耀眼的存在。', 
+                img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png',
+                bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' 
+            },
+            { ruby: 'RAIKA ANZU', short: 'ANZU', name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '團隊中的帥氣擔當。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'UNABARA NAGISA', short: 'NAGISA', name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'HIMURO REINA', short: 'REINA', name: '氷室 玲奈', title: 'CV. 石川由依 / Vocal', desc: '冷靜沉著的高冷才女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'MOMONO MONAMI', short: 'MONAMI', name: '桃乃 萌波', title: 'CV. 小倉唯 / Cute', desc: '正統派小惡魔系少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'KAMI SHIRO HISUI', short: 'HISUI', name: '神代 翡翠', title: 'CV. 早見沙織 / Mystery', desc: '充滿神祕感的少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'KOHAKU RUI', short: 'RUI', name: '琥珀 琉衣', title: 'CV. 內田真禮 / Energy', desc: '性格率直的陽光女孩。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' }
         ];
 
         let currentIndex = 0;
         let isFlipped = false;
         const iconImg = "https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png";
+
+        // 初始化
+        const bgElement = document.getElementById('dynamic-bg');
+        bgElement.style.backgroundImage = `url('${charData[0].bg}')`;
 
         const iconList = document.getElementById('icon-list');
         charData.forEach((char, index) => {
@@ -260,6 +273,13 @@
             const infoBox = document.getElementById('info-box');
             const bgName = document.getElementById('bg-name');
             const data = charData[index];
+
+            // 動態更換背景圖
+            if(data.bg) {
+                bgElement.style.backgroundImage = `url('${data.bg}')`;
+            } else {
+                bgElement.style.backgroundImage = 'none';
+            }
 
             infoBox.classList.add('fade-out');
             bgName.classList.add('fade-out');
