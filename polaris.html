@@ -7,167 +7,100 @@
     <style>
         :root {
             --polaris-pink: #FF2B5D;
-            --polaris-gold: #FFD666;
-            /* 導覽列稍微加深一點點以應對更亮的背景 */
             --nav-bg: rgba(255, 255, 255, 0.95);
-            /* --- [重要] 定義統一的毛玻璃樣式 --- */
             --glass-bg: rgba(255, 255, 255, 0.1);
             --glass-blur: blur(5px);
             --glass-border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        body { 
-            background-color: #fcfcfc; /* 底層白底 */
-            margin: 0; 
-            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; 
-            overflow-x: hidden; 
-        }
+        body { background-color: #fcfcfc; margin: 0; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; overflow-x: hidden; }
 
-        /* --- 1. 導覽列 (維持鎖定) --- */
+        /* --- 導覽列與搜索列 (鎖定位置) --- */
         .navbar {
             position: fixed;
-            top: 0;
-            width: 100%;
-            height: 70px;
+            top: 0; width: 100%; height: 70px;
             background: var(--nav-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            box-sizing: border-box;
-            z-index: 1000;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px; box-sizing: border-box; z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-
         .nav-left-area { display: flex; align-items: center; gap: 30px; }
         .logo-img { height: 40px; width: auto; }
         .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 0.95rem; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 600; }
+        
+        .search-container { position: absolute; right: 40px; display: flex; align-items: center; }
+        .search-bar { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; }
 
-        /* 搜索列 */
-        .search-container {
-            position: absolute;
-            right: 40px;
-            display: flex;
-            align-items: center;
-        }
-        .search-bar {
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 1px solid #ddd;
-            background: rgba(255,255,255,0.7);
-            outline: none;
-        }
-
-        /* --- 2. [重要] 背景優化：增加 20% 白底 --- */
+        /* --- 背景與動畫 --- */
         #dynamic-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            z-index: -2;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center; z-index: -2;
             transition: filter 0.6s ease, opacity 0.6s ease;
-            
-            /* 調整透明度為 0.8，透出下方的 body 白底 */
             opacity: 0.8; 
-            filter: brightness(1.0) grayscale(0); /* 恢復亮度，交給透明度處理 */
         }
-        #dynamic-bg.switching { filter: brightness(0.5) grayscale(1); opacity: 0.4; }
+        #dynamic-bg.switching { filter: brightness(0.3) grayscale(1); opacity: 0.6; }
 
-        /* --- 3. [重要] 背景巨型文字：50% 透明度 --- */
         .bg-name-deco {
-            position: fixed;
-            left: 50%; top: 55%;
-            transform: translate(-50%, -50%) translateZ(-300px); 
-            font-size: 22vw; 
-            max-width: 95vw;
-            font-weight: 900;
-            
-            /* 將 Alpha 值調為 0.5 (50% 透明) */
-            color: rgba(255, 255, 255, 0.5); 
-            
-            white-space: nowrap;
-            z-index: -1;
-            pointer-events: none;
-            text-transform: uppercase;
+            position: fixed; left: 50%; top: 55%; transform: translate(-50%, -50%); 
+            font-size: 22vw; max-width: 95vw; font-weight: 900;
+            color: rgba(255, 255, 255, 0.5); /* 背景字 50% 透明度 */
+            white-space: nowrap; z-index: -1; pointer-events: none; text-transform: uppercase;
         }
 
-        /* --- 4. 內容排版 --- */
+        /* --- 內容佈局 --- */
         .page-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-            padding: 0 20px;
-            margin-top: 110px; 
-            width: 100%;
-            box-sizing: border-box;
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 0 20px; margin-top: 110px; width: 100%; box-sizing: border-box;
         }
 
         .char-main-section {
-            display: flex;
-            align-items: center;
-            justify-content: center; 
-            width: 95%; 
-            max-width: 1400px;
-            height: 580px; 
-            position: relative;
-            gap: 40px; /* 微調間距以適應新區塊 */
-            perspective: 2500px;
-            z-index: 5;
+            display: flex; align-items: center; justify-content: center; 
+            width: 95%; max-width: 1400px; height: 580px; 
+            position: relative; gap: 50px; perspective: 2500px; z-index: 5;
         }
 
-        /* --- 5. [重要] 文字資訊區：包圍全部介紹文字的毛玻璃白底區塊 --- */
+        /* --- [重要修改] 介紹文字區變成長方形 4:3 比例 --- */
         .char-info-area {
-            flex: 1;
-            max-width: 500px;
-            z-index: 15;
-            color: #222; /* 文字顏色稍微加深一點點增強對比 */
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            width: 500px; /* 固定寬度確保姓名不換行 */
+            height: 375px; /* 寬度 500 / 4 * 3 = 375 (4:3 比例) */
+            z-index: 15; color: #222; text-align: left;
+            display: flex; flex-direction: column; align-items: flex-start;
             
-            /* --- 應用與卡片一致的毛玻璃樣式 --- */
             background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
             border: var(--glass-border);
-            border-radius: 20px; /* 圓角與卡片呼應 */
-            padding: 30px; /* 增加內邊距 */
+            border-radius: 20px; padding: 40px; box-sizing: border-box;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            box-sizing: border-box; /* 確保 padding 不影響寬度 */
         }
 
         .name-ruby { display: inline-block; background: var(--polaris-pink); color: white; font-size: 0.8rem; padding: 4px 12px; border-radius: 4px; margin-bottom: 10px; }
-        #char-name { font-size: 3.8rem; margin: 0; font-weight: bold; text-align: left; line-height: 1.1; }
+        #char-name { font-size: 3.8rem; margin: 0; font-weight: bold; white-space: nowrap; } /* 確保名字不換行 */
         
+        /* 捲動條樣式與設定 */
         .desc-scroll-box { 
-            width: 100%;
-            height: 160px; /* 稍微調整高度以配合 padding */
-            overflow-y: auto; 
-            margin-top: 20px; 
-            text-align: left;
+            width: 100%; flex: 1; /* 自動填滿剩餘空間 */
+            overflow-y: auto; margin-top: 20px; padding-right: 10px;
         }
+        /* 自定義捲動條，讓它更有質感 */
+        .desc-scroll-box::-webkit-scrollbar { width: 4px; }
+        .desc-scroll-box::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+        .desc-scroll-box::-webkit-scrollbar-thumb { background: var(--polaris-pink); border-radius: 10px; }
+
         #char-desc { line-height: 1.9; font-size: 1.05rem; margin: 0; color: #333; }
 
-        /* 卡片 (維持樣式) */
-        .flip-card-container { width: 380px; height: 506px; flex-shrink: 0; z-index: 10; }
-        .card-face {
-            /* --- 使用統一的毛玻璃變數 --- */
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: var(--glass-border);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        /* 卡片與圖片 (頂部對齊) */
+        .flip-card-container { width: 380px; height: 506px; flex-shrink: 0; }
+        .card-face { 
+            position: absolute; width: 100%; height: 100%; border-radius: 20px; overflow: hidden;
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: var(--glass-border);
         }
         .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 
-        /* 按鈕與 ICON (維持原本鎖定位置) */
-        .char-nav-wrapper { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 40px 0; z-index: 100; }
-        .char-btn { width: 75px; height: 75px; border-radius: 50%; border: 2px solid #fff; overflow: hidden; cursor: pointer; transition: 0.3s; background: none; padding: 0; }
+        /* 導覽按鈕 */
+        .char-nav-wrapper { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 40px 0; }
+        .char-btn { width: 75px; height: 75px; border-radius: 50%; border: 2px solid #fff; overflow: hidden; cursor: pointer; transition: 0.3s; background: none; }
         .char-btn.active { border-color: var(--polaris-pink); transform: scale(1.1); }
         .char-btn img { width: 100%; height: 100%; object-fit: cover; }
         
@@ -180,13 +113,11 @@
 
     <nav class="navbar">
         <div class="nav-left-area">
-            <a href="index.html" class="logo-link">
-                <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
-            </a>
+            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="LOGO">
             <ul class="nav-links">
-                <li><a href="news.html">公告事項</a></li>
-                <li><a href="world.html">介紹</a></li>
-                <li><a href="polaris.html">藝能事務所</a></li>
+                <li><a href="#">公告事項</a></li>
+                <li><a href="#">介紹</a></li>
+                <li><a href="#">藝能事務所</a></li>
             </ul>
         </div>
         <div class="search-container">
@@ -196,14 +127,16 @@
 
     <div class="page-container">
         <div class="char-main-section">
-            <button onclick="prevChar()" style="background:none; border:none; font-size:2rem; cursor:pointer; z-index:20; color:rgba(255,255,255,0.7);">&#10094;</button>
+            <button onclick="prevChar()" style="background:none; border:none; font-size:2rem; cursor:pointer;">&#10094;</button>
 
             <div class="char-info-area" id="info-box">
                 <span class="name-ruby" id="char-ruby">TACHIBANA TSUBAME</span>
                 <h3 id="char-name">立花 つばめ</h3>
-                <span id="char-title" style="font-size:1.4rem; color:#444; margin-top:10px; font-weight:500;">CV. 佐藤利奈 / Center</span>
+                <span id="char-title" style="font-size:1.3rem; color:#444; margin-top:5px;">CV. 佐藤利奈 / Center</span>
                 <div class="desc-scroll-box">
-                    <p id="char-desc">Project POLARIS 的中心人物，引領團隊前進的北極星。擁有清澈如水的嗓音與無與倫比的舞台渲染力。</p>
+                    <p id="char-desc">
+                        作為 Project POLARIS 的核心人物，つばめ 擁有如雨後陽光般的強大感染力。她那清澈且富有穿透力的嗓音，總能在舞台上瞬間抓住聽眾的心。雖然外表看起來優雅冷靜，但內心對於偶像事業有著超乎常人的執著與熱情。無論面對多麼嚴苛的訓練，她始終保持著笑容，成為團員們最可靠的北極星。這份永不言敗的精神，正是她能站在 Center 位置的關鍵原因。
+                    </p>
                 </div>
             </div>
 
@@ -211,27 +144,37 @@
 
             <div class="flip-card-container">
                 <div class="flip-card-inner" id="flip-inner" style="position:relative; width:100%; height:100%; transition:0.8s; transform-style:preserve-3d;">
-                    <div class="card-face" style="position:absolute; width:100%; height:100%; backface-visibility:hidden;">
+                    <div class="card-face" style="backface-visibility:hidden; width:100%; height:100%;">
                         <img id="img-front" src="https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png">
                     </div>
-                    <div class="card-face" id="card-back-div" style="position:absolute; width:100%; height:100%; backface-visibility:hidden; transform:rotateY(180deg);">
+                    <div class="card-face" style="backface-visibility:hidden; width:100%; height:100%; transform:rotateY(180deg);">
                         <img id="img-back" src="https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png">
                     </div>
                 </div>
             </div>
 
-            <button onclick="nextChar()" style="background:none; border:none; font-size:2rem; cursor:pointer; z-index:20; color:rgba(255,255,255,0.7);">&#10095;</button>
+            <button onclick="nextChar()" style="background:none; border:none; font-size:2rem; cursor:pointer;">&#10095;</button>
         </div>
 
         <div class="char-nav-wrapper" id="icon-list"></div>
     </div>
 
     <script>
-        // 腳本邏輯保持不變 (D方案灰階切換與維持8人檔案)
+        // 資料與邏輯維持穩定
         const charData = [
-            { ruby: 'TACHIBANA TSUBAME', short: 'TSUBAME', name: '立花 つばめ', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的核心，擁有如雨後陽光般的渲染力。清澈嗓音引領團隊。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' },
-            { ruby: 'SA-TAN MARRY', short: 'MARRY', name: '咲丹 マリア', title: 'CV. 花澤香菜 / Visual', desc: '雖然名字帶點惡魔的氣息，卻是舞台上最耀眼的存在。視覺擔當。', img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png', bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' },
-            { ruby: 'RAIKA ANZU', short: 'ANZU', name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '團隊中的帥氣擔當。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { 
+                ruby: 'TACHIBANA TSUBAME', short: 'TSUBAME', name: '立花 つばめ', title: 'CV. 佐藤利奈 / Center', 
+                desc: '作為 Project POLARIS 的核心人物，つばめ 擁有如雨後陽光般的強大感染力。她那清澈且富有穿透力的嗓音，總能在舞台上瞬間抓住聽眾的心。雖然外表看起來優雅冷靜，但內心對於偶像事業有著超乎常人的執著與熱情。無論面對多麼嚴苛的訓練，她始終保持著笑容，成為團員們最可靠的北極星。這份永不言敗的精神，正是她能站在 Center 位置的關鍵原因。', 
+                img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png',
+                bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' 
+            },
+            { 
+                ruby: 'SA-TAN MARRY', short: 'MARRY', name: '咲丹 マリア', title: 'CV. 花澤香菜 / Visual', 
+                desc: '雖然名字帶點惡魔的氣息，卻是舞台上最耀眼的存在。瑪莉亞的魅力在於她那捉摸不定的性格，上一秒還是溫柔的鄰家女孩，下一秒就能展現出極具張力的舞台魅力。身為視覺擔當，她對審美有著極高的要求，是隊內的時尚風向球。', 
+                img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png',
+                bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' 
+            },
+            { ruby: 'RAIKA ANZU', short: 'ANZU', name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '充滿爆發力的舞者。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
             { ruby: 'UNABARA NAGISA', short: 'NAGISA', name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
             { ruby: 'HIMURO REINA', short: 'REINA', name: '氷室 玲奈', title: 'CV. 石川由依 / Vocal', desc: '冷靜沉著的高冷才女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
             { ruby: 'MOMONO MONAMI', short: 'MONAMI', name: '桃乃 萌波', title: 'CV. 小倉唯 / Cute', desc: '正統派小惡魔系少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
