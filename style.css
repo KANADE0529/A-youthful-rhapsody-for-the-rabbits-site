@@ -12,7 +12,7 @@
 
 body { 
     font-family: 'Noto Sans TC', sans-serif; 
-    /* 背景圖固定在後方，讓公告滑過時有透視感 */
+    /* 背景圖固定，這是透視感的靈魂 */
     background-image: url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png');
     background-size: cover;
     background-position: center;
@@ -59,11 +59,10 @@ body {
 .search-input { background: transparent; border: none; padding: 5px; outline: none; width: 110px; color: var(--main-text); }
 .search-btn { background: transparent; border: none; cursor: pointer; color: var(--main-text); }
 
-/* --- 視差滾動 Hero：佔滿全螢幕封面 --- */
+/* --- 視差滾動 Hero：純封面 --- */
 .hero-section { 
     height: 100vh; 
     width: 100%;
-    /* 此處也放背景圖是為了確保進場時讀取順暢 */
     background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
     background-size: cover; 
     background-position: center; 
@@ -74,29 +73,37 @@ body {
 }
 .hero-section h2 { font-size: 4rem; color: white; text-shadow: 3px 3px 20px rgba(0,0,0,0.4); letter-spacing: 12px; font-weight: bold; }
 
-/* --- 內容區塊：滑動後才出現的毛玻璃面板 --- */
+/* --- 內容區塊：滑動升起的毛玻璃面板 --- */
 .content-wrapper { 
     position: relative; 
     z-index: 10; 
-    /* 修正：取消負 margin，讓它排在封面下方 */
     margin-top: 0; 
     background-color: var(--main-bg); 
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: 80px 0; 
-    /* 頂部細邊框，增加玻璃邊緣質感 */
+    backdrop-filter: blur(25px); /* 稍微調深模糊度增加質感 */
+    -webkit-backdrop-filter: blur(25px);
+    padding: 100px 0; 
+    
+    /* 上邊圓角還妳了！ */
     border-top: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+    border-radius: 60px 60px 0 0; /* 更加顯眼的圓角 */
+    box-shadow: 0 -20px 40px rgba(0,0,0,0.15);
 }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-.section-title { font-size: 2.2rem; border-left: 6px solid var(--point-pink); padding-left: 15px; margin-bottom: 40px; font-weight: bold; }
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+    /* 增加區塊高度 350px (透過設定最小高度確保空間) */
+    min-height: calc(100vh + 350px); 
+}
+
+.section-title { font-size: 2.2rem; border-left: 6px solid var(--point-pink); padding-left: 15px; margin-bottom: 60px; font-weight: bold; }
 
 .update-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.update-item { text-decoration: none; color: inherit; display: block; padding: 15px; border-radius: 12px; transition: 0.3s ease; }
-.update-item:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-8px); }
+.update-item { text-decoration: none; color: inherit; display: block; padding: 15px; border-radius: 20px; transition: 0.3s ease; }
+.update-item:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-10px); }
 
-.update-img-box { width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; margin-bottom: 15px; background-color: rgba(0,0,0,0.05); }
+.update-img-box { width: 100%; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; margin-bottom: 20px; background-color: rgba(0,0,0,0.05); }
 .update-img-box img { width: 100%; height: 100%; object-fit: cover; }
 
 .update-item h3 { font-size: 1.6rem; text-align: left; font-weight: bold; transition: color 0.3s; }
