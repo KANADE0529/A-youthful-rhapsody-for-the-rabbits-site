@@ -14,38 +14,39 @@
         body { background-color: #fcfcfc; margin: 0; font-family: sans-serif; }
         .logo-img { height: 45px; width: auto; display: block; }
 
-        /* --- 整體區塊居中 --- */
+        /* --- 整體容器置中 --- */
         .page-container {
             display: flex;
             flex-direction: column;
             align-items: center; 
-            padding: 0 5%;
+            padding: 0 20px;
             margin-top: 100px;
             width: 100%;
             box-sizing: border-box;
         }
 
-        /* 標題內容與位置不變：靠左對齊 */
+        /* 標題靠左 */
         .page-title {
             align-self: flex-start;
             margin-left: 5%;
             margin-bottom: 30px;
         }
 
+        /* 主區域：按鈕分居兩側 */
         .char-main-section {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
-            width: 100%;
+            justify-content: space-between; 
+            width: 95%; 
+            max-width: 1450px;
+            margin-bottom: 40px;
         }
 
-        /* --- 角色卡片改為 4:3 比例 (寬480, 高360) --- */
+        /* --- 核心修改：16:9 劇照比例 (1.5倍放大) --- */
         .flip-card-container {
-            width: 480px; 
-            height: 360px;
-            perspective: 1500px;
+            width: 720px; 
+            height: 405px;
+            perspective: 2000px;
         }
 
         .flip-card-inner {
@@ -61,74 +62,77 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 20px;
+            border-radius: 12px;
             overflow: hidden;
             background: #fff;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.12);
         }
+        /* 圖片填滿方式改為 cover，完美呈現劇照感 */
         .card-face img { width: 100%; height: 100%; object-fit: cover; }
         .card-back { transform: rotateY(180deg); }
 
+        /* 切換按鈕 1.5 倍放大 (75px) */
         .side-nav-btn {
             background: #fff;
             border: 1px solid #eee;
-            width: 50px;
-            height: 50px;
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: 0.3s;
             color: #333;
             flex-shrink: 0;
         }
-        .side-nav-btn:hover { background: var(--polaris-pink); color: white; }
+        .side-nav-btn:hover { background: var(--polaris-pink); color: white; transform: scale(1.1); }
 
+        /* 文字資訊區 */
         .char-info-area {
-            padding-left: 20px;
+            padding-left: 60px;
             flex: 1;
-            max-width: 450px;
+            max-width: 500px;
         }
 
         .name-ruby {
             display: inline-block;
             background: var(--polaris-pink);
             color: white;
-            font-size: 0.85rem;
-            padding: 3px 12px;
+            font-size: 0.9rem;
+            padding: 4px 15px;
             border-radius: 4px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             text-transform: uppercase;
         }
 
-        #char-name { font-size: 3rem; color: #333; margin: 0; font-weight: bold; }
-        #char-title { font-size: 1.2rem; color: #999; margin-bottom: 20px; display: block; }
-        #char-desc { font-size: 1.05rem; line-height: 1.8; color: #555; margin: 0; }
+        #char-name { font-size: 3.5rem; color: #333; margin: 0; font-weight: bold; line-height: 1.1; }
+        #char-title { font-size: 1.4rem; color: #999; margin: 20px 0 25px 0; display: block; }
+        #char-desc { font-size: 1.1rem; line-height: 1.9; color: #555; margin: 0; }
 
-        /* 下方預覽列居中 */
+        /* 下方頭像列 (1.5倍放大版) */
         .char-nav-wrapper {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             margin-top: 20px;
             width: 100%;
-            flex-wrap: wrap; /* 確保人多時會自動換行 */
+            flex-wrap: wrap;
         }
 
         .char-btn {
-            width: 70px;
-            height: 70px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            border: 2px solid #fff;
+            border: 3px solid #fff;
             overflow: hidden;
             cursor: pointer;
             padding: 0;
             background: none;
             transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
         }
         .char-btn.active { border-color: var(--polaris-pink); transform: scale(1.1); }
         .char-btn img { width: 100%; height: 100%; object-fit: cover; }
@@ -197,7 +201,6 @@
     </div>
 
     <script>
-        // --- 完整 8 位角色數據回歸 ---
         const charData = [
             { ruby: 'AMANO GAWA SHIORI', name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。引領團隊前進的北極星。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
             { ruby: 'YOZAKURA MASHIRO', name: '夜桜 真白', title: 'CV. 花澤香菜 / Visual', desc: '溫柔優雅的大家閨秀，在舞台上展現出月下的精靈般的爆發力。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
