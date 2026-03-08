@@ -193,4 +193,44 @@ footer {
     text-align: center;
     padding: 50px;
     border-top: 1px solid #333;
+
+}
+/* 搜尋框樣式 */
+.search-container {
+    margin-left: auto; /* 將搜尋框推向最右邊 */
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: 1px solid var(--accent-gold);
+}
+
+.search-input {
+    background: none;
+    border: none;
+    color: white;
+    outline: none;
+    padding: 5px;
+    width: 150px;
+    font-size: 14px;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search-btn {
+    background: none;
+    border: none;
+    color: var(--accent-gold);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* 確保導航列能容納搜尋框 */
+.navbar {
+    display: flex;
+    justify-content: flex-start; /* 讓 Logo 和選單靠左 */
+    align-items: center;
 }
