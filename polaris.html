@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal | Polaris</title>
+    <title>Project POLARIS | 波拉里斯藝能</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="polaris-page">
     <nav class="navbar">
-        <a href="index.html" class="logo-link"><img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="LOGO"></a>
+        <a href="index.html" class="logo-link">
+            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="LOGO">
+        </a>
+        
         <ul class="nav-links">
             <li><a href="news.html">公告事項</a></li>
             <li class="dropdown">
@@ -16,6 +19,13 @@
                 <ul class="submenu">
                     <li><a href="world.html">世界觀背景</a></li>
                     <li><a href="story.html">故事背景</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">角色介紹</a>
+                <ul class="submenu">
+                    <li><a href="characters_main.html">主要角色</a></li>
+                    <li><a href="characters_sub.html">次要角色</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -27,8 +37,9 @@
                 </ul>
             </li>
         </ul>
+
         <div class="search-container">
-            <input type="text" placeholder="搜尋..." class="search-input">
+            <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
             <button class="search-btn">🔍</button>
         </div>
     </nav>
@@ -36,10 +47,64 @@
     <main class="content-wrapper" style="margin-top:70px;">
         <section class="container">
             <h2 class="section-title">Project POLARIS <span style="color: #FFD666;">波拉里斯藝能</span></h2>
-            
-            <div class="update-grid">
+
+            <div class="char-showcase">
+                <div class="char-image-frame">
+                    <img src="https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png" class="active" id="img-1">
+                    <img src="角色2大圖網址" id="img-2">
+                    <img src="角色3大圖網址" id="img-3">
                 </div>
+
+                <div class="char-info-box">
+                    <div class="char-detail active" id="info-1">
+                        <div class="char-name">角色姓名 01</div>
+                        <div class="char-title">CV. 聲優姓名 / 所屬稱號</div>
+                        <p class="char-desc">這裡放角色 1 的詳細介紹。例如：性格開朗但內心堅韌，在 Project POLARIS 中擔任領隊角色，目標是成為閃耀的星辰。</p>
+                    </div>
+                    
+                    <div class="char-detail" id="info-2">
+                        <div class="char-name">角色姓名 02</div>
+                        <div class="char-title">CV. 聲優姓名 / 所屬稱號</div>
+                        <p class="char-desc">這裡放角色 2 的詳細介紹。這裡展現的是圖文分離的切換效果，文字與左側大圖是分別對應的。</p>
+                    </div>
+
+                    <div class="char-detail" id="info-3">
+                        <div class="char-name">角色姓名 03</div>
+                        <div class="char-title">CV. 聲優姓名 / 所屬稱號</div>
+                        <p class="char-desc">這裡放角色 3 的詳細介紹。點擊下方的頭像按鍵即可同步更新上方所有內容。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="char-nav">
+                <div class="char-btn active" onclick="showChar(1)">
+                    <img src="角色1頭像網址" alt="Char 1">
+                </div>
+                <div class="char-btn" onclick="showChar(2)">
+                    <img src="角色2頭像網址" alt="Char 2">
+                </div>
+                <div class="char-btn" onclick="showChar(3)">
+                    <img src="角色3頭像網址" alt="Char 3">
+                </div>
+            </div>
         </section>
     </main>
+
+    <script>
+        function showChar(index) {
+            // 隱藏所有圖片與文字
+            document.querySelectorAll('.char-image-frame img').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.char-detail').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.char-btn').forEach(el => el.classList.remove('active'));
+
+            // 顯示當前選中的內容
+            document.getElementById('img-' + index).classList.add('active');
+            document.getElementById('info-' + index).classList.add('active');
+            
+            // 讓對應的按鈕變為 active (高亮)
+            const btns = document.querySelectorAll('.char-btn');
+            btns[index-1].classList.add('active');
+        }
+    </script>
 </body>
 </html>
