@@ -8,31 +8,34 @@
         :root {
             --polaris-pink: #FF2B5D;
             --polaris-gold: #FFD666;
-            --nav-bg: #ffffff;
+            --nav-pink: #FFC0CB; /* 還原圖中粉色導覽列底色 */
         }
 
-        body { background-color: #fcfcfc; margin: 0; font-family: "Microsoft JhengHei", sans-serif; }
+        body { background-color: #fcfcfc; margin: 0; font-family: sans-serif; }
 
-        /* --- 導覽列 Navbar 完全修復區 --- */
+        /* --- 1. 導覽列 Navbar (根據 image_820066.png 還原) --- */
         .navbar {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            background-color: var(--nav-bg);
-            padding: 10px 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background-color: var(--nav-pink);
+            padding: 5px 5%;
+            height: 60px;
             position: fixed;
             top: 0;
-            width: 90%;
-            z-index: 1000;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .nav-links { display: flex; list-style: none; margin: 0; padding: 0; }
-        .nav-links li { position: relative; margin: 0 15px; }
-        .nav-links a { text-decoration: none; color: #333; font-weight: bold; transition: 0.3s; }
+        .navbar .logo-img { height: 45px; margin-right: 40px; }
+
+        .nav-links { display: flex; list-style: none; margin: 0; padding: 0; align-items: center; }
+        .nav-links li { position: relative; margin-right: 30px; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: bold; font-size: 1.1rem; }
         .nav-links a:hover { color: var(--polaris-pink); }
 
-        /* 子選單顯示邏輯 */
+        /* 子選單 (根據 image_82005f.png 還原) */
         .submenu {
             display: none;
             position: absolute;
@@ -42,22 +45,24 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             list-style: none;
             padding: 10px 0;
-            border-radius: 8px;
-            min-width: 140px;
+            min-width: 150px;
+            border-top: 3px solid var(--polaris-pink);
         }
         .nav-links li:hover .submenu { display: block; }
-        .submenu li a { padding: 8px 20px; display: block; font-size: 0.9rem; white-space: nowrap; }
+        .submenu li a { padding: 10px 20px; display: block; font-size: 1rem; color: #444; }
+        .submenu li a:hover { background: #f8f8f8; color: var(--polaris-pink); }
 
-        .search-container { display: flex; align-items: center; background: #f0f0f0; padding: 5px 15px; border-radius: 20px; }
-        .search-input { border: none; background: none; outline: none; padding: 5px; }
+        /* 搜尋框 (置右) */
+        .search-wrapper { margin-left: auto; display: flex; align-items: center; border-bottom: 1.5px solid #333; }
+        .search-input { border: none; background: none; outline: none; padding: 5px; width: 150px; }
 
-        /* --- 角色面板區 (基於妳提供的備份) --- */
+        /* --- 2. 角色展示區 (完全保留妳提供的備份代碼樣式) --- */
         .page-container {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             padding-left: 5%;
-            margin-top: 100px; /* 這裡增加間距避免被 Navbar 擋住 */
+            margin-top: 100px; /* 避開固定導覽列 */
         }
 
         .char-main-section {
@@ -67,7 +72,7 @@
             margin-bottom: 20px;
         }
 
-        /* 改用妳提供的箭頭圖檔 */
+        /* 改用妳提供的箭頭圖檔 image_826ddb.png */
         .side-nav-btn {
             background: url('https://images.plurk.com/66Qy86zW8zX2qhRu9jjrO.png') no-repeat center;
             background-size: contain;
@@ -76,10 +81,9 @@
             height: 50px;
             cursor: pointer;
             transition: 0.3s;
-            opacity: 0.7;
         }
-        .side-nav-btn:hover { opacity: 1; transform: scale(1.1); }
-        .btn-prev { transform: rotate(180deg); }
+        .btn-prev { transform: rotate(180deg); } /* 左箭頭翻轉 */
+        .side-nav-btn:hover { transform: scale(1.1); }
         .btn-prev:hover { transform: rotate(180deg) scale(1.1); }
 
         .flip-card-container {
@@ -106,16 +110,10 @@
             background: #fff;
             box-shadow: 0 8px 25px rgba(0,0,0,0.08);
         }
-
         .card-face img { width: 100%; height: 100%; object-fit: contain; }
         .card-back { transform: rotateY(180deg); }
 
-        .char-info-area {
-            padding-left: 40px;
-            flex: 1;
-            max-width: 500px;
-        }
-
+        .char-info-area { padding-left: 40px; flex: 1; max-width: 500px; }
         .name-ruby {
             display: inline-block;
             background: var(--polaris-pink);
@@ -159,9 +157,7 @@
 <body>
 
     <nav class="navbar">
-        <a href="index.html" class="logo-link">
-            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" style="height:40px;">
-        </a>
+        <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img">
         <ul class="nav-links">
             <li><a href="news.html">公告事項</a></li>
             <li>
@@ -176,12 +172,13 @@
                 <ul class="submenu">
                     <li><a href="polaris.html">波拉里斯藝能</a></li>
                     <li><a href="stellar.html">星異界藝能</a></li>
+                    <li><a href="#">其他或未知</a></li>
                 </ul>
             </li>
         </ul>
-        <div class="search-container">
+        <div class="search-wrapper">
             <input type="text" placeholder="搜尋..." class="search-input">
-            <span style="cursor:pointer;">🔍</span>
+            <span>🔍</span>
         </div>
     </nav>
 
@@ -216,7 +213,7 @@
     </div>
 
     <script>
-        // 腳本邏輯完全保留妳備份中的內容
+        // 完全使用妳留下的原始腳本邏輯
         const charData = [
             { ruby: 'AMANO GAWA SHIORI', name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。引領團隊前進的北極星。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
             { ruby: 'YOZAKURA MASHIRO', name: '夜桜 真白', title: 'CV. 花澤香菜 / Visual', desc: '溫柔優雅的大家閨秀，在舞台上展現出月下的精靈般的爆發力。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
