@@ -9,6 +9,7 @@
         :root {
             --polaris-pink: #FF2B5D;
             --polaris-gold: #FFD666;
+            --nav-bg: rgba(255, 255, 255, 0.85);
         }
 
         /* --- D 方案：灰階過渡背景層 --- */
@@ -21,55 +22,110 @@
             background-size: cover;
             background-position: center;
             z-index: -2;
-            transition: filter 0.5s ease, opacity 0.5s ease;
+            transition: filter 0.6s ease, opacity 0.6s ease;
             filter: brightness(0.9) grayscale(0);
         }
-        /* 當切換時觸發的類別 */
         #dynamic-bg.switching {
-            filter: brightness(0.4) grayscale(1); /* 瞬間變暗且失去飽和度 */
-            opacity: 0.5;
+            filter: brightness(0.3) grayscale(1);
+            opacity: 0.6;
         }
 
         body { background-color: #fcfcfc; margin: 0; font-family: sans-serif; overflow-x: hidden; }
 
+        /* --- 完整導覽列樣式修復 --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-sizing: border-box;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo-img { height: 40px; width: auto; }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--polaris-pink); }
+
+        /* 下拉選單基礎 */
+        .dropdown { position: relative; }
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            list-style: none;
+            padding: 10px 0;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            min-width: 150px;
+        }
+        .dropdown:hover .submenu { display: block; }
+        .submenu li a { padding: 8px 20px; display: block; font-weight: 400; }
+
+        /* --- 頁面容器 --- */
         .page-container {
             display: flex;
             flex-direction: column;
             align-items: center; 
             padding: 0 20px;
-            margin-top: 100px;
+            margin-top: 110px; /* 避開固定導覽列 */
             width: 100%;
             box-sizing: border-box;
             min-height: 100vh;
         }
 
-        /* --- 1. 背景字優化：收納不超出畫面 --- */
+        /* 背景字優化 */
         .bg-name-deco {
             position: fixed;
             left: 50%;
-            top: 50%;
+            top: 55%;
             transform: translate(-50%, -50%) translateZ(-300px); 
-            font-size: 22vw; /* 調小比例確保收納 */
-            max-width: 95vw; /* 限制最大寬度 */
+            font-size: 22vw; 
+            max-width: 95vw;
             text-align: center;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.15);
             white-space: nowrap;
             z-index: -1;
             pointer-events: none;
             text-transform: uppercase;
-            overflow: hidden; /* 確保不溢出螢幕 */
+            overflow: hidden;
             transition: opacity 0.4s;
         }
 
-        /* --- 主展示區域 --- */
+        /* 主展示區 */
         .char-main-section {
             display: flex;
             align-items: center;
             justify-content: center; 
             width: 95%; 
             max-width: 1400px;
-            height: 600px; 
+            height: 580px; 
             margin-bottom: 20px;
             position: relative;
             gap: 40px;
@@ -77,96 +133,44 @@
             z-index: 5;
         }
 
-        /* --- 高清透明角色卡 --- */
-        .flip-card-container {
-            width: 400px; 
-            height: 533px;
-            flex-shrink: 0;
-            z-index: 10;
-        }
-
+        .flip-card-container { width: 380px; height: 506px; flex-shrink: 0; z-index: 10; }
         .flip-card-inner {
             position: relative;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
         }
 
         .card-face {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             backface-visibility: hidden;
             border-radius: 20px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(5px);          
-            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transform: translateZ(0); 
         }
 
-        /* --- 修復點：角色圖片頂部對齊，避免砍頭 --- */
-        .card-face img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            object-position: top; /* 關鍵：從頭部開始顯示 */
-        }
-        
-        .card-back { transform: rotateY(180deg) translateZ(0); }
+        .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+        .card-back { transform: rotateY(180deg); }
 
-        .char-info-area {
-            flex: 1;
-            max-width: 450px;
-            z-index: 15;
-            color: #333;
-            text-shadow: 0 2px 10px rgba(255,255,255,0.8);
-        }
-
-        .name-ruby {
-            display: inline-block;
-            background: var(--polaris-pink);
-            color: white;
-            font-size: 0.8rem;
-            padding: 3px 12px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-
+        .char-info-area { flex: 1; max-width: 450px; z-index: 15; color: #333; text-shadow: 0 2px 10px rgba(255,255,255,0.5); }
+        .name-ruby { display: inline-block; background: var(--polaris-pink); color: white; font-size: 0.8rem; padding: 3px 12px; border-radius: 4px; margin-bottom: 10px; }
         #char-name { font-size: 3.5rem; margin: 0; font-weight: bold; }
-        #char-title { font-size: 1.3rem; color: #444; margin: 15px 0; display: block; }
+        .desc-scroll-box { height: 160px; overflow-y: auto; margin-top: 15px; }
 
-        .desc-scroll-box {
-            height: 180px;
-            overflow-y: auto;
-            padding-right: 15px;
-        }
-        #char-desc { font-size: 1rem; line-height: 1.8; color: #222; margin: 0; }
-
+        /* 8人 ICON 列 */
         .char-nav-wrapper {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 10px;
             width: 100%;
             padding-bottom: 40px;
-            position: relative;
             z-index: 100;
         }
-
-        .char-btn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.5);
-            overflow: hidden;
-            cursor: pointer;
-            background: none;
-            transition: 0.3s;
-        }
+        .char-btn { width: 75px; height: 75px; border-radius: 50%; border: 2px solid #fff; overflow: hidden; cursor: pointer; transition: 0.3s; }
         .char-btn.active { border-color: var(--polaris-pink); transform: scale(1.1); }
         .char-btn img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -177,8 +181,32 @@
 
     <div id="dynamic-bg"></div>
 
+    <nav class="navbar">
+        <a href="index.html" class="logo-link">
+            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
+        </a>
+        <ul class="nav-links">
+            <li><a href="news.html">公告事項</a></li>
+            <li class="dropdown">
+                <a href="#">介紹</a>
+                <ul class="submenu">
+                    <li><a href="world.html">世界觀背景</a></li>
+                    <li><a href="story.html">故事背景</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">藝能事務所</a>
+                <ul class="submenu">
+                    <li><a href="polaris.html">波拉里斯藝能</a></li>
+                    <li><a href="stellar.html">星異界藝能</a></li>
+                    <li><a href="others.html">其他或未知</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
     <div class="page-container">
-        <h2 class="page-title" style="color: #333; background: rgba(255,255,255,0.6); padding: 5px 15px; border-radius: 8px;">
+        <h2 class="page-title" style="color: #333; background: rgba(255,255,255,0.6); padding: 5px 15px; border-radius: 8px; font-size: 1.2rem;">
             Project POLARIS <span style="color: var(--polaris-pink);">波拉里斯藝能</span>
         </h2>
 
@@ -217,7 +245,7 @@
         const charData = [
             { 
                 ruby: 'TACHIBANA TSUBAME', short: 'TSUBAME', name: '立花 つばめ', title: 'CV. 佐藤利奈 / Center', 
-                desc: 'Project POLARIS 的核心，引領團隊前進。', 
+                desc: 'Project POLARIS 的核心，擁有如雨後陽光般的感染力。', 
                 img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png',
                 bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' 
             },
@@ -258,20 +286,16 @@
             const bgName = document.getElementById('bg-name');
             const data = charData[index];
 
-            // D 方案切換動畫：加入 switching 類別觸發灰階與變暗
             bgElement.classList.add('switching');
-
             infoBox.classList.add('fade-out');
             bgName.classList.add('fade-out');
 
             setTimeout(() => {
-                // 在變黑時更換圖片
                 if(data.bg) {
                     bgElement.style.backgroundImage = `url('${data.bg}')`;
                 } else {
                     bgElement.style.backgroundImage = 'none';
                 }
-                // 恢復色彩
                 bgElement.classList.remove('switching');
             }, 300);
 
