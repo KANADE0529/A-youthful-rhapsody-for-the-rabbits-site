@@ -33,7 +33,7 @@
             height: auto;
             display: block;
             min-height: 600px;
-            object-fit: cover;
+            object-fit: cover; /* 確保大圖比例正確 */
         }
 
         .char-info-area {
@@ -64,10 +64,10 @@
             min-height: 180px;
         }
 
-        /* 8個按鈕的 Grid 佈局 (4x2) */
+        /* 8個按鈕佈局 */
         .char-nav-buttons {
             display: grid;
-            grid-template-columns: repeat(4, 80px); /* 固定寬度確保整齊 */
+            grid-template-columns: repeat(4, 80px);
             gap: 15px;
         }
 
@@ -96,7 +96,7 @@
         .char-nav-buttons img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* 確保圓形頭像不變形 */
         }
     </style>
 </head>
@@ -130,6 +130,7 @@
                 </ul>
             </li>
         </ul>
+
         <div class="search-container">
             <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
             <button class="search-btn">🔍</button>
@@ -144,23 +145,23 @@
 
             <div class="char-display-box">
                 <div class="char-image-area">
-                    <img id="char-img" src="https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png">
+                    <img id="char-img" src="https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png">
                 </div>
                 
                 <div class="char-info-area">
                     <h3 id="char-name">天ノ川 詩織</h3>
                     <span id="char-title">CV. 佐藤利奈 / Center</span>
-                    <p id="char-desc">Project POLARIS 的中心人物。擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。</p>
+                    <p id="char-desc">Project POLARIS 的中心人物。引領團隊前進的北極星。目前正在為了即將到來的巡迴演出進行特訓。</p>
                     
                     <div class="char-nav-buttons">
-                        <button onclick="update('C1')" class="active"><img src="https://via.placeholder.com/100/FFC3C7?text=1"></button>
-                        <button onclick="update('C2')"><img src="https://via.placeholder.com/100/FFC3C7?text=2"></button>
-                        <button onclick="update('C3')"><img src="https://via.placeholder.com/100/FFC3C7?text=3"></button>
-                        <button onclick="update('C4')"><img src="https://via.placeholder.com/100/FFC3C7?text=4"></button>
-                        <button onclick="update('C5')"><img src="https://via.placeholder.com/100/FFC3C7?text=5"></button>
-                        <button onclick="update('C6')"><img src="https://via.placeholder.com/100/FFC3C7?text=6"></button>
-                        <button onclick="update('C7')"><img src="https://via.placeholder.com/100/FFC3C7?text=7"></button>
-                        <button onclick="update('C8')"><img src="https://via.placeholder.com/100/FFC3C7?text=8"></button>
+                        <button onclick="update('C1')" class="active"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                        <button onclick="update('C2')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                        <button onclick="update('C3')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                        <button onclick="update('C4')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                        <button onclick="update('C5')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                        <button onclick="update('C6')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                        <button onclick="update('C7')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                        <button onclick="update('C8')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
                     </div>
                 </div>
             </div>
@@ -168,15 +169,16 @@
     </main>
 
     <script>
+        // 為了展示效果，目前 8 個按鈕都指向同一張大圖，妳之後可以根據需求更換 img 網址
         const charData = {
-            'C1': { name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。引領團隊前進的北極星。', img: 'https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png' },
-            'C2': { name: '夜桜 真白', title: 'CV. 花澤香菜 / Visual', desc: '溫柔優雅的大家閨秀，在舞台上展現出月下的精靈般的爆發力。', img: 'https://via.placeholder.com/500x700?text=C2' },
-            'C3': { name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '團隊中的帥氣擔當，精通各類現代舞，是大姐頭般的氣質。', img: 'https://via.placeholder.com/500x700?text=C3' },
-            'C4': { name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。運動神經發達，總是充滿活力。', img: 'https://via.placeholder.com/500x700?text=C4' },
-            'C5': { name: '氷室 玲奈', title: 'CV. 石川由依 / Vocal', desc: '冷靜沉著的高冷才女，負責團隊的編曲工作，雖然毒舌但很溫柔。', img: 'https://via.placeholder.com/500x700?text=C5' },
-            'C6': { name: '桃乃 萌波', title: 'CV. 小倉唯 / Cute', desc: '正統派小惡魔系少女。外表甜美，內心是個不折不扣的努力家。', img: 'https://via.placeholder.com/500x700?text=C6' },
-            'C7': { name: '神代 翡翠', title: 'CV. 早見沙織 / Mystery', desc: '充滿神祕感的少女，舞蹈動作優雅而詭譎，令人難以移開視線。', img: 'https://via.placeholder.com/500x700?text=C7' },
-            'C8': { name: '琥珀 琉衣', title: 'CV. 內田真禮 / Energy', desc: '性格率直的陽光女孩。希望能用自己的活力治癒全世界。', img: 'https://via.placeholder.com/500x700?text=C8' }
+            'C1': { name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
+            'C2': { name: '夜桜 真白', title: 'CV. 花澤香菜 / Visual', desc: '溫柔優雅的大家閨秀，在舞台上展現出月下的精靈般的爆發力。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
+            'C3': { name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '團隊中的帥氣擔當，精通各類現代舞，是大姐頭般的氣質。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
+            'C4': { name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。運動神經發達，總是充滿活力。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
+            'C5': { name: '氷室 玲奈', title: 'CV. 石川由依 / Vocal', desc: '冷靜沉著的高冷才女，負責團隊的編曲工作。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
+            'C6': { name: '桃乃 萌波', title: 'CV. 小倉唯 / Cute', desc: '正統派小惡魔系少女。外表甜美，內心是努力家。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
+            'C7': { name: '神代 翡翠', title: 'CV. 早見沙織 / Mystery', desc: '充滿神祕感的少女，舞蹈動作優雅而詭譎。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
+            'C8': { name: '琥珀 琉衣', title: 'CV. 內田真禮 / Energy', desc: '性格率直的陽光女孩。希望能用自己的活力治癒全世界。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' }
         };
 
         function update(k) {
