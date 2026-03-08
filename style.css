@@ -15,13 +15,14 @@ body {
     line-height: 1.6;
 }
 
-/* --- 導覽列：修正歪掉的問題 --- */
+/* --- 導覽列：修正展開選單歪掉的問題 --- */
 .navbar { 
     position: fixed; top: 0; width: 100%; 
+    height: 70px; /* 固定高度，防止任何內容撐開它 */
     display: flex; 
-    justify-content: space-between; /* 讓 Logo 與選單撐開至兩端 */
+    justify-content: space-between; 
     align-items: center; 
-    padding: 10px 50px; 
+    padding: 0 50px; 
     background: var(--navbar-bg); 
     z-index: 1000; 
     border-bottom: 2px solid var(--point-pink);
@@ -30,17 +31,25 @@ body {
 .logo-link { display: flex; align-items: center; }
 .logo-img { height: 45px; width: auto; display: block; }
 
-/* 選單與搜尋的組合包 */
 .nav-right-group {
     display: flex;
     align-items: center;
     gap: 30px;
+    height: 100%;
 }
 
 .nav-links { 
     list-style: none; 
     display: flex; 
-    gap: 25px; 
+    gap: 30px; 
+    height: 100%;
+}
+
+.nav-links > li {
+    display: flex;
+    align-items: center;
+    position: relative; /* 讓子選單相對於這個項目定位 */
+    height: 100%;
 }
 
 .nav-links a { 
@@ -48,37 +57,58 @@ body {
     color: var(--main-text); 
     font-weight: bold; 
     transition: 0.3s;
+    white-space: nowrap; /* 防止文字換行擠壓 */
 }
 
 .nav-links a:hover { color: var(--point-pink); }
 
-/* --- 視差滾動背景區 --- */
+/* --- 下拉選單修正：絕對定位防止抖動 --- */
+.submenu { 
+    position: absolute; 
+    top: 70px; /* 對齊導覽列底部 */
+    left: 50%;
+    transform: translateX(-50%); /* 居中對齊 */
+    background: white; 
+    min-width: 160px; 
+    display: none; 
+    padding: 10px 0; 
+    list-style: none;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    border-top: 2px solid var(--point-pink);
+    border-radius: 0 0 8px 8px;
+}
+
+.nav-links > li:hover .submenu { 
+    display: block; 
+}
+
+.submenu li { width: 100%; }
+.submenu li a { 
+    display: block; 
+    padding: 12px 20px; 
+    font-size: 14px; 
+    color: #333; 
+    font-weight: normal;
+}
+
+.submenu li a:hover { 
+    background: #FFF0F1;
+    color: var(--point-pink);
+}
+
+/* --- 視差滾動 Hero 區 --- */
 .hero-section { 
     height: 100vh; 
     width: 100%;
-    background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), 
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), 
                       url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
     background-size: cover; 
     background-position: center center; 
-    background-attachment: fixed; /* 背景固定 */
-    background-repeat: no-repeat;
+    background-attachment: fixed; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
 }
 
 .hero-section h2 { 
-    font-size: 4.5rem; 
-    color: white; 
-    text-shadow: 3px 3px 20px rgba(59, 43, 44, 0.6);
-    letter-spacing: 12px; 
-    font-weight: bold;
-}
-
-/* --- 下方滑動內容區 --- */
-.content-wrapper { 
-    position: relative; 
-    z-index: 10;
-    background-color: var(--main-bg); 
-    padding: 80px 0; 
-    box-shadow
+    font-size:
