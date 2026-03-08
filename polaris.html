@@ -3,175 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project POLARIS | 波拉里斯藝能</title>
+    <title>Project POLARIS | 角色翻牌展示</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .logo-img { height: 45px; width: auto; display: block; }
-        
-        /* 角色展示盒佈局 */
+
+        /* 3D 翻牌核心容器 */
         .char-display-box {
             display: flex;
-            gap: 50px;
-            background: #fff;
-            padding: 30px;
-            border-radius: 20px;
-            align-items: flex-start;
-            margin-top: 20px;
+            gap: 40px;
+            padding: 40px;
+            max-width: 1000px;
+            margin: 40px auto;
+            align-items: center; /* 垂直居中讓翻轉更好看 */
+            perspective: 1500px; /* 3D 透視深度，數值越大翻轉越平緩 */
         }
 
-        .char-image-area {
+        /* 翻轉卡片主體 */
+        .flip-card {
             flex: 1;
-            max-width: 450px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-            background: #fdfdfd;
+            max-width: 400px;
+            aspect-ratio: 3 / 4;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); /* 翻轉速度與曲線 */
         }
 
-        .char-image-area img {
-            width: 100%;
-            height: auto;
-            display: block;
-            min-height: 600px;
-            object-fit: cover; /* 確保大圖比例正確 */
+        /* 當啟動翻轉時的 Class */
+        .flip-card.is-flipped {
+            transform: rotateY(180px);
         }
 
-        .char-info-area {
-            flex: 1.2;
-            text-align: left;
-        }
-
-        #char-name {
-            font-size: 2.8rem;
-            color: #FF2B5D; 
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        #char-title {
-            font-size: 1.2rem;
-            color: #888;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        #char-desc {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: #3B2B2C;
-            margin-bottom: 30px;
-            min-height: 180px;
-        }
-
-        /* 8個按鈕佈局 */
-        .char-nav-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 80px);
-            gap: 15px;
-        }
-
-        .char-nav-buttons button {
-            background: #fff;
-            border: 3px solid #eee;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            padding: 0;
-            overflow: hidden;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .char-nav-buttons button:hover {
-            border-color: #FFC3C7;
-            transform: translateY(-3px);
-        }
-
-        .char-nav-buttons button.active {
-            border-color: #FF2B5D;
-            box-shadow: 0 0 15px rgba(255, 43, 93, 0.3);
-        }
-
-        .char-nav-buttons img {
+        /* 卡片正反面共同樣式 */
+        .card-face {
+            position: absolute;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 確保圓形頭像不變形 */
+            backface-visibility: hidden; /* 翻到背面時隱藏正面 */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background: #fff;
         }
+
+        .card-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 背面：需預先旋轉 180 度 */
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* 右側文字區：加入淡入淡出動畫 */
+        .char-info-area {
+            flex: 1.5;
+            text-align: left;
+            transition: opacity 0.4s ease;
+        }
+        .char-info-area.fade-out { opacity: 0; }
+
+        #char-name { font-size: 3rem; color: #FF2B5D; margin-bottom: 5px; font-weight: bold; }
+        #char-title { font-size: 1.2rem; color: #999; margin-bottom: 30px; display: block; }
+        #char-desc { font-size: 1.15rem; line-height: 1.8; color: #444; min-height: 150px; }
+
+        /* 下方頭像橫排 */
+        .char-nav-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding-bottom: 50px;
+        }
+
+        .char-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 80px;
+            height: 80px;
+            transition: 0.3s;
+        }
+        .char-btn img {
+            width: 100%; height: 100%; border-radius: 50%;
+            border: 2px solid #fff; box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+        .char-btn.active img { border: 3px solid #FF2B5D; box-shadow: 0 0 15px rgba(255, 43, 93, 0.5); }
     </style>
 </head>
-<body>
+<body style="background-color: #fcfcfc;">
     <nav class="navbar">
-        <a href="index.html" class="logo-link">
-            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
-        </a>
-        <ul class="nav-links">
-            <li><a href="news.html">公告事項</a></li>
-            <li class="dropdown">
-                <a href="#">介紹</a>
-                <ul class="submenu">
-                    <li><a href="world.html">世界觀背景</a></li>
-                    <li><a href="story.html">故事背景</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">角色介紹</a>
-                <ul class="submenu">
-                    <li><a href="characters_main.html">主要角色</a></li>
-                    <li><a href="characters_sub.html">次要角色</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">藝能事務所</a>
-                <ul class="submenu">
-                    <li><a href="polaris.html">波拉里斯藝能</a></li>
-                    <li><a href="stellar.html">星異界藝能</a></li>
-                    <li><a href="others.html">其他或未知</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <div class="search-container">
-            <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
-            <button class="search-btn">🔍</button>
-        </div>
+        <a href="index.html" class="logo-link"><img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img"></a>
+        <ul class="nav-links"><li><a href="polaris.html">波拉里斯藝能</a></li><li><a href="stellar.html">星異界藝能</a></li></ul>
     </nav>
 
     <main class="content-wrapper" style="margin-top: 100px;">
         <section class="container">
-            <h2 class="section-title">
-                Project POLARIS <span style="color: #FFD666;">波拉里斯藝能</span>
-            </h2>
+            <h2 class="section-title">Project POLARIS <span style="color: #FFD666;">波拉里斯藝能</span></h2>
 
             <div class="char-display-box">
-                <div class="char-image-area">
-                    <img id="char-img" src="https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png">
-                </div>
-                
-                <div class="char-info-area">
-                    <h3 id="char-name">天ノ川 詩織</h3>
-                    <span id="char-title">CV. 佐藤利奈 / Center</span>
-                    <p id="char-desc">Project POLARIS 的中心人物。引領團隊前進的北極星。目前正在為了即將到來的巡迴演出進行特訓。</p>
-                    
-                    <div class="char-nav-buttons">
-                        <button onclick="update('C1')" class="active"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
-                        <button onclick="update('C2')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
-                        <button onclick="update('C3')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
-                        <button onclick="update('C4')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
-                        <button onclick="update('C5')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
-                        <button onclick="update('C6')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
-                        <button onclick="update('C7')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
-                        <button onclick="update('C8')"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                <div class="flip-card" id="card-container">
+                    <div class="card-face card-front">
+                        <img id="img-front" src="https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png">
+                    </div>
+                    <div class="card-face card-back">
+                        <img id="img-back" src="https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png">
                     </div>
                 </div>
+
+                <div class="char-info-area" id="info-text-area">
+                    <h3 id="char-name">天ノ川 詩織</h3>
+                    <span id="char-title">CV. 佐藤利奈 / Center</span>
+                    <p id="char-desc">Project POLARIS 的中心人物。引領團隊前進的北極星。</p>
+                </div>
+            </div>
+
+            <div class="char-nav-wrapper">
+                <button class="char-btn active" onclick="flipUpdate('C1', this)"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                <button class="char-btn" onclick="flipUpdate('C2', this)"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                <button class="char-btn" onclick="flipUpdate('C3', this)"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                <button class="char-btn" onclick="flipUpdate('C4', this)"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                <button class="char-btn" onclick="flipUpdate('C5', this)"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                <button class="char-btn" onclick="flipUpdate('C6', this)"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                <button class="char-btn" onclick="flipUpdate('C7', this)"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
+                <button class="char-btn" onclick="flipUpdate('C8', this)"><img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png"></button>
             </div>
         </section>
     </main>
 
     <script>
-        // 為了展示效果，目前 8 個按鈕都指向同一張大圖，妳之後可以根據需求更換 img 網址
         const charData = {
-            'C1': { name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
+            'C1': { name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。引領團隊前進的北極星。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
             'C2': { name: '夜桜 真白', title: 'CV. 花澤香菜 / Visual', desc: '溫柔優雅的大家閨秀，在舞台上展現出月下的精靈般的爆發力。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
             'C3': { name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '團隊中的帥氣擔當，精通各類現代舞，是大姐頭般的氣質。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
             'C4': { name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。運動神經發達，總是充滿活力。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
@@ -181,15 +147,38 @@
             'C8': { name: '琥珀 琉衣', title: 'CV. 內田真禮 / Energy', desc: '性格率直的陽光女孩。希望能用自己的活力治癒全世界。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' }
         };
 
-        function update(k) {
-            document.getElementById('char-name').innerText = charData[k].name;
-            document.getElementById('char-title').innerText = charData[k].title;
-            document.getElementById('char-desc').innerText = charData[k].desc;
-            document.getElementById('char-img').src = charData[k].img;
+        let isFlipped = false;
 
-            const btns = document.querySelectorAll('.char-nav-buttons button');
-            btns.forEach(btn => btn.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+        function flipUpdate(key, element) {
+            const card = document.getElementById('card-container');
+            const info = document.getElementById('info-text-area');
+            const nextImg = charData[key].img;
+            
+            // 1. 文字先淡出
+            info.classList.add('fade-out');
+            
+            // 2. 判斷現在要翻到哪一面，並預載下一張圖到「即將轉過來」的那一面
+            if (!isFlipped) {
+                document.getElementById('img-back').src = nextImg;
+                card.style.transform = "rotateY(180deg)";
+            } else {
+                document.getElementById('img-front').src = nextImg;
+                card.style.transform = "rotateY(0deg)";
+            }
+            
+            isFlipped = !isFlipped;
+
+            // 3. 在動畫中途更新文字
+            setTimeout(() => {
+                document.getElementById('char-name').innerText = charData[key].name;
+                document.getElementById('char-title').innerText = charData[key].title;
+                document.getElementById('char-desc').innerText = charData[key].desc;
+                info.classList.remove('fade-out');
+            }, 300);
+
+            // 更新按鈕高亮
+            document.querySelectorAll('.char-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
         }
     </script>
 </body>
