@@ -1,27 +1,25 @@
 /* --- 基礎變數與設定 --- */
 :root {
-    --main-bg: #FFFFFF;           /* 網頁底色：純白色 */
-    /* 修正：統一全站為 25% 白色毛玻璃 */
-    --navbar-bg: rgba(255, 255, 255, 0.25); 
-    --main-text: #3B2B2C;         /* 文字深咖啡色 */
-    --point-pink: #FF2B5D;        /* 強調桃紅色 */
-    
-    /* 指定顏色變數 */
-    --news-item-title: #E35A73;   /* 公告事項內標題顏色 */
-    --polaris-highlight: #FFD666; /* 波拉里斯強調黃色 */
+    --main-bg: rgba(255, 255, 255, 0.5); /* 內容區改為 50% 透明白 */
+    --navbar-bg: rgba(255, 255, 255, 0.25); /* 導覽列 25% 透明白 */
+    --main-text: #3B2B2C;
+    --point-pink: #FF2B5D;
+    --news-item-title: #E35A73;
+    --polaris-highlight: #FFD666;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body { 
     font-family: 'Noto Sans TC', sans-serif; 
-    background-color: var(--main-bg); 
+    /* 這裡改為深色背景，能讓毛玻璃透出的層次感更深邃 */
+    background-color: #1a1a1a; 
     color: var(--main-text); 
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* --- 導覽列：毛玻璃樣式修正 --- */
+/* --- 導覽列：25% 毛玻璃 --- */
 .navbar { 
     position: fixed; top: 0; width: 100%; 
     height: 70px; 
@@ -29,78 +27,69 @@ body {
     align-items: center; 
     padding: 0 50px; 
     background: var(--navbar-bg); 
-    /* 毛玻璃核心代碼 */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     z-index: 2000; 
-    /* 修正：改為較淡的邊框，維持通透感 */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo-link { display: flex; align-items: center; margin-right: 40px; text-decoration: none; }
 .logo-img { height: 45px; width: auto; }
 
 .nav-links { 
-    list-style: none; 
-    display: flex; 
-    gap: 30px; 
-    height: 100%;
-    margin-right: auto; /* 將搜尋框推向最右邊 */
+    list-style: none; display: flex; gap: 30px; height: 100%; margin-right: auto; 
 }
-
 .nav-links > li { display: flex; align-items: center; position: relative; height: 70px; }
 .nav-links a { text-decoration: none; color: var(--main-text); font-weight: bold; transition: 0.3s; }
 .nav-links a:hover { color: var(--point-pink); }
 
-/* 下拉選單：維持高質感半透明 */
 .submenu { 
     position: absolute; top: 70px; left: 0; 
     background: rgba(255, 255, 255, 0.95); 
     min-width: 180px; display: none; padding: 10px 0; 
-    list-style: none; box-shadow: 0 8px 15px rgba(0,0,0,0.1); 
-    border-top: 2px solid var(--point-pink);
+    list-style: none; box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-top: 2px solid var(--point-pink);
 }
 .nav-links > li:hover .submenu { display: block; }
 .submenu li a { display: block; padding: 12px 20px; color: #333; font-weight: bold; }
-.submenu li a:hover { background: #fff0f3; color: var(--point-pink); }
 
-/* 搜尋框樣式優化 */
-.search-container { 
-    display: flex; 
-    align-items: center; 
-    border-bottom: 2px solid var(--main-text); 
-    margin-left: 20px;
-}
-.search-input { 
-    background: transparent; border: none; padding: 5px; 
-    outline: none; width: 110px; color: var(--main-text); 
-}
-.search-input::placeholder { color: rgba(59, 43, 44, 0.5); }
+.search-container { display: flex; align-items: center; border-bottom: 2px solid var(--main-text); margin-left: 20px; }
+.search-input { background: transparent; border: none; padding: 5px; outline: none; width: 110px; color: var(--main-text); }
 .search-btn { background: transparent; border: none; cursor: pointer; color: var(--main-text); }
 
 /* --- 視差滾動 Hero --- */
 .hero-section { 
     height: 100vh; width: 100%;
-    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
+    background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
     background-size: cover; background-position: center center; background-attachment: fixed; 
     display: flex; justify-content: center; align-items: center;
 }
 .hero-section h2 { font-size: 4rem; color: white; text-shadow: 3px 3px 20px rgba(0,0,0,0.4); letter-spacing: 12px; font-weight: bold; }
 
-/* --- 內容區塊與公告按鍵 (4:3) --- */
-.content-wrapper { position: relative; z-index: 10; background-color: var(--main-bg); padding: 80px 0; }
+/* --- 內容區塊修正：50% 白色毛玻璃 --- */
+.content-wrapper { 
+    position: relative; 
+    z-index: 10; 
+    background-color: var(--main-bg); 
+    /* 毛玻璃模糊效果 */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 80px 0; 
+    /* 微光邊框讓銜接處更柔和 */
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .section-title { font-size: 2.2rem; border-left: 6px solid var(--point-pink); padding-left: 15px; margin-bottom: 40px; font-weight: bold; }
 
 .update-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 .update-item { text-decoration: none; color: inherit; display: block; padding: 15px; border-radius: 12px; transition: 0.3s ease; }
-.update-item:hover { background: #F8F8F8; transform: translateY(-8px); }
+.update-item:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-8px); }
 
-.update-img-box { width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; margin-bottom: 15px; background-color: #eee; }
+.update-img-box { width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; margin-bottom: 15px; background-color: rgba(238, 238, 238, 0.5); }
 .update-img-box img { width: 100%; height: 100%; object-fit: cover; }
 
 .update-item h3 { font-size: 1.6rem; text-align: left; font-weight: bold; transition: color 0.3s; }
 
-/* --- 公告與事務所專屬標題 --- */
+/* --- 專屬標題顏色 --- */
 .news-page .update-item h3 { color: var(--news-item-title); }
 .polaris-page .section-title span.highlight-yellow { color: var(--polaris-highlight); }
