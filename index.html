@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<nav class="navbar">
+    <nav class="navbar">
         <div class="logo">PORTAL</div>
         <ul class="nav-links">
             <li class="dropdown">
@@ -44,52 +44,17 @@
         </div>
     </nav>
 
-    <script>
-        /* 角色切換功能 */
-        const charData = {
-            'A': { name: '次元特工 - 蒼藍', desc: '擅長中距離作戰，擁有極高的機動力。', img: 'https://via.placeholder.com/500x700/000/FFB957?text=Agent+Blue' },
-            'B': { name: '重裝隊長 - 緋紅', desc: '隊伍的核心護盾，以巨大的能量巨劍斬斷威脅。', img: 'https://via.placeholder.com/500x700/000/FF2B5D?text=Captain+Red' }
-        };
-        
-        function switchChar(key) {
-            const char = charData[key];
-            document.getElementById('char-name').innerText = char.name;
-            document.getElementById('char-desc').innerText = char.desc;
-            document.getElementById('char-img').src = char.img;
-        }
+    <header class="hero-section">
+        <div class="hero-content">
+            <h2>BEYOND THE LIMIT</h2>
+            <p>探索未知的次元力量</p>
+        </div>
+    </header>
 
-        /* 實際搜尋功能：在頁面中尋找關鍵字並跳轉 */
-        function executeSearch() {
-            const query = document.getElementById('site-search').value.toLowerCase();
-            if (!query) return;
-
-            // 取得所有可搜尋的文字標籤
-            const contentElements = document.querySelectorAll('h2, h3, p, a');
-            let found = false;
-
-            for (let el of contentElements) {
-                if (el.innerText.toLowerCase().includes(query)) {
-                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // 高亮一下找到的文字
-                    el.style.backgroundColor = '#FFB957';
-                    el.style.color = '#000';
-                    setTimeout(() => {
-                        el.style.backgroundColor = '';
-                        el.style.color = '';
-                    }, 2000);
-                    found = true;
-                    break; 
-                }
-            }
-            if (!found) alert('找不到相關內容！');
-        }
-
-        // 支援 Enter 鍵搜尋
-        document.getElementById('site-search').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') executeSearch();
-        });
-    </script>
-</body>
-
-</html>
-
+    <main class="content-wrapper">
+        <section id="character-intro" class="container">
+            <h2 class="section-title">CHARACTER <span>介紹</span></h2>
+            
+            <div class="char-display-box">
+                <div class="char-image-area">
+                    <img id="char-img" src="
