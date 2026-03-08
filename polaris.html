@@ -4,90 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project POLARIS | 官方角色展示</title>
-    <style>
+    <link rel="stylesheet" href="style.css"> <style>
         :root {
             --polaris-pink: #FF2B5D;
             --polaris-gold: #FFD666;
-            --nav-bg-pink: #FFC1CC; /* 精準還原圖 1 的粉色底 */
         }
 
-        /* 移除所有邊距，字體回歸最簡約的 sans-serif */
         body { background-color: #fcfcfc; margin: 0; font-family: sans-serif; }
+        .logo-img { height: 45px; width: auto; display: block; }
 
-        /* --- 導覽列 Navbar (依照 image_820066.png 像素級還原) --- */
-        .navbar {
-            display: flex;
-            align-items: center;
-            background-color: var(--nav-bg-pink);
-            padding: 0 5%;
-            height: 55px; /* 圖中看起來較窄的比例 */
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-sizing: border-box;
-        }
-
-        .logo-img { height: 40px; margin-right: 35px; }
-
-        .nav-links { display: flex; list-style: none; margin: 0; padding: 0; align-items: center; }
-        .nav-links li { position: relative; margin-right: 25px; }
-        .nav-links a { 
-            text-decoration: none; 
-            color: #333; 
-            font-size: 1.05rem; 
-            transition: 0.2s;
-            font-weight: normal; /* 移除加粗，還原圖中字體質感 */
-        }
-        .nav-links a:hover { color: var(--polaris-pink); }
-
-        /* 子選單 (依照 image_82005f.png 還原) */
-        .submenu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            list-style: none;
-            padding: 8px 0;
-            min-width: 140px;
-            border-top: 2px solid var(--polaris-pink); /* 圖中頂部的一條粉色線 */
-        }
-        .nav-links li:hover .submenu { display: block; }
-        .submenu li a { 
-            padding: 8px 15px; 
-            display: block; 
-            font-size: 0.95rem; 
-            color: #444; 
-        }
-        .submenu li a:hover { background: #fff5f7; color: var(--polaris-pink); }
-
-        /* 搜尋框 (置右，簡約底線設計) */
-        .search-container {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #444; /* 還原圖中那條細細的搜尋底線 */
-            padding-bottom: 2px;
-        }
-        .search-input {
-            border: none;
-            background: none;
-            outline: none;
-            color: #444;
-            width: 130px;
-            font-size: 0.9rem;
-        }
-        .search-icon { font-size: 1.1rem; cursor: pointer; }
-
-        /* --- 角色展示區 (完全保留妳備份中的 1.2 倍排版) --- */
+        /* --- 以下為從 polaris 移過來的核心卡片樣式 --- */
         .page-container {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             padding-left: 5%;
-            margin-top: 90px; /* 給導覽列留空間 */
+            margin-top: 100px; /* 避開固定導覽列 */
         }
 
         .char-main-section {
@@ -97,19 +29,23 @@
             margin-bottom: 20px;
         }
 
-        /* 箭頭圖檔套用與垂直置中 */
+        /* 左右按鈕垂直置中 */
         .side-nav-btn {
-            background: url('https://images.plurk.com/66Qy86zW8zX2qhRu9jjrO.png') no-repeat center;
-            background-size: contain;
-            border: none;
+            background: #fff;
+            border: 1px solid #eee;
             width: 50px;
             height: 50px;
+            border-radius: 50%;
             cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             transition: 0.3s;
+            color: #333;
         }
-        .btn-prev { transform: rotate(180deg); }
-        .side-nav-btn:hover { transform: scale(1.1); }
-        .btn-prev:hover { transform: rotate(180deg) scale(1.1); }
+        .side-nav-btn:hover { background: var(--polaris-pink); color: white; }
 
         .flip-card-container {
             width: 420px;
@@ -187,28 +123,32 @@
 <body>
 
     <nav class="navbar">
-        <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img">
+        <a href="index.html" class="logo-link">
+            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
+        </a>
+        
         <ul class="nav-links">
             <li><a href="news.html">公告事項</a></li>
-            <li>
+            <li class="dropdown">
                 <a href="#">介紹</a>
                 <ul class="submenu">
                     <li><a href="world.html">世界觀背景</a></li>
                     <li><a href="story.html">故事背景</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="dropdown">
                 <a href="#">藝能事務所</a>
                 <ul class="submenu">
                     <li><a href="polaris.html">波拉里斯藝能</a></li>
                     <li><a href="stellar.html">星異界藝能</a></li>
-                    <li><a href="#">其他或未知</a></li>
+                    <li><a href="others.html">其他或未知</a></li>
                 </ul>
             </li>
         </ul>
+
         <div class="search-container">
-            <input type="text" placeholder="搜尋..." class="search-input">
-            <span class="search-icon">🔍</span>
+            <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
+            <button class="search-btn">🔍</button>
         </div>
     </nav>
 
@@ -216,7 +156,7 @@
         <h2 style="margin-bottom: 30px;">Project POLARIS <span style="color: var(--polaris-gold);">波拉里斯藝能</span></h2>
 
         <div class="char-main-section">
-            <button class="side-nav-btn btn-prev" onclick="prevChar()"></button>
+            <button class="side-nav-btn" onclick="prevChar()">&#10094;</button>
 
             <div class="flip-card-container">
                 <div class="flip-card-inner" id="flip-inner">
@@ -236,14 +176,14 @@
                 <p id="char-desc">Project POLARIS 的中心人物。擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。</p>
             </div>
 
-            <button class="side-nav-btn btn-next" onclick="nextChar()"></button>
+            <button class="side-nav-btn" onclick="nextChar()">&#10095;</button>
         </div>
 
         <div class="char-nav-wrapper" id="icon-list"></div>
     </div>
 
     <script>
-        // JS 邏輯完全保留妳測試成功的版本
+        // 套用 polaris.html 的腳本邏輯
         const charData = [
             { ruby: 'AMANO GAWA SHIORI', name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。引領團隊前進的北極星。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
             { ruby: 'YOZAKURA MASHIRO', name: '夜桜 真白', title: 'CV. 花澤香菜 / Visual', desc: '溫柔優雅的大家閨秀，在舞台上展現出月下的精靈般的爆發力。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' },
