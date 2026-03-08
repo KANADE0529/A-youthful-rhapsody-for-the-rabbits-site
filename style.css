@@ -7,6 +7,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body { 
     font-family: 'Noto Sans TC', sans-serif; 
     background-color: var(--main-bg); 
@@ -28,51 +29,33 @@ body {
 .nav-links { list-style: none; display: flex; gap: 25px; margin-left: auto; margin-right: 30px; }
 .nav-links a { text-decoration: none; color: var(--main-text); font-weight: bold; }
 
-/* --- 首頁 Hero 區域：修復背景圖不見的問題 --- */
+/* --- 核心：視差滾動背景區 --- */
 .hero-section { 
-    height: 75vh; 
-    /* 修正後的背景圖語法 */
-    background-image: linear-gradient(rgba(255,195,199,0.2), rgba(255,195,199,0.2)), 
+    height: 100vh; /* 讓第一屏背景撐滿整個畫面 */
+    width: 100%;
+    /* 修正背景圖語法並設定固定 */
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), 
                       url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
     background-size: cover; 
-    background-position: center 30%; 
-    background-attachment: fixed; /* 讓背景固定，文字滑過它 */
+    background-position: center center; 
+    background-attachment: fixed; /* 關鍵：背景圖不動 */
+    background-repeat: no-repeat;
+    
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    margin-top: 65px;
+    position: relative;
 }
 
 .hero-section h2 { 
-    font-size: 3.5rem; color: white; 
-    text-shadow: 2px 2px 15px rgba(59, 43, 44, 0.6);
-    letter-spacing: 8px; 
+    font-size: 4rem; 
+    color: white; 
+    text-shadow: 3px 3px 20px rgba(59, 43, 44, 0.7);
+    letter-spacing: 10px; 
     font-weight: bold;
+    z-index: 1;
 }
 
-/* --- 內容區塊 --- */
+/* --- 核心：滑上來的內容區塊 --- */
 .content-wrapper { 
-    background-color: var(--main-bg); /* 確保內容區塊有背景色，蓋住後方固定的圖 */
-    position: relative; 
-    z-index: 2; 
-    padding: 60px 0; 
-}
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-.section-title { 
-    font-size: 2.2rem; border-left: 6px solid var(--point-pink); 
-    padding-left: 15px; margin-bottom: 40px; font-weight: bold;
-}
-
-/* 公告區塊：4:3 按鍵樣式 */
-.update-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.update-item { text-decoration: none; color: inherit; display: block; padding: 10px; border-radius: 12px; transition: 0.3s; }
-.update-item:hover { background: rgba(255, 255, 255, 0.4); transform: translateY(-8px); }
-.update-img-box { width: 100%; aspect-ratio: 4 / 3; background: #fff; border-radius: 8px; overflow: hidden; margin-bottom: 15px; }
-.update-img-box img { width: 100%; height: 100%; object-fit: cover; }
-.update-item h3 { font-size: 1.5rem; text-align: left; font-weight: bold; }
-
-/* 搜尋框 */
-.search-container { display: flex; align-items: center; border-bottom: 2px solid var(--main-text); }
-.search-input { background: transparent; border: none; padding: 5px; outline: none; width: 100px; }
-.search-btn { background: transparent; border: none; cursor: pointer; }
+    position: relative;
