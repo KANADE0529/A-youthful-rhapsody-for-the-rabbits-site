@@ -15,7 +15,7 @@
 
         body { background-color: #fcfcfc; margin: 0; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; overflow-x: hidden; }
 
-        /* --- 導覽列修復：文字靠左，搜尋靠右 --- */
+        /* --- 導覽列 --- */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: 70px;
             background: var(--nav-bg); backdrop-filter: blur(10px);
@@ -28,7 +28,6 @@
         .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
         .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 1.1rem; }
 
-        /* 下拉選單 */
         .dropdown { position: relative; }
         .submenu {
             position: absolute; top: 100%; left: 0; background: white; list-style: none;
@@ -39,10 +38,9 @@
         .submenu li a { padding: 10px 20px; display: block; font-weight: 500; font-size: 1rem; color: #444 !important; }
         .submenu li a:hover { background: #fff0f3; color: var(--polaris-pink) !important; }
 
-        /* 搜尋框 */
         .search-input { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; width: 180px; }
 
-        /* --- 背景與灰階變換 --- */
+        /* --- 背景 --- */
         #dynamic-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center; z-index: -2;
@@ -50,78 +48,80 @@
         }
         #dynamic-bg.switching { filter: brightness(0.3) grayscale(1); opacity: 0.6; }
 
-        /* --- 角色展示區塊 (1.2倍) --- */
-        .page-container { display: flex; flex-direction: column; align-items: center; margin-top: 110px; width: 100%; }
+        /* --- 角色展示區塊 (1.1倍放大) --- */
+        .page-container { display: flex; flex-direction: column; align-items: center; margin-top: 100px; width: 100%; }
 
         .char-main-section {
             display: flex; align-items: center; justify-content: center; 
-            width: 95%; max-width: 1500px; height: 607px; gap: 60px; perspective: 2500px;
+            width: 95%; max-width: 1600px; height: 668px; gap: 40px; perspective: 2500px;
         }
 
-        .flip-card-container { width: 456px; height: 607px; flex-shrink: 0; z-index: 10; }
+        /* 放大後的卡片寬高 */
+        .flip-card-container { width: 501px; height: 668px; flex-shrink: 0; z-index: 10; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; }
         .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; overflow: hidden; background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
         .card-back { transform: rotateY(180deg); }
 
-        /* 1. 修正毛玻璃背景板 */
+        /* 文字區塊高度與人物同長 (668px) */
         .char-info-area { 
-            width: 500px; 
+            width: 540px; 
+            height: 668px;
             z-index: 15; 
-            background: rgba(255, 255, 255, 0.4); /* 白色半透明 */
-            backdrop-filter: blur(15px);         /* 毛玻璃模糊 */
+            background: rgba(255, 255, 255, 0.4); 
+            backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            padding: 35px; 
-            border-radius: 15px;                 /* 圓角板子 */
+            padding: 50px 40px; 
+            border-radius: 20px; 
             border: 1px solid rgba(255, 255, 255, 0.4); 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             box-sizing: border-box;
             text-align: left;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* 2. 紅色英文標籤 */
         .name-ruby { 
             display: inline-block; 
             background: #FF2B5D; 
             color: white; 
-            font-size: 0.85rem; 
+            font-size: 0.9rem; 
             letter-spacing: 1px;
-            padding: 4px 15px; 
+            padding: 5px 18px; 
             border-radius: 2px; 
             margin-bottom: 15px;
             font-weight: bold;
             text-transform: uppercase;
+            align-self: flex-start;
         }
 
-        /* 3. 角色大名 */
         #char-name { 
-            font-size: 3.5rem; 
+            font-size: 4rem; 
             margin: 0; 
             font-weight: 800; 
             color: #333;
-            line-height: 1.2;
+            line-height: 1.1;
         }
 
-        /* 4. 描述文字與捲動盒修復 */
+        /* 捲動容器高度適配長邊 */
         .desc-scroll-box {
-            height: 180px;
+            flex-grow: 1;
             overflow-y: auto;
-            margin-top: 25px;
-            padding-right: 10px;
+            margin-top: 30px;
+            padding-right: 15px;
         }
         #char-desc { 
-            font-size: 1.1rem; 
-            line-height: 1.8; 
+            font-size: 1.15rem; 
+            line-height: 2; 
             margin: 0;
-            color: #444;
+            color: #333;
             font-weight: 500;
         }
-        /* 客製化捲動條 */
         .desc-scroll-box::-webkit-scrollbar { width: 5px; }
         .desc-scroll-box::-webkit-scrollbar-thumb { background: var(--polaris-pink); border-radius: 10px; }
 
         /* --- 8人按鈕列 --- */
-        .char-nav-wrapper { display: flex; justify-content: center; gap: 18px; width: 100%; padding: 40px 0; }
+        .char-nav-wrapper { display: flex; justify-content: center; gap: 18px; width: 100%; padding: 30px 0; }
         .char-btn { width: 72px; height: 72px; border-radius: 50%; border: 2px solid #fff; overflow: hidden; cursor: pointer; transition: 0.3s; background: none; padding: 0; }
         .char-btn.active { border-color: var(--polaris-pink); transform: scale(1.1); }
         .char-btn img { width: 100%; height: 100%; object-fit: cover; }
@@ -187,14 +187,14 @@
                 desc: 'Project POLARIS 的中心人物，也是引領團隊前進的北極星。她擁有極強的責任感與親和力，總能在關鍵時刻凝聚眾人的意志。雖然在舞台上散發著無與倫比的領袖氣場，私底下卻也有著喜歡照顧人、甚至偶爾有些愛操心的一面。她深信偶像的力量能照亮每個人的內心，因此不論面對多大的挑戰，始終保持著堅定不移的笑容與勇氣，是所有成員最信賴的精神支柱。', 
                 img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', 
                 bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' 
-            }, // <-- 修正：補上這個逗號
-            { ruby: 'SA-TAN MARRY', name: '咲丹 マリア', desc: '視覺擔當，優雅且神祕。', img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png', bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' },
-            { ruby: 'RAIKA ANZU', name: '雷火 杏', desc: '團隊中的帥氣擔當。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'UNABARA NAGISA', name: '海原 凪沙', desc: '活潑好動的氣氛帶動者。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'HIMURO REINA', name: '氷室 玲奈', desc: '冷靜沉著的高冷才女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'MOMONO MONAMI', name: '桃乃 萌波', desc: '正統派小惡魔系少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'KAMI SHIRO HISUI', name: '神代 翡翠', desc: '充滿神祕感的少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'KOHAKU RUI', name: '琥珀 琉衣', desc: '性格率直的陽光女孩。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' }
+            },
+            { ruby: 'SA-TAN MARRY', name: '咲丹 マリア', desc: '視覺擔當，優雅且神祕。她擁有一種讓人移不開視線的高貴氣息，在舞台上的每一舉手一投足都像是藝術品。雖然表面冷靜，但對音樂的熱情比任何人都強烈。', img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png', bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' },
+            { ruby: 'RAIKA ANZU', name: '雷火 杏', desc: '團隊中的帥氣擔當。擁有爆發性的舞蹈能量與爽朗的性格，是舞台上最耀眼的熱力源。私底下的她性格直率，雖然有時候說話太直接，但其實內心非常溫柔且容易害羞。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'UNABARA NAGISA', name: '海原 凪沙', desc: '活潑好動的氣氛帶動者。就像夏日的海洋般充滿活力，總能用她的笑容感染身邊的所有人。雖然看起來大大咧咧，其實對於舞台上的小細節非常在意，是個努力家。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'HIMURO REINA', name: '氷室 玲奈', desc: '冷靜沉著的高冷才女。負責團隊的曲風分析與和聲編排，音樂素養極高。雖然給人一種難以親近的感覺，但其實是個對貓完全沒有抵抗力的女孩子。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'MOMONO MONAMI', name: '桃乃 萌波', desc: '正統派小惡魔系少女。擅長透過眼神與歌聲與台下的粉絲進行心靈交流，在握手會的人氣居高不下。她深知自己的魅力所在，並完美地將其轉化為舞台上的武器。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'KAMI SHIRO HISUI', name: '神代 翡翠', desc: '充滿神祕感的少女。她擁有一種超脫塵世的歌聲，彷彿能洗滌聽眾的靈魂。平日沈默寡言，似乎生活在自己的世界中，只有在舞台上才能見到她最真實、最燦爛的一面。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'KOHAKU RUI', name: '琥珀 琉衣', desc: '性格率直的陽光女孩。團隊中的運動好手，擁有驚人的肺活量與嗓音。不論遇到多大的挫折，她總能快速振作，並用她的正面能量帶領團隊走過低谷。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' }
         ];
 
         let currentIndex = -1;
