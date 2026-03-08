@@ -1,51 +1,59 @@
 :root {
-    --main-bg: #FFC3C7;       /* 1. 主色調粉色 */
-    --main-text: #3B2B2C;     /* 2. 文字深色 */
+    --main-bg: #FFC3C7;       /* 主色調 */
+    --main-text: #3B2B2C;     /* 文字深色 */
     --accent-gold: #FFB957;
     --point-pink: #FF2B5D;
-    --stella-green: #67ECC1;  /* 星異界專屬色 */
-    --others-blue: #96E8FF;   /* 其他單位專屬色 */
-    --search-line: rgba(59, 43, 44, 0.5);
+    --stella-green: #67ECC1;
+    --others-blue: #96E8FF;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-    font-family: 'Noto Sans TC', sans-serif; 
-    background: var(--main-bg); 
-    color: var(--main-text); 
-    overflow-x: hidden; 
-}
+body { font-family: 'Noto Sans TC', sans-serif; background: var(--main-bg); color: var(--main-text); }
 
-/* 導航列：改為淺色半透明 */
+/* 導航列修正 */
 .navbar { 
     position: fixed; top: 0; width: 100%; 
     display: flex; justify-content: space-between; align-items: center; 
-    padding: 15px 50px; 
-    background: rgba(255, 195, 199, 0.9); 
+    padding: 10px 50px; 
+    background: rgba(255, 195, 199, 0.95); /* 提高不透明度防止背景干擾 */
     z-index: 1000; 
-    border-bottom: 1px solid rgba(59, 43, 44, 0.1); 
+    border-bottom: 2px solid var(--point-pink);
 }
 
-.logo-img { height: 45px; width: auto; }
-.nav-links { list-style: none; display: flex; gap: 30px; margin-right: auto; margin-left: 50px; }
-.nav-links a { text-decoration: none; color: var(--main-text); font-weight: bold; transition: 0.3s; }
-.nav-links a:hover { color: white; }
+.nav-links { list-style: none; display: flex; gap: 25px; align-items: center; }
+.nav-links a { text-decoration: none; color: var(--main-text); font-weight: bold; padding: 10px; }
 
-/* 搜尋框：配合深色文字 */
-.search-container { 
-    display: flex; align-items: center; 
-    border-bottom: 2px solid var(--search-line); 
-    background: transparent; padding: 2px 5px; 
-}
-.search-input { 
-    background: transparent; border: none; 
-    color: var(--main-text); padding: 5px; outline: none; width: 120px; 
-}
-.search-input::placeholder { color: rgba(59, 43, 44, 0.5); }
-.search-btn { background: transparent; border: none; color: var(--main-text); cursor: pointer; }
-
-/* 下拉選單 */
+/* 修正下拉選單擠成一團的問題 */
 .dropdown { position: relative; }
 .submenu { 
-    position: absolute; top: 100%; left: 0; 
-    background: white; list-style: none; min-width: 160px;
+    position: absolute; 
+    top: 100%; 
+    left: 0; 
+    background: white; /* 必須有背景色才不會透明疊加 */
+    list-style: none; 
+    min-width: 180px; /* 給予足夠寬度 */
+    display: none; 
+    padding: 5px 0; 
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.submenu li { width: 100%; }
+.submenu li a { 
+    display: block; 
+    padding: 12px 20px; 
+    font-size: 14px; 
+    border-bottom: 1px solid #eee;
+}
+.submenu li:last-child a { border-bottom: none; }
+.dropdown:hover .submenu { display: block; }
+
+/* 搜尋框優化 */
+.search-container { display: flex; align-items: center; border-bottom: 2px solid var(--main-text); margin-left: 20px; }
+.search-input { background: transparent; border: none; padding: 5px; outline: none; width: 100px; }
+
+/* 圖片區塊修正 */
+.update-img-box img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; /* 確保圖片縮放不變形 */
+}
