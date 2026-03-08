@@ -6,81 +6,94 @@
     <title>Project POLARIS | 波拉里斯藝能</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* 專屬切換區塊樣式 - 確保一定會出現 */
-        .char-showcase {
+        .logo-img { height: 45px; width: auto; display: block; }
+        
+        /* 星異界同款角色切換區塊樣式 */
+        .char-display-box {
             display: flex;
-            gap: 50px;
+            gap: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
             align-items: flex-start;
-            margin-top: 40px;
-            min-height: 500px;
-            background: #FFFFFF;
         }
 
-        /* 左側圖片區 */
-        .char-image-frame {
+        .char-image-area {
             flex: 1;
             max-width: 450px;
-            aspect-ratio: 3 / 4;
-            background: #f9f9f9;
-            border-radius: 15px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .char-image-frame img {
+
+        .char-image-area img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        .char-info-area {
+            flex: 1.5;
+            text-align: left;
+        }
+
+        #char-name {
+            font-size: 2.5rem;
+            color: #FF2B5D; /* 波拉里斯的主色 */
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        #char-desc {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #3B2B2C;
+            margin-bottom: 30px;
+            min-height: 150px;
+        }
+
+        /* 下方頭像按鈕區 */
+        .char-nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .char-nav-buttons button {
+            background: none;
+            border: 3px solid #eee;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            padding: 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .char-nav-buttons button:hover {
+            border-color: #FFC3C7;
+            transform: translateY(-3px);
+        }
+
+        .char-nav-buttons button.active {
+            border-color: #FF2B5D;
+        }
+
+        .char-nav-buttons img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none; /* 預設隱藏 */
-        }
-        .char-image-frame img.active { display: block; animation: fadeIn 0.5s ease; }
-
-        /* 右側文字區 */
-        .char-info-box {
-            flex: 1.2;
-            padding: 20px 0;
-            text-align: left;
-        }
-        .char-detail { display: none; }
-        .char-detail.active { display: block; animation: fadeIn 0.5s ease; }
-
-        .char-name { font-size: 2.8rem; color: #FF2B5D; margin-bottom: 10px; font-weight: bold; }
-        .char-title { font-size: 1.2rem; color: #888; margin-bottom: 25px; letter-spacing: 2px; }
-        .char-desc { font-size: 1.1rem; line-height: 1.9; color: #3B2B2C; text-align: justify; }
-
-        /* 下方頭像切換按鈕 */
-        .char-nav {
-            display: flex;
-            gap: 20px;
-            margin-top: 60px;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding-bottom: 50px;
-        }
-        .char-btn {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            overflow: hidden;
-            cursor: pointer;
-            border: 4px solid #eee;
-            transition: all 0.3s ease;
-            background: #fff;
-        }
-        .char-btn img { width: 100%; height: 100%; object-fit: cover; }
-        .char-btn:hover { transform: translateY(-5px); border-color: #FFC3C7; }
-        .char-btn.active { border-color: #FF2B5D; transform: scale(1.1); box-shadow: 0 5px 15px rgba(255, 43, 93, 0.2); }
-
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateX(20px); } 
-            to { opacity: 1; transform: translateX(0); } 
         }
     </style>
 </head>
-<body class="polaris-page">
+<body>
     <nav class="navbar">
         <a href="index.html" class="logo-link">
-            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="LOGO">
+            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
         </a>
+        
         <ul class="nav-links">
             <li><a href="news.html">公告事項</a></li>
             <li class="dropdown">
@@ -106,60 +119,69 @@
                 </ul>
             </li>
         </ul>
+
         <div class="search-container">
-            <input type="text" placeholder="搜尋..." class="search-input">
+            <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
             <button class="search-btn">🔍</button>
         </div>
     </nav>
 
-    <main class="content-wrapper" style="margin-top:100px; background-color: #FFFFFF;">
+    <main class="content-wrapper" style="margin-top: 100px;">
         <section class="container">
-            <h2 class="section-title">Project POLARIS <span style="color: #FFD666;">波拉里斯藝能</span></h2>
+            <h2 class="section-title">
+                Project POLARIS <span style="color: #FFD666;">波拉里斯藝能</span>
+            </h2>
 
-            <div class="char-showcase">
-                <div class="char-image-frame">
-                    <img src="https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png" class="active" id="img-1">
-                    <img src="https://via.placeholder.com/450x600?text=Character+02" id="img-2">
-                    <img src="https://via.placeholder.com/450x600?text=Character+03" id="img-3">
+            <div class="char-display-box">
+                <div class="char-image-area">
+                    <img id="char-img" src="https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png">
                 </div>
-
-                <div class="char-info-box">
-                    <div class="char-detail active" id="info-1">
-                        <div class="char-name">角色 A</div>
-                        <div class="char-title">CV. OOOO / 事務所所屬藝人</div>
-                        <p class="char-desc">這是第一個角色的介紹內容。圖片和文字是分開切換的，點選下方的圓形頭像即可切換到不同的人選。</p>
-                    </div>
+                
+                <div class="char-info-area">
+                    <h3 id="char-name">角色姓名 01</h3>
+                    <p id="char-desc">這裡放角色 1 的詳細介紹文字。內容與圖片會隨著下方的按鈕點擊而即時更新。</p>
                     
-                    <div class="char-detail" id="info-2">
-                        <div class="char-name">角色 B</div>
-                        <div class="char-title">CV. XXXX / 事務所新星</div>
-                        <p class="char-desc">這是第二個角色的介紹。妳可以在這裡填寫更長的故事背景，右側空間非常充裕。</p>
+                    <div class="char-nav-buttons">
+                        <button onclick="update('C1')" class="active"><img src="頭像1連結"></button>
+                        <button onclick="update('C2')"><img src="頭像2連結"></button>
+                        <button onclick="update('C3')"><img src="頭像3連結"></button>
                     </div>
-
-                    <div class="char-detail" id="info-3">
-                        <div class="char-name">角色 C</div>
-                        <div class="char-title">CV. YYYY / 實力派唱將</div>
-                        <p class="char-desc">這是第三個角色的介紹。測試切換功能是否正常，左右兩邊應該會同時變動。</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="char-nav">
-                <div class="char-btn active" onclick="showChar(1)">
-                    <img src="https://via.placeholder.com/100?text=C1" alt="C1">
-                </div>
-                <div class="char-btn" onclick="showChar(2)">
-                    <img src="https://via.placeholder.com/100?text=C2" alt="C2">
-                </div>
-                <div class="char-btn" onclick="showChar(3)">
-                    <img src="https://via.placeholder.com/100?text=C3" alt="C3">
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        function showChar(index) {
-            // 清除所有狀態
-            const imgs = document.querySelectorAll('.char-image-frame img');
-            const infos
+        // 設定資料庫
+        const charData = {
+            'C1': {
+                name: '角色姓名 01',
+                desc: '這是第一個波拉里斯成員的詳細背景故事，妳可以在這裡填寫她的性格與目標。',
+                img: '大圖1連結'
+            },
+            'C2': {
+                name: '角色姓名 02',
+                desc: '這是第二個角色的介紹。採用與星異界相同的 JS 邏輯進行快速切換。',
+                img: '大圖2連結'
+            },
+            'C3': {
+                name: '角色姓名 03',
+                desc: '這是第三個角色的介紹。按鈕與文字都在右側，方便使用者閱讀。',
+                img: '大圖3連結'
+            }
+        };
+
+        function update(k) {
+            // 更新文字與圖片
+            document.getElementById('char-name').innerText = charData[k].name;
+            document.getElementById('char-desc').innerText = charData[k].desc;
+            document.getElementById('char-img').src = charData[k].img;
+
+            // 更新按鈕 active 狀態
+            const btns = document.querySelectorAll('.char-nav-buttons button');
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
