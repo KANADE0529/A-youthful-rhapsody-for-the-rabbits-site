@@ -153,8 +153,23 @@
             </a>
             <ul class="nav-links">
                 <li><a href="news.html">公告事項</a></li>
-                <li><a href="world.html">介紹</a></li>
-                <li><a href="polaris.html" style="color: var(--polaris-pink);">藝能事務所</a></li>
+                
+                <li class="dropdown">
+                    <a href="world.html" class="dropbtn">介紹</a>
+                    <div class="dropdown-content">
+                        <a href="world-background.html">世界觀背景</a>
+                        <a href="story-background.html">故事背景</a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="polaris.html" class="dropbtn" style="color: var(--polaris-pink);">藝能事務所</a>
+                    <div class="dropdown-content">
+                        <a href="agency-polaris.html">波拉里斯藝能</a>
+                        <a href="agency-star-world.html">星異界藝能</a>
+                        <a href="agency-others.html">其他或未知</a>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="search-container">
@@ -162,50 +177,74 @@
         </div>
     </nav>
 
-    <div class="sub-nav-container">
-        <ul class="sub-nav-links">
-            <li><a href="#" class="active">ALL MEMBERS</a></li>
-            <li><a href="#">TEAM A</a></li>
-            <li><a href="#">TEAM B</a></li>
-            <li><a href="#">TRAINEES</a></li>
-        </ul>
-    </div>
-
     <style>
-        /* 子板塊樣式優化 */
-        .sub-nav-container {
-            width: 100%;
-            margin-top: 70px; /* 避開固定導覽列 */
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(5px);
+        /* --- 1.2倍放大後的導覽列與下拉選單樣式 --- */
+        .navbar {
+            position: fixed; top: 0; width: 100%; height: 70px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px; box-sizing: border-box; z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: center;
-            z-index: 900;
-        }
-        .sub-nav-links {
-            list-style: none;
-            display: flex;
-            gap: 40px;
-            padding: 12px 0;
-            margin: 0;
-        }
-        .sub-nav-links a {
-            text-decoration: none;
-            color: #666;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        .sub-nav-links a:hover, .sub-nav-links a.active {
-            color: var(--polaris-pink);
         }
 
-        /* 調整內容區域的邊距，避開子板塊 */
-        .page-container {
-            margin-top: 40px; /* 縮小原本的 margin，因為上方多了子板塊 */
+        .nav-links { display: flex; list-style: none; gap: 35px; margin: 0; padding: 0; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 1.1rem; }
+
+        /* 下拉選單核心樣式 */
+        .dropdown { position: relative; display: inline-block; }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 180px; /* 稍微加寬以容納五個中文字 */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+            z-index: 1100;
+            top: 100%;
+            left: 0;
+            border-radius: 4px;
+            padding: 5px 0;
+            border-top: 3px solid var(--polaris-pink); /* 增加頂部粉紅邊框更顯精緻 */
         }
+
+        .dropdown-content a {
+            color: #444 !important;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #fff0f3;
+            color: var(--polaris-pink) !important;
+        }
+
+        .dropdown:hover .dropdown-content { display: block; }
+
+        /* 灰階切換動畫樣式 */
+        #dynamic-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center; z-index: -2;
+            transition: filter 0.6s ease, opacity 0.6s ease;
+            opacity: 0.8;
+        }
+        #dynamic-bg.switching {
+            filter: brightness(0.3) grayscale(1);
+            opacity: 0.5;
+        }
+
+        /* 內容區 1.2 倍相關比例（維持妳要求的放大感） */
+        .char-nav-wrapper { padding: 30px 0; }
+        .char-btn { width: 72px; height: 72px; }
+        .char-main-section { height: 607px; gap: 60px; }
+        .char-info-area { width: 660px; height: 607px; padding: 50px; }
+        .flip-card-container { width: 456px; height: 607px; }
+        #char-name { font-size: 4.8rem; }
+        #char-desc { font-size: 1.2rem; line-height: 2; }
     </style>
 
     <div class="page-container">
@@ -329,5 +368,6 @@
     </script>
 </body>
 </html>
+
 
 
