@@ -13,22 +13,23 @@ body {
     background-color: var(--main-bg); 
     color: var(--main-text); 
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
-/* --- 導覽列：修正展開選單歪掉的問題 --- */
+/* --- 導覽列：穩定不跳動結構 --- */
 .navbar { 
     position: fixed; top: 0; width: 100%; 
-    height: 70px; /* 固定高度，防止任何內容撐開它 */
+    height: 70px; 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
     padding: 0 50px; 
     background: var(--navbar-bg); 
-    z-index: 1000; 
+    z-index: 2000; 
     border-bottom: 2px solid var(--point-pink);
 }
 
-.logo-link { display: flex; align-items: center; }
+.logo-link { display: flex; align-items: center; text-decoration: none; }
 .logo-img { height: 45px; width: auto; display: block; }
 
 .nav-right-group {
@@ -48,7 +49,7 @@ body {
 .nav-links > li {
     display: flex;
     align-items: center;
-    position: relative; /* 讓子選單相對於這個項目定位 */
+    position: relative; 
     height: 100%;
 }
 
@@ -57,17 +58,17 @@ body {
     color: var(--main-text); 
     font-weight: bold; 
     transition: 0.3s;
-    white-space: nowrap; /* 防止文字換行擠壓 */
+    white-space: nowrap; 
 }
 
 .nav-links a:hover { color: var(--point-pink); }
 
-/* --- 下拉選單修正：絕對定位防止抖動 --- */
+/* --- 子選單：絕對定位（不影響主列排版） --- */
 .submenu { 
     position: absolute; 
-    top: 70px; /* 對齊導覽列底部 */
+    top: 70px; 
     left: 50%;
-    transform: translateX(-50%); /* 居中對齊 */
+    transform: translateX(-50%); 
     background: white; 
     min-width: 160px; 
     display: none; 
@@ -89,6 +90,7 @@ body {
     font-size: 14px; 
     color: #333; 
     font-weight: normal;
+    text-align: center;
 }
 
 .submenu li a:hover { 
@@ -108,7 +110,73 @@ body {
     display: flex; 
     justify-content: center; 
     align-items: center; 
+    position: relative;
+    z-index: 1;
 }
 
 .hero-section h2 { 
-    font-size:
+    font-size: clamp(2rem, 8vw, 4.5rem); 
+    color: white; 
+    text-shadow: 3px 3px 20px rgba(59, 43, 44, 0.6);
+    letter-spacing: 12px; 
+    font-weight: bold;
+    text-align: center;
+    padding: 0 20px;
+}
+
+/* --- 滑動內容區 --- */
+.content-wrapper { 
+    position: relative; 
+    z-index: 10;
+    background-color: var(--main-bg); 
+    padding: 80px 0; 
+    box-shadow: 0 -15px 35px rgba(59, 43, 44, 0.15); 
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+.section-title { 
+    font-size: 2.2rem; 
+    border-left: 6px solid var(--point-pink); 
+    padding-left: 15px; 
+    margin-bottom: 40px; 
+    font-weight: bold;
+}
+
+/* --- 公告區塊按鍵樣式 (4:3) --- */
+.update-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+}
+
+.update-item { 
+    text-decoration: none; 
+    color: inherit; 
+    display: block; 
+    padding: 15px; 
+    border-radius: 12px; 
+    transition: 0.3s ease; 
+}
+
+.update-item:hover { 
+    background: rgba(255, 255, 255, 0.5); 
+    transform: translateY(-8px); 
+}
+
+.update-img-box { 
+    width: 100%; 
+    aspect-ratio: 4 / 3; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    margin-bottom: 15px; 
+    background-color: #fff;
+}
+
+.update-img-box img { width: 100%; height: 100%; object-fit: cover; }
+.update-item h3 { font-size: 1.5rem; text-align: left; font-weight: bold; }
+
+/* 搜尋框 */
+.search-container { display: flex; align-items: center; border-bottom: 2px solid var(--main-text); }
+.search-input { background: transparent; border: none; padding: 5px; outline: none; width: 110px; color: var(--main-text); }
+.search-btn { background: transparent; border: none; cursor: pointer; color: var(--main-text); }
