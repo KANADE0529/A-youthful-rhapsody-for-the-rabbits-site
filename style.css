@@ -1,8 +1,8 @@
-/* 顏色定義 */
+/* 1. 基礎設定與顏色定義 */
 :root {
-    --bg-black: #000000;      /* 60% */
-    --accent-gold: #FFB957;   /* 25% */
-    --point-pink: #FF2B5D;    /* 15% */
+    --bg-black: #000000;      /* 基礎色調 60% */
+    --accent-gold: #FFB957;   /* 附屬色調 25% */
+    --point-pink: #FF2B5D;    /* 點綴色調 15% */
     --text-white: #ffffff;
 }
 
@@ -13,21 +13,23 @@
 }
 
 body {
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Noto Sans TC', 'Segoe UI', sans-serif;
     background-color: var(--bg-black);
     color: var(--text-white);
     overflow-x: hidden;
 }
 
-/* 導航列與下拉選單 */
+/* 2. 導航列 (Navbar) */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     display: flex;
-    padding: 20px 50px;
-    background: rgba(0, 0, 0, 0.8);
+    justify-content: space-between; /* 讓 Logo/選單 與 搜尋框 分開兩端 */
+    align-items: center;
+    padding: 15px 50px;
+    background: rgba(0, 0, 0, 0.9);
     z-index: 1000;
     border-bottom: 1px solid var(--accent-gold);
 }
@@ -36,13 +38,14 @@ body {
     font-size: 24px;
     font-weight: bold;
     color: var(--point-pink);
-    margin-right: 50px;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
     gap: 30px;
+    margin-left: 50px;
+    margin-right: auto; /* 關鍵：這會把後面的搜尋框擠到最右邊 */
 }
 
 .nav-links a {
@@ -56,7 +59,7 @@ body {
     color: var(--accent-gold);
 }
 
-/* 下拉選單邏輯 */
+/* 3. 下拉選單 (Submenu) */
 .dropdown {
     position: relative;
 }
@@ -67,30 +70,61 @@ body {
     left: 0;
     background: #111;
     list-style: none;
-    min-width: 150px;
-    display: none; /* 預設隱藏 */
+    min-width: 160px;
+    display: none;
     padding: 10px 0;
     border-top: 2px solid var(--point-pink);
 }
 
 .submenu li a {
-    padding: 10px 20px;
+    padding: 12px 20px;
     display: block;
     font-size: 14px;
 }
 
 .dropdown:hover .submenu {
-    display: block; /* 移入時顯示 */
+    display: block;
 }
 
-/* 首頁大圖 (固定不動) */
+/* 4. 搜尋框 (Search Box) */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--point-pink);
+    border-radius: 4px;
+    padding: 2px 10px;
+}
+
+.search-input {
+    background: none;
+    border: none;
+    color: white;
+    padding: 5px;
+    outline: none;
+    width: 180px;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search-btn {
+    background: none;
+    border: none;
+    color: var(--accent-gold);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* 5. 首頁大圖區 (Hero) */
 .hero-section {
     height: 100vh;
     width: 100%;
-    background-image: url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=2070');
+    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=2070');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* 關鍵：背景固定 */
+    background-attachment: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -106,7 +140,7 @@ body {
     color: var(--accent-gold);
 }
 
-/* 內容區塊 (向上捲動蓋過背景) */
+/* 6. 內容區塊 */
 .content-wrapper {
     position: relative;
     background-color: var(--bg-black);
@@ -122,160 +156,4 @@ body {
 }
 
 .section-title {
-    font-size: 2rem;
-    border-left: 5px solid var(--point-pink);
-    padding-left: 15px;
-    margin-bottom: 50px;
-}
-
-.section-title span {
-    color: var(--accent-gold);
-}
-
-/* 角色展示切換區 */
-.char-display-box {
-    display: flex;
-    gap: 50px;
-    align-items: center;
-    min-height: 600px;
-}
-
-.char-image-area {
-    flex: 1;
-    text-align: center;
-}
-
-.char-image-area img {
-    max-width: 100%;
-    height: auto;
-    filter: drop-shadow(0 0 15px var(--accent-gold));
-}
-
-.char-info-area {
-    flex: 1;
-}
-
-.info-content h3 {
-    font-size: 2.5rem;
-    color: var(--accent-gold);
-    margin-bottom: 20px;
-}
-
-.info-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 40px;
-}
-
-/* 角色按鈕列 */
-.char-nav-buttons {
-    display: flex;
-    gap: 15px;
-}
-
-.char-nav-buttons button {
-    background: none;
-    border: 2px solid #333;
-    cursor: pointer;
-    transition: 0.3s;
-    width: 80px;
-    height: 80px;
-    padding: 0;
-    overflow: hidden;
-}
-
-.char-nav-buttons button:hover {
-    border-color: var(--point-pink);
-    transform: scale(1.1);
-}
-
-footer {
-    text-align: center;
-    padding: 50px;
-    border-top: 1px solid #333;
-
-}
-/* 搜尋框樣式 */
-.search-container {
-    margin-left: auto; /* 將搜尋框推向最右邊 */
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 5px 15px;
-    border: 1px solid var(--accent-gold);
-}
-
-.search-input {
-    background: none;
-    border: none;
-    color: white;
-    outline: none;
-    padding: 5px;
-    width: 150px;
-    font-size: 14px;
-}
-
-.search-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.search-btn {
-    background: none;
-    border: none;
-    color: var(--accent-gold);
-    cursor: pointer;
-    font-size: 16px;
-}
-
-/* 導航列基礎設定 */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    display: flex;
-    /* 這裡使用 space-between 是關鍵，它會把內容推向兩端 */
-    justify-content: space-between; 
-    align-items: center;
-    padding: 10px 40px;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 1000;
-    border-bottom: 1px solid var(--accent-gold);
-}
-
-/* 讓左側選單與 Logo 保持間距，並把搜尋框推向最右邊 */
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-    margin-left: 50px;
-    /* margin-right: auto 會吃掉中間所有剩餘空間，確保搜尋框在末端 */
-    margin-right: auto; 
-}
-
-/* 搜尋框樣式 */
-.search-container {
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--point-pink); /* 使用點綴色 #FF2B5D */
-    border-radius: 4px;
-    padding: 2px 10px;
-}
-
-.search-input {
-    background: none;
-    border: none;
-    color: white;
-    padding: 5px;
-    outline: none;
-    width: 180px;
-}
-
-.search-btn {
-    background: none;
-    border: none;
-    color: var(--accent-gold); /* 使用附屬色 #FFB957 */
-    cursor: pointer;
-    font-size: 1.2rem;
-}
+    font-size: 2rem
