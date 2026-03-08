@@ -8,11 +8,19 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="index.html">
-            <img src="https://via.placeholder.com/150x50?text=PORTAL" class="logo-img" alt="LOGO">
+        <a href="index.html" class="logo-link">
+            <img src="https://images.plurk.com/2uMbyB39xWLseifB3DlagS.png" class="logo-img" alt="PORTAL HOME">
         </a>
+        
         <ul class="nav-links">
-            <li><a href="index.html">首頁</a></li>
+            <li class="dropdown">
+                <a href="#">介紹</a>
+                <ul class="submenu">
+                    <li><a href="#">世界觀背景</a></li>
+                    <li><a href="#">故事背景</a></li>
+                </ul>
+            </li>
+            
             <li class="dropdown">
                 <a href="#">藝能事務所</a>
                 <ul class="submenu">
@@ -22,6 +30,7 @@
                 </ul>
             </li>
         </ul>
+
         <div class="search-container">
             <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
             <button class="search-btn">🔍</button>
