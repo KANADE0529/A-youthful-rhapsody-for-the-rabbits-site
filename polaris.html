@@ -3,47 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project POLARIS | 官方角色展示</title>
+    <title>Project POLARIS | 角色切換</title>
     <style>
         :root {
             --polaris-pink: #FF2B5D;
-            --nav-bg: rgba(255, 255, 255, 0.95);
             --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-blur: blur(5px);
+            --glass-blur: blur(8px);
             --glass-border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         body { background-color: #fcfcfc; margin: 0; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; overflow-x: hidden; }
 
-        /* --- 導覽列與搜索列 (鎖定位置) --- */
-        .navbar {
-            position: fixed; top: 0; width: 100%; height: 70px;
-            background: var(--nav-bg); backdrop-filter: blur(10px);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 40px; box-sizing: border-box; z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        .nav-left-area { display: flex; align-items: center; gap: 30px; }
-        .logo-img { height: 40px; width: auto; }
-        .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: #333; font-weight: 600; }
-        .search-container { position: absolute; right: 40px; }
-        .search-bar { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; }
-
-        /* --- 背景與背景字 (50% 透明 + [重要] D方案灰階過渡) --- */
+        /* --- 背景與灰階變換 --- */
         #dynamic-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center; z-index: -2;
-            /* 增加過渡時間與效果 */
-            transition: filter 0.6s ease-in-out, opacity 0.6s ease-in-out; 
-            opacity: 0.8; 
-            filter: brightness(1.0) grayscale(0); /* 初始狀態：正常亮度與色彩 */
+            transition: filter 0.6s ease, opacity 0.6s ease;
+            opacity: 0.8;
         }
-        /* [重要] 切換時的狀態：變暗且變灰 */
-        #dynamic-bg.switching {
-            filter: brightness(0.3) grayscale(1); 
-            opacity: 0.5;
-        }
+        #dynamic-bg.switching { filter: brightness(0.3) grayscale(1); opacity: 0.5; }
 
         .bg-name-deco {
             position: fixed; left: 50%; top: 55%; transform: translate(-50%, -50%); 
@@ -51,94 +29,79 @@
             white-space: nowrap; z-index: -1; pointer-events: none; text-transform: uppercase;
         }
 
-        /* --- 內容區域佈局 --- */
+        /* --- 頁面容器 --- */
         .page-container {
             display: flex; flex-direction: column; align-items: center; 
             margin-top: 100px; width: 100%; box-sizing: border-box;
         }
 
-        /* --- [重要修改 1] ICON 選擇列：放大 1.2 倍 --- */
-        .char-nav-wrapper {
-            display: flex; justify-content: center; gap: 15px; /* 稍微增加間距 */
-            width: 100%; padding: 25px 0; z-index: 100;
+        /* --- [核心修正] 下拉式選單樣式：放大 1.2 倍 --- */
+        .char-selector-container {
+            width: 100%;
+            max-width: 660px; /* 與介紹區塊同寬 */
+            margin-bottom: 30px;
+            z-index: 100;
         }
-        .char-btn { 
-            width: 72px; /* 60 * 1.2 */
-            height: 72px; /* 60 * 1.2 */
-            border-radius: 50%; border: 2px solid #fff; overflow: hidden; cursor: pointer; transition: 0.3s; background: none; padding: 0;
-        }
-        .char-btn.active { border-color: var(--polaris-pink); transform: scale(1.1); box-shadow: 0 0 15px rgba(255, 43, 93, 0.3); }
-        .char-btn img { width: 100%; height: 100%; object-fit: cover; }
 
+        #char-select-menu {
+            width: 100%;
+            padding: 15px 25px;
+            font-size: 1.2rem; /* 放大字體 */
+            font-weight: 600;
+            color: #333;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--polaris-pink);
+            border-radius: 12px;
+            cursor: pointer;
+            outline: none;
+            appearance: none; /* 去除原生箭頭 */
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF2B5D' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        #char-select-menu:hover {
+            background-color: #fff;
+            box-shadow: 0 6px 20px rgba(255, 43, 93, 0.15);
+        }
+
+        /* --- 主展示區 (1.2倍放大) --- */
         .char-main-section {
             display: flex; align-items: flex-start; justify-content: center; 
-            width: 95%; max-width: 1500px; /* 稍微增加最大寬度 */
-            height: 607px; /* 506 * 1.2，統一放大後的高度 */
+            width: 95%; max-width: 1400px; height: 607px; /* 506 * 1.2 */
             position: relative; gap: 60px; z-index: 5;
-            perspective: 2500px; /* 保持3D透視 */
         }
 
-        /* --- [重要修改 2] 角色卡片與圖片：放大 1.2 倍 --- */
-        .flip-card-container { 
-            width: 456px; /* 380 * 1.2 */
-            height: 607px; /* 506 * 1.2 */
-            flex-shrink: 0; position: relative; 
-        }
-        .card-face { 
-            position: absolute; width: 100%; height: 100%; border-radius: 20px; overflow: hidden;
-            background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: var(--glass-border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-        .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-
-        /* --- [重要修改 3] 介紹文字區：放大 1.2 倍 (高度對齊 607px) --- */
+        /* 介紹文字區 (放大後高度與卡片對齊) */
         .char-info-area {
-            width: 660px; /* 550 * 1.2 */
-            height: 607px; /* 高度對齊 506 * 1.2 */
-            z-index: 15; color: #333; text-align: left;
-            display: flex; flex-direction: column; align-items: flex-start;
-            padding: 50px; /* padding 稍微加大 */
-            box-sizing: border-box;
+            width: 660px; height: 607px; 
+            padding: 50px; box-sizing: border-box;
             background: var(--glass-bg); backdrop-filter: var(--glass-blur);
             border: var(--glass-border); border-radius: 20px;
+            display: flex; flex-direction: column;
         }
 
         .name-ruby { 
             display: inline-block; background: var(--polaris-pink); color: white; 
-            font-size: 0.9rem; /* 字體稍微加大 */
-            padding: 6px 18px; font-weight: 600;
-            margin-bottom: 20px; border-radius: 4px;
+            font-size: 0.9rem; padding: 6px 18px; margin-bottom: 20px; border-radius: 4px;
         }
-        #char-name { 
-            font-size: 4.8rem; /* 4.2 * 1.2 */
-            margin: 0; font-weight: bold; line-height: 1; white-space: nowrap; 
-        }
-        #char-title { 
-            font-size: 1.7rem; /* 1.5 * 1.2 */
-            color: #555; margin-top: 20px; display: block; 
-        }
+        #char-name { font-size: 4.8rem; margin: 0; font-weight: bold; line-height: 1; }
+        #char-title { font-size: 1.7rem; color: #555; margin-top: 20px; display: block; }
         
-        .desc-scroll-box { 
-            width: 100%; flex: 1; overflow-y: auto; margin-top: 30px; padding-right: 20px;
-        }
-        .desc-scroll-box::-webkit-scrollbar { width: 4px; }
-        .desc-scroll-box::-webkit-scrollbar-thumb { background: var(--polaris-pink); border-radius: 10px; }
+        .desc-scroll-box { width: 100%; flex: 1; overflow-y: auto; margin-top: 30px; }
+        #char-desc { line-height: 2; font-size: 1.2rem; color: #333; margin: 0; }
 
-        #char-desc { 
-            line-height: 2; /* 行高稍微加大，配合字體放大 */
-            font-size: 1.2rem; /* 1.1 * 1.2 */
-            color: #333; margin: 0; 
+        /* 角色卡片 (1.2倍) */
+        .flip-card-container { width: 456px; height: 607px; flex-shrink: 0; }
+        .card-face { 
+            position: absolute; width: 100%; height: 100%; border-radius: 20px; overflow: hidden;
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: var(--glass-border);
         }
+        .card-face img { width: 100%; height: 100%; object-fit: cover; }
 
-        .side-nav-arrow {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: none; border: none; font-size: 3rem; /* 箭頭也放大 */
-            cursor: pointer; color: rgba(0,0,0,0.2); transition: 0.3s;
-        }
-        .side-nav-arrow:hover { color: var(--polaris-pink); }
-        .arrow-left { left: -100px; } /* 間距拉大，適應放大後的區塊 */
-        .arrow-right { right: -100px; }
-        
         .fade-out { opacity: 0; transition: 0.3s; }
     </style>
 </head>
@@ -146,118 +109,19 @@
 
     <div id="dynamic-bg"></div>
 
-    <nav class="navbar">
-        <a href="index.html" class="logo-link">
-            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
-        </a>
-        <ul class="nav-links">
-            <li><a href="news.html">公告事項</a></li>
-            <li class="dropdown">
-                <a href="#">介紹</a>
-                <ul class="submenu">
-                    <li><a href="world.html">世界觀背景</a></li>
-                    <li><a href="story.html">故事背景</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">藝能事務所</a>
-                <ul class="submenu">
-                    <li><a href="polaris.html">波拉里斯藝能</a></li>
-                    <li><a href="stellar.html">星異界藝能</a></li>
-                    <li><a href="others.html">其他或未知</a></li>
-                </ul>
-            </li>
-        </ul>
-        <div class="search-container">
-            <input type="text" id="site-search" placeholder="搜尋..." class="search-input">
-            <button class="search-btn">🔍</button>
-        </div>
-    </nav>
-
-    <style>
-        /* --- 1.2倍放大後的導覽列與下拉選單樣式 --- */
-        .navbar {
-            position: fixed; top: 0; width: 100%; height: 70px;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 40px; box-sizing: border-box; z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .nav-links { display: flex; list-style: none; gap: 35px; margin: 0; padding: 0; }
-        .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 1.1rem; }
-
-        /* 下拉選單核心樣式 */
-        .dropdown { position: relative; display: inline-block; }
-        
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #ffffff;
-            min-width: 180px; /* 稍微加寬以容納五個中文字 */
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-            z-index: 1100;
-            top: 100%;
-            left: 0;
-            border-radius: 4px;
-            padding: 5px 0;
-            border-top: 3px solid var(--polaris-pink); /* 增加頂部粉紅邊框更顯精緻 */
-        }
-
-        .dropdown-content a {
-            color: #444 !important;
-            padding: 12px 20px;
-            text-decoration: none;
-            display: block;
-            font-size: 1rem;
-            font-weight: 500;
-            text-align: left;
-            transition: 0.2s;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #fff0f3;
-            color: var(--polaris-pink) !important;
-        }
-
-        .dropdown:hover .dropdown-content { display: block; }
-
-        /* 灰階切換動畫樣式 */
-        #dynamic-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center; z-index: -2;
-            transition: filter 0.6s ease, opacity 0.6s ease;
-            opacity: 0.8;
-        }
-        #dynamic-bg.switching {
-            filter: brightness(0.3) grayscale(1);
-            opacity: 0.5;
-        }
-
-        /* 內容區 1.2 倍相關比例（維持妳要求的放大感） */
-        .char-nav-wrapper { padding: 30px 0; }
-        .char-btn { width: 72px; height: 72px; }
-        .char-main-section { height: 607px; gap: 60px; }
-        .char-info-area { width: 660px; height: 607px; padding: 50px; }
-        .flip-card-container { width: 456px; height: 607px; }
-        #char-name { font-size: 4.8rem; }
-        #char-desc { font-size: 1.2rem; line-height: 2; }
-    </style>
-
     <div class="page-container">
-        <div class="char-nav-wrapper" id="icon-list"></div>
+        <div class="char-selector-container">
+            <select id="char-select-menu" onchange="updateDisplay(this.value)">
+                </select>
+        </div>
 
         <div class="char-main-section">
-            <button onclick="prevChar()" class="side-nav-arrow arrow-left">&#10094;</button>
-
             <div class="char-info-area" id="info-box">
                 <span class="name-ruby" id="char-ruby">TACHIBANA TSUBAME</span>
                 <h3 id="char-name">立花 つばめ</h3>
                 <span id="char-title">CV. 佐藤利奈 / Center</span>
                 <div class="desc-scroll-box">
-                    <p id="char-desc">
-                        作為 Project POLARIS 的核心人物，つばめ 擁有如雨後陽光般的強大感染力。她那清澈且富有穿透力的嗓音，總能在舞台上瞬間抓住聽眾的心。雖然外表看起來優雅冷靜，但內心對於偶像事業有著超乎常人的執著與熱情。無論面對多麼嚴苛的訓練，她始終保持著笑容，成為團員們最可靠的北極星。這份永不言敗的精神，正是她能站在 Center 位置的關鍵原因。
-                    </p>
+                    <p id="char-desc">作為 Project POLARIS 的核心人物，擁有如雨後陽光般的感染力...</p>
                 </div>
             </div>
 
@@ -273,68 +137,51 @@
                     </div>
                 </div>
             </div>
-
-            <button onclick="nextChar()" class="side-nav-arrow arrow-right">&#10095;</button>
         </div>
     </div>
 
     <script>
         const charData = [
-            { 
-                ruby: 'TACHIBANA TSUBAME', short: 'TSUBAME', name: '立花 つばめ', title: 'CV. 佐藤利奈 / Center', 
-                desc: '作為 Project POLARIS 的核心人物，つばめ 擁有如雨後陽光般的強大感染力。她那清澈且富有穿透力的嗓音，總能在舞台上瞬間抓住聽眾的心。雖然外表看起來優雅冷靜，但內心對於偶像事業有著超乎常人的執著與熱情。無論面對多麼嚴苛的訓練，她始終保持著笑容，成為團員們最可靠的北極星。這份永不言敗的精神，正是她能站在 Center 位置的關鍵原因。', 
-                img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png',
-                bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' 
-            },
-            { 
-                ruby: 'SA-TAN MARRY', short: 'MARRY', name: '咲丹 マリア', title: 'CV. 花澤香菜 / Visual', 
-                desc: '雖然名字帶點惡魔的氣息，卻是舞台上最耀眼的存在。瑪莉亞的魅力在於她那捉摸不定的性格，上一秒還是溫柔的鄰家女孩，下一秒就能展現出極具張力的舞台魅力。身為視覺擔當，她對審美有著極高的要求，是隊內的時尚風向球。', 
-                img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png',
-                bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' 
-            },
-            { ruby: 'RAIKA ANZU', short: 'ANZU', name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '充滿爆發力的舞者。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'UNABARA NAGISA', short: 'NAGISA', name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'HIMURO REINA', short: 'REINA', name: '氷室 玲奈', title: 'CV. 石川由依 / Vocal', desc: '冷靜沉著的高冷才女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'MOMONO MONAMI', short: 'MONAMI', name: '桃乃 萌波', title: 'CV. 小倉唯 / Cute', desc: '正統派小惡魔系少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'KAMI SHIRO HISUI', short: 'HISUI', name: '神代 翡翠', title: 'CV. 早見沙織 / Mystery', desc: '充滿神祕感的少女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
-            { ruby: 'KOHAKU RUI', short: 'RUI', name: '琥珀 琉衣', title: 'CV. 內田真禮 / Energy', desc: '性格率直的陽光女孩。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' }
+            { ruby: 'TACHIBANA TSUBAME', short: 'TSUBAME', name: '立花 つばめ', title: 'CV. 佐藤利奈 / Center', desc: '核心人物介紹內容...', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' },
+            { ruby: 'SA-TAN MARRY', short: 'MARRY', name: '咲丹 マリア', title: 'CV. 花澤香菜 / Visual', desc: '視覺擔當介紹內容...', img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png', bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' }
+            // ... 可加入其他角色
         ];
 
         let currentIndex = 0;
         let isFlipped = false;
-        const iconImg = "https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png";
-
         const bgElement = document.getElementById('dynamic-bg');
-        bgElement.style.backgroundImage = `url('${charData[0].bg}')`;
+        const menu = document.getElementById('char-select-menu');
 
-        const iconList = document.getElementById('icon-list');
+        // 初始化下拉選單選項
         charData.forEach((char, index) => {
-            const btn = document.createElement('button');
-            btn.className = `char-btn ${index === 0 ? 'active' : ''}`;
-            btn.innerHTML = `<img src="${iconImg}">`;
-            btn.onclick = () => updateDisplay(index);
-            iconList.appendChild(btn);
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = `角色選擇：${char.name}`;
+            menu.appendChild(option);
         });
 
+        bgElement.style.backgroundImage = `url('${charData[0].bg}')`;
+
         function updateDisplay(index) {
+            index = parseInt(index);
             if (index === currentIndex) return;
+
             const cardInner = document.getElementById('flip-inner');
             const infoBox = document.getElementById('info-box');
             const bgName = document.getElementById('bg-name');
             const data = charData[index];
 
-            /* --- [重要] D方案灰階切換：觸發 switching --- */
+            // 觸發灰階背景變換
             bgElement.classList.add('switching');
             infoBox.classList.add('fade-out');
             bgName.classList.add('fade-out');
 
             setTimeout(() => {
-                // 在切換的黑白瞬間更換背景圖片
                 bgElement.style.backgroundImage = data.bg ? `url('${data.bg}')` : 'none';
-                // 恢復色彩
                 bgElement.classList.remove('switching');
             }, 300);
 
+            // 處理翻牌效果
             if (!isFlipped) {
                 document.getElementById('img-back').src = data.img;
                 cardInner.style.transform = "rotateY(180deg)";
@@ -344,6 +191,7 @@
             }
             isFlipped = !isFlipped;
 
+            // 更新文字
             setTimeout(() => {
                 document.getElementById('char-ruby').innerText = data.ruby;
                 document.getElementById('char-name').innerText = data.name;
@@ -354,18 +202,8 @@
                 bgName.classList.remove('fade-out');
             }, 300);
 
-            const btns = document.querySelectorAll('.char-btn');
-            if (btns[currentIndex]) btns[currentIndex].classList.remove('active');
-            if (btns[index]) btns[index].classList.add('active');
             currentIndex = index;
         }
-
-        function nextChar() { updateDisplay((currentIndex + 1) % charData.length); }
-        function prevChar() { updateDisplay((currentIndex - 1 + charData.length) % charData.length); }
     </script>
 </body>
 </html>
-
-
-
-
