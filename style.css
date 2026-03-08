@@ -1,113 +1,36 @@
-/* --- 基礎變數與設定 --- */
-:root {
-    --main-bg: rgba(255, 255, 255, 0.5);   /* 50% 半透明 */
-    --navbar-bg: rgba(255, 255, 255, 0.25); 
-    --main-text: #3B2B2C;
-    --point-pink: #FF2B5D;
-    --news-item-title: #E35A73;
-    --polaris-highlight: #FFD666;
-}
+/* --- 導覽列懸浮加強：大分類底色效果 --- */
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body { 
-    font-family: 'Noto Sans TC', sans-serif; 
-    /* 背景圖固定，這是透視感的靈魂 */
-    background-image: url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+/* 1. 調整 a 標籤，讓它有空間顯示底色 */
+.nav-links a { 
+    text-decoration: none; 
     color: var(--main-text); 
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* --- 導覽列：25% 毛玻璃 --- */
-.navbar { 
-    position: fixed; top: 0; width: 100%; 
-    height: 70px; 
-    display: flex; 
-    align-items: center; 
-    padding: 0 50px; 
-    background: var(--navbar-bg); 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 2000; 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.logo-link { display: flex; align-items: center; margin-right: 40px; text-decoration: none; }
-.logo-img { height: 45px; width: auto; }
-
-.nav-links { 
-    list-style: none; display: flex; gap: 30px; height: 100%; margin-right: auto;
-}
-.nav-links > li { display: flex; align-items: center; position: relative; height: 70px; }
-.nav-links a { text-decoration: none; color: var(--main-text); font-weight: bold; transition: 0.3s; }
-.nav-links a:hover { color: var(--point-pink); }
-
-.submenu { 
-    position: absolute; top: 70px; left: 0; 
-    background: rgba(255, 255, 255, 0.95); 
-    min-width: 180px; display: none; padding: 10px 0; 
-    list-style: none; box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-top: 2px solid var(--point-pink);
-}
-.nav-links > li:hover .submenu { display: block; }
-.submenu li a { display: block; padding: 12px 20px; color: #333; font-weight: bold; }
-
-.search-container { display: flex; align-items: center; border-bottom: 2px solid var(--main-text); margin-left: 20px; }
-.search-input { background: transparent; border: none; padding: 5px; outline: none; width: 110px; color: var(--main-text); }
-.search-btn { background: transparent; border: none; cursor: pointer; color: var(--main-text); }
-
-/* --- 視差滾動 Hero：純封面 --- */
-.hero-section { 
-    height: 100vh; 
-    width: 100%;
-    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
-    background-size: cover; 
-    background-position: center; 
-    background-attachment: fixed; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-}
-.hero-section h2 { font-size: 4rem; color: white; text-shadow: 3px 3px 20px rgba(0,0,0,0.4); letter-spacing: 12px; font-weight: bold; }
-
-/* --- 內容區塊：滑動升起的毛玻璃面板 --- */
-.content-wrapper { 
-    position: relative; 
-    z-index: 10; 
-    margin-top: 0; 
-    background-color: var(--main-bg); 
-    backdrop-filter: blur(25px); /* 稍微調深模糊度增加質感 */
-    -webkit-backdrop-filter: blur(25px);
-    padding: 100px 0; 
+    font-weight: bold; 
+    transition: all 0.3s ease; /* 讓顏色與背景切換更平滑 */
     
-    /* 上邊圓角還妳了！ */
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 60px 60px 0 0; /* 更加顯眼的圓角 */
-    box-shadow: 0 -20px 40px rgba(0,0,0,0.15);
+    /* 重點：增加內距讓底色包覆文字，並加上圓角 */
+    padding: 8px 16px; 
+    border-radius: 8px; 
 }
 
-.container { 
-    max-width: 1200px; 
-    margin: 0 auto; 
-    padding: 0 20px; 
-    /* 增加區塊高度 350px (透過設定最小高度確保空間) */
-    min-height: calc(100vh + 350px); 
+/* 2. 當滑鼠移到 li (大分類) 上時，改變 a 的背景與文字顏色 */
+.nav-links > li:hover > a { 
+    background-color: var(--point-pink); /* 變成妳設定的粉紅色 */
+    color: #FFFFFF !important;           /* 文字強制變白色 */
 }
 
-.section-title { font-size: 2.2rem; border-left: 6px solid var(--point-pink); padding-left: 15px; margin-bottom: 60px; font-weight: bold; }
+/* 3. 移除原本單純變粉紅字的設定，避免跟底色衝突 */
+.nav-links a:hover { 
+    /* 這裡留空即可，樣式已由上方的 li:hover 統一接管 */
+}
 
-.update-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.update-item { text-decoration: none; color: inherit; display: block; padding: 15px; border-radius: 20px; transition: 0.3s ease; }
-.update-item:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-10px); }
+/* 4. 確保下拉選單 (Submenu) 內的文字顏色不受影響 (維持白底粉字) */
+.submenu li a {
+    background-color: transparent !important; /* 移除子項目的粉紅底色 */
+    color: #333 !important;                   /* 恢復深色字 */
+    padding: 12px 20px;
+}
 
-.update-img-box { width: 100%; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; margin-bottom: 20px; background-color: rgba(0,0,0,0.05); }
-.update-img-box img { width: 100%; height: 100%; object-fit: cover; }
-
-.update-item h3 { font-size: 1.6rem; text-align: left; font-weight: bold; transition: color 0.3s; }
-
-/* --- 專屬顏色設定 --- */
-.news-page .update-item h3 { color: var(--news-item-title); }
-.polaris-page .section-title span.highlight-yellow { color: var(--polaris-highlight); }
+.submenu li a:hover {
+    color: var(--point-pink) !important;      /* 子項目懸浮時只需變粉紅字 */
+    background-color: #FFF0F3 !important;      /* 或者給一個極淺的粉紅底 */
+}
