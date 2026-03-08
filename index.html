@@ -8,14 +8,17 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo">PORTAL</div>
+<nav class="navbar">
+        <a href="index.html" class="logo-link">
+            <img src="https://via.placeholder.com/150x50?text=LOGO" alt="PORTAL LOGO" class="logo-img">
+        </a>
+        
         <ul class="nav-links">
             <li class="dropdown">
-                <a href="#">HOME</a>
+                <a href="#">介紹</a>
                 <ul class="submenu">
-                    <li><a href="#">近期公告</a></li>
-                    <li><a href="#">世界觀介紹</a></li>
+                    <li><a href="#">世界觀背景</a></li>
+                    <li><a href="#">故事背景</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -33,28 +36,53 @@
                     <li><a href="#">技能展示</a></li>
                 </ul>
             </li>
-            <li class="dropdown">
-                <a href="#">其他</a>
-            </li>
         </ul>
 
         <div class="search-container">
-            <input type="text" id="site-search" placeholder="搜尋角色或內容..." class="search-input">
+            <input type="text" id="site-search" placeholder="搜尋內容..." class="search-input">
             <button class="search-btn" onclick="executeSearch()">🔍</button>
         </div>
     </nav>
 
-    <header class="hero-section">
-        <div class="hero-content">
-            <h2>BEYOND THE LIMIT</h2>
-            <p>探索未知的次元力量</p>
-        </div>
-    </header>
-
     <main class="content-wrapper">
-        <section id="character-intro" class="container">
-            <h2 class="section-title">CHARACTER <span>介紹</span></h2>
-            
+        <section class="container update-section">
+            <h2 class="section-title">RECENT <span>UPDATES</span></h2>
+            <div class="update-grid">
+                <a href="#" class="update-item">
+                    <div class="update-img-box"><img src="https://via.placeholder.com/300x300?text=News+1" alt="更新1"></div>
+                    <h3>近期公告標題</h3>
+                </a>
+                <a href="#" class="update-item">
+                    <div class="update-img-box"><img src="https://via.placeholder.com/300x300?text=News+2" alt="更新2"></div>
+                    <h3>活動資訊標題</h3>
+                </a>
+                <a href="#" class="update-item">
+                    <div class="update-img-box"><img src="https://via.placeholder.com/300x300?text=News+3" alt="更新3"></div>
+                    <h3>版本更新標題</h3>
+                </a>
+            </div>
+        </section>
+
+        <section id="agency-chars" class="container char-section">
+            <h2 class="section-title">AGENCY <span>事務所角色</span></h2>
             <div class="char-display-box">
                 <div class="char-image-area">
-                    <img id="char-img" src="
+                    <img id="char-img" src="https://via.placeholder.com/500x700/000/FFB957?text=CHARACTER" alt="Character">
+                </div>
+
+                <div class="char-info-area">
+                    <div class="info-content">
+                        <h3 id="char-name">請選擇角色</h3>
+                        <p id="char-desc">點擊下方頭像即可切換角色圖片與對應介紹文字。</p>
+                    </div>
+                    
+                    <div class="char-nav-buttons">
+                        <button onclick="switchChar('A')"><img src="https://via.placeholder.com/100?text=A"></button>
+                        <button onclick="switchChar('B')"><img src="https://via.placeholder.com/100?text=B"></button>
+                        <button onclick="switchChar('C')"><img src="https://via.placeholder.com/100?text=C"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
