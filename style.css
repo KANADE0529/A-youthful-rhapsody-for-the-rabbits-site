@@ -15,47 +15,70 @@ body {
     line-height: 1.6;
 }
 
-/* --- 導覽列 --- */
+/* --- 導覽列：修正歪掉的問題 --- */
 .navbar { 
     position: fixed; top: 0; width: 100%; 
-    display: flex; align-items: center; 
+    display: flex; 
+    justify-content: space-between; /* 讓 Logo 與選單撐開至兩端 */
+    align-items: center; 
     padding: 10px 50px; 
     background: var(--navbar-bg); 
     z-index: 1000; 
     border-bottom: 2px solid var(--point-pink);
 }
 
+.logo-link { display: flex; align-items: center; }
 .logo-img { height: 45px; width: auto; display: block; }
-.nav-links { list-style: none; display: flex; gap: 25px; margin-left: auto; margin-right: 30px; }
-.nav-links a { text-decoration: none; color: var(--main-text); font-weight: bold; }
 
-/* --- 核心：視差滾動背景區 --- */
+/* 選單與搜尋的組合包 */
+.nav-right-group {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links { 
+    list-style: none; 
+    display: flex; 
+    gap: 25px; 
+}
+
+.nav-links a { 
+    text-decoration: none; 
+    color: var(--main-text); 
+    font-weight: bold; 
+    transition: 0.3s;
+}
+
+.nav-links a:hover { color: var(--point-pink); }
+
+/* --- 視差滾動背景區 --- */
 .hero-section { 
-    height: 100vh; /* 讓第一屏背景撐滿整個畫面 */
+    height: 100vh; 
     width: 100%;
-    /* 修正背景圖語法並設定固定 */
-    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), 
+    background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), 
                       url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
     background-size: cover; 
     background-position: center center; 
-    background-attachment: fixed; /* 關鍵：背景圖不動 */
+    background-attachment: fixed; /* 背景固定 */
     background-repeat: no-repeat;
-    
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    position: relative;
 }
 
 .hero-section h2 { 
-    font-size: 4rem; 
+    font-size: 4.5rem; 
     color: white; 
-    text-shadow: 3px 3px 20px rgba(59, 43, 44, 0.7);
-    letter-spacing: 10px; 
+    text-shadow: 3px 3px 20px rgba(59, 43, 44, 0.6);
+    letter-spacing: 12px; 
     font-weight: bold;
-    z-index: 1;
 }
 
-/* --- 核心：滑上來的內容區塊 --- */
+/* --- 下方滑動內容區 --- */
 .content-wrapper { 
-    position: relative;
+    position: relative; 
+    z-index: 10;
+    background-color: var(--main-bg); 
+    padding: 80px 0; 
+    box-shadow
