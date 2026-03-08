@@ -157,3 +157,61 @@ body {
 
 .section-title {
     font-size: 2rem
+
+/* Logo 圖片樣式 */
+.logo-img {
+    height: 40px;
+    display: block;
+    transition: 0.3s;
+}
+.logo-img:hover {
+    filter: brightness(1.2);
+}
+
+/* 修改 3: 近期更新區塊樣式 */
+.update-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+    margin-bottom: 80px;
+}
+.update-item {
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    transition: 0.3s;
+}
+.update-img-box {
+    aspect-ratio: 1 / 1; /* 強制正方形 */
+    overflow: hidden;
+    border: 2px solid #333;
+    margin-bottom: 15px;
+}
+.update-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+.update-item:hover .update-img-box {
+    border-color: var(--accent-gold);
+}
+.update-item:hover img {
+    transform: scale(1.1);
+}
+.update-item h3 {
+    font-size: 1.2rem;
+    color: var(--text-white);
+}
+
+/* 修改 4: 角色切換區細節優化 */
+.char-section {
+    padding-top: 50px;
+    border-top: 1px solid #222;
+}
+.char-nav-buttons button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
