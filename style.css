@@ -16,7 +16,7 @@ body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg-black); col
 .nav-links a { text-decoration: none; color: white; transition: 0.3s; }
 .nav-links a:hover { color: var(--accent-gold); }
 
-/* 搜尋框 */
+/* 透明底線搜尋框 */
 .search-container { display: flex; align-items: center; border-bottom: 2px solid var(--search-blue); background: transparent; padding: 2px 5px; }
 .search-input { background: transparent; border: none; color: white; padding: 5px; outline: none; width: 120px; }
 .search-btn { background: transparent; border: none; color: white; cursor: pointer; }
@@ -27,15 +27,16 @@ body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg-black); col
 .submenu li a { padding: 10px 20px; display: block; font-size: 14px; }
 .dropdown:hover .submenu { display: block; }
 
-/* --- 圖片修復區塊 --- */
+/* --- 背景圖修復區塊 --- */
 .hero-section { 
-    height: 70vh; 
-    /* 我已經將你的圖片轉為直連網址 */
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
-                url('https://images.weserv.nl/?url=reurl.cc/5dYk6R'); 
+    height: 75vh; 
+    /* 使用你提供的 Plurk 直連圖片 */
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+                url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
     background-size: cover;
-    background-position: center 20%; /* 稍微往上一點，確保能看到兔女郎的臉 */
+    background-position: center 30%; /* 調整位置，讓兔女郎們的臉更清晰 */
     background-repeat: no-repeat;
+    background-attachment: fixed; /* 增加捲動時的高級感 */
     display: flex; 
     justify-content: center; 
     align-items: center; 
@@ -45,8 +46,8 @@ body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg-black); col
 .hero-section h2 { 
     font-size: 3.5rem; 
     color: var(--accent-gold); 
-    text-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 10px var(--accent-gold);
-    letter-spacing: 5px;
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.9), 0 0 10px var(--accent-gold);
+    letter-spacing: 6px;
     font-weight: bold;
 }
 
