@@ -1,8 +1,8 @@
 /* 1. 基礎設定與顏色定義 */
 :root {
-    --bg-black: #000000;      /* 基礎色調 60% */
-    --accent-gold: #FFB957;   /* 附屬色調 25% */
-    --point-pink: #FF2B5D;    /* 點綴色調 15% */
+    --bg-black: #000000;
+    --accent-gold: #FFB957;
+    --point-pink: #FF2B5D;
     --text-white: #ffffff;
 }
 
@@ -26,7 +26,7 @@ body {
     left: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between; /* 讓 Logo/選單 與 搜尋框 分開兩端 */
+    justify-content: space-between;
     align-items: center;
     padding: 15px 50px;
     background: rgba(0, 0, 0, 0.9);
@@ -34,10 +34,10 @@ body {
     border-bottom: 1px solid var(--accent-gold);
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--point-pink);
+.logo-img {
+    height: 40px;
+    display: block;
+    transition: 0.3s;
 }
 
 .nav-links {
@@ -45,7 +45,7 @@ body {
     display: flex;
     gap: 30px;
     margin-left: 50px;
-    margin-right: auto; /* 關鍵：這會把後面的搜尋框擠到最右邊 */
+    margin-right: auto;
 }
 
 .nav-links a {
@@ -59,11 +59,8 @@ body {
     color: var(--accent-gold);
 }
 
-/* 3. 下拉選單 (Submenu) */
-.dropdown {
-    position: relative;
-}
-
+/* 3. 下拉選單 */
+.dropdown { position: relative; }
 .submenu {
     position: absolute;
     top: 100%;
@@ -75,18 +72,10 @@ body {
     padding: 10px 0;
     border-top: 2px solid var(--point-pink);
 }
+.submenu li a { padding: 12px 20px; display: block; font-size: 14px; }
+.dropdown:hover .submenu { display: block; }
 
-.submenu li a {
-    padding: 12px 20px;
-    display: block;
-    font-size: 14px;
-}
-
-.dropdown:hover .submenu {
-    display: block;
-}
-
-/* 4. 搜尋框 (Search Box) */
+/* 4. 搜尋框 */
 .search-container {
     display: flex;
     align-items: center;
@@ -95,27 +84,11 @@ body {
     border-radius: 4px;
     padding: 2px 10px;
 }
-
 .search-input {
-    background: none;
-    border: none;
-    color: white;
-    padding: 5px;
-    outline: none;
-    width: 180px;
+    background: none; border: none; color: white;
+    padding: 5px; outline: none; width: 180px;
 }
-
-.search-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.search-btn {
-    background: none;
-    border: none;
-    color: var(--accent-gold);
-    cursor: pointer;
-    font-size: 1.2rem;
-}
+.search-btn { background: none; border: none; color: var(--accent-gold); cursor: pointer; font-size: 1.2rem; }
 
 /* 5. 首頁大圖區 (Hero) */
 .hero-section {
@@ -129,16 +102,7 @@ body {
     justify-content: center;
     align-items: center;
 }
-
-.hero-content {
-    text-align: center;
-    text-shadow: 0 0 20px rgba(0,0,0,0.8);
-}
-
-.hero-content h2 {
-    font-size: 4rem;
-    color: var(--accent-gold);
-}
+.hero-content h2 { font-size: 4rem; color: var(--accent-gold); text-align: center; }
 
 /* 6. 內容區塊 */
 .content-wrapper {
@@ -146,72 +110,36 @@ body {
     background-color: var(--bg-black);
     z-index: 10;
     padding: 80px 0;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
 }
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .section-title {
-    font-size: 2rem
-
-/* Logo 圖片樣式 */
-.logo-img {
-    height: 40px;
-    display: block;
-    transition: 0.3s;
+    font-size: 2rem;
+    border-left: 5px solid var(--point-pink);
+    padding-left: 15px;
+    margin-bottom: 50px;
 }
-.logo-img:hover {
-    filter: brightness(1.2);
-}
+.section-title span { color: var(--accent-gold); }
 
-/* 修改 3: 近期更新區塊樣式 */
+/* 7. 近期更新 (正方形圖片) */
 .update-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    margin-top: 30px;
     margin-bottom: 80px;
 }
-.update-item {
-    text-decoration: none;
-    color: white;
-    text-align: center;
-    transition: 0.3s;
-}
-.update-img-box {
-    aspect-ratio: 1 / 1; /* 強制正方形 */
-    overflow: hidden;
-    border: 2px solid #333;
-    margin-bottom: 15px;
-}
-.update-img-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: 0.5s;
-}
-.update-item:hover .update-img-box {
-    border-color: var(--accent-gold);
-}
-.update-item:hover img {
-    transform: scale(1.1);
-}
-.update-item h3 {
-    font-size: 1.2rem;
-    color: var(--text-white);
-}
+.update-item { text-decoration: none; color: white; text-align: center; }
+.update-img-box { aspect-ratio: 1 / 1; overflow: hidden; border: 2px solid #333; margin-bottom: 15px; }
+.update-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+.update-item:hover img { transform: scale(1.1); }
+.update-item:hover .update-img-box { border-color: var(--accent-gold); }
 
-/* 修改 4: 角色切換區細節優化 */
-.char-section {
-    padding-top: 50px;
-    border-top: 1px solid #222;
-}
-.char-nav-buttons button img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+/* 8. 角色展示 */
+.char-display-box { display: flex; gap: 50px; align-items: center; min-height: 600px; }
+.char-image-area { flex: 1; text-align: center; }
+.char-image-area img { max-width: 100%; border-radius: 8px; filter: drop-shadow(0 0 15px var(--accent-gold)); }
+.char-info-area { flex: 1; }
+.info-content h3 { font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 20px; }
+.char-nav-buttons { display: flex; gap: 15px; margin-top: 30px; }
+.char-nav-buttons button { width: 80px; height: 80px; cursor: pointer; border: 2px solid #333; background: #111; overflow: hidden; }
+.char-nav-buttons button img { width: 100%; height: 100%; object-fit: cover; }
+.char-nav-buttons button:hover { border-color: var(--point-pink); }
