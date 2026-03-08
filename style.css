@@ -1,10 +1,11 @@
 /* --- 基礎變數與設定 --- */
 :root {
-    --main-bg: #FFC3C7;       /* 主色調：粉色 */
-    --main-text: #3B2B2C;     /* 文字顏色：深咖啡 */
-    --point-pink: #FF2B5D;    /* 強調色：桃紅 */
+    --main-bg: #FFFFFF;       /* 網頁底色變更為純白色 */
+    --navbar-pink: #FFC3C7;   /* 導航列维持原本粉色 */
+    --main-text: #3B2B2C;     /* 文字深咖啡色 */
+    --point-pink: #FF2B5D;    /* 強調桃紅色 */
     --navbar-bg: rgba(255, 195, 199, 0.95);
-    --hover-bg: rgba(255, 255, 255, 0.4);
+    --hover-bg: rgba(255, 255, 255, 0.6);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,12 +18,11 @@ body {
     overflow-x: hidden;
 }
 
-/* --- 導覽列：穩定結構 --- */
+/* --- 導覽列：位置修正 (左側 LOGO+選單 / 右側 搜尋) --- */
 .navbar { 
     position: fixed; top: 0; width: 100%; 
     height: 70px; 
     display: flex; 
-    justify-content: space-between; 
     align-items: center; 
     padding: 0 50px; 
     background: var(--navbar-bg); 
@@ -30,23 +30,57 @@ body {
     border-bottom: 2px solid var(--point-pink);
 }
 
+.logo-link { 
+    display: flex; 
+    align-items: center; 
+    text-decoration: none;
+    margin-right: 40px; /* LOGO 與選單的距離 */
+}
 .logo-img { height: 45px; width: auto; display: block; }
 
-.nav-right-group { display: flex; align-items: center; gap: 30px; height: 100%; }
-.nav-links { list-style: none; display: flex; gap: 30px; height: 100%; }
-.nav-links > li { display: flex; align-items: center; position: relative; height: 100%; }
-.nav-links a { text-decoration: none; color: var(--main-text); font-weight: bold; }
+.nav-links { 
+    list-style: none; 
+    display: flex; 
+    gap: 30px; 
+    height: 100%;
+    margin-right: auto; /* 重點：將後面的搜尋框推向最右側 */
+}
+
+.nav-links > li {
+    display: flex;
+    align-items: center;
+    position: relative; 
+    height: 70px;
+}
+
+.nav-links a { 
+    text-decoration: none; 
+    color: var(--main-text); 
+    font-weight: bold; 
+    transition: 0.3s;
+}
+
+.nav-links a:hover { color: var(--point-pink); }
 
 /* 下拉選單 */
 .submenu { 
-    position: absolute; top: 70px; left: 50%; transform: translateX(-50%); 
+    position: absolute; top: 70px; left: 0; 
     background: white; min-width: 160px; display: none; padding: 10px 0; 
     list-style: none; box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-top: 2px solid var(--point-pink);
 }
 .nav-links > li:hover .submenu { display: block; }
-.submenu li a { display: block; padding: 12px 20px; color: #333; font-weight: normal; text-align: center; }
+.submenu li a { display: block; padding: 12px 20px; color: #333; font-weight: normal; }
 
-/* --- 視差滾動區 --- */
+/* 搜尋框：靠右 */
+.search-container { 
+    display: flex; 
+    align-items: center; 
+    border-bottom: 2px solid var(--main-text); 
+}
+.search-input { background: transparent; border: none; padding: 5px; outline: none; width: 110px; color: var(--main-text); }
+.search-btn { background: transparent; border: none; cursor: pointer; color: var(--main-text); }
+
+/* --- 視差滾動 Hero 區 --- */
 .hero-section { 
     height: 100vh; width: 100%;
     background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), 
@@ -56,50 +90,23 @@ body {
 }
 .hero-section h2 { font-size: 4rem; color: white; text-shadow: 3px 3px 20px rgba(59, 43, 44, 0.6); letter-spacing: 12px; font-weight: bold; }
 
-/* --- 公告區塊修正：區塊按鍵設計 --- */
-.content-wrapper { position: relative; z-index: 10; background-color: var(--main-bg); padding: 80px 0; box-shadow: 0 -15px 35px rgba(59,43,44,0.1); }
+/* --- 公告區塊：4:3 區塊按鍵 --- */
+.content-wrapper { 
+    position: relative; z-index: 10; 
+    background-color: var(--main-bg); /* 純白背景 */
+    padding: 80px 0; 
+}
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
 .section-title { font-size: 2.2rem; border-left: 6px solid var(--point-pink); padding-left: 15px; margin-bottom: 40px; font-weight: bold; }
 
 .update-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.update-item { text-decoration: none; color: inherit; display: block; padding: 15px; border-radius: 12px; transition: 0.3s ease; }
+.update-item:hover { background: #F8F8F8; transform: translateY(-8px); } /* 在白底上使用淺灰色 hover */
 
-/* 區塊按鍵本體 */
-.update-item { 
-    text-decoration: none; 
-    color: inherit; 
-    display: block;      /* 讓整個 <a> 變成區塊 */
-    padding: 15px; 
-    border-radius: 12px; 
-    transition: all 0.3s ease;
-}
-
-.update-item:hover { 
-    background: var(--hover-bg); 
-    transform: translateY(-8px); 
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
-
-/* 4:3 比例圖片 */
 .update-img-box { 
-    width: 100%; 
-    aspect-ratio: 4 / 3; /* 鎖定 4:3 */
-    border-radius: 8px; 
-    overflow: hidden; 
-    margin-bottom: 15px; 
-    background-color: #fff;
+    width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; margin-bottom: 15px; 
+    background-color: #eee;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 在白底上加點陰影更有質感 */
 }
 .update-img-box img { width: 100%; height: 100%; object-fit: cover; }
-
-/* 靠左大字標題 */
-.update-item h3 { 
-    font-size: 1.6rem;    /* 加大字體 */
-    text-align: left;     /* 靠左對齊 */
-    font-weight: bold; 
-    line-height: 1.3;
-}
-
-/* 搜尋框 */
-.search-container { display: flex; align-items: center; border-bottom: 2px solid var(--main-text); }
-.search-input { background: transparent; border: none; padding: 5px; outline: none; width: 110px; }
-.search-btn { background: transparent; border: none; cursor: pointer; }
+.update-item h3 { font-size: 1.6rem; text-align: left; font-weight: bold; }
