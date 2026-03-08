@@ -30,25 +30,24 @@
             margin-bottom: 30px;
         }
 
-        /* --- 主區域：固定高度確保下方內容不位移 --- */
+        /* --- 主區域 --- */
         .char-main-section {
             display: flex;
             align-items: center;
             justify-content: center; 
             width: 95%; 
             max-width: 1400px;
-            height: 650px; /* 配合 3:4 比例增高 */
+            height: 650px;
             margin-bottom: 40px;
             position: relative;
             gap: 40px;
         }
 
         /* --- 1. 角色卡片化 (3:4 比例) --- */
-        /* 寬度設定為 420px，高度則為 560px (1.5倍放大感) */
         .flip-card-container {
             width: 420px; 
             height: 560px;
-            perspective: 2000px;
+            perspective: 2000px; /* 給予卡片容器透視感 */
             flex-shrink: 0;
             z-index: 2;
         }
@@ -58,10 +57,10 @@
             width: 100%;
             height: 100%;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
+            transform-style: preserve-3d; /* 啟動 3D 渲染 */
         }
 
-    .card-face {
+        .card-face {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -69,33 +68,33 @@
             border-radius: 20px;
             overflow: hidden;
             
-            /* --- 毛玻璃半透明效果 --- */
-            background: rgba(255, 255, 255, 0.4); /* 白色半透明 */
-            backdrop-filter: blur(10px);          /* 背景模糊，增加質感 */
-            -webkit-backdrop-filter: blur(10px);
+            /* --- 高級半透明/毛玻璃質感 (修復點 1) --- */
+            background: rgba(255, 255, 255, 0.4); /* 白色半透明底色 */
+            backdrop-filter: blur(15px);          /* 背景模糊 */
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3); /* 細緻亮邊 */
             
-            border: 1px solid rgba(255, 255, 255, 0.3); /* 細緻的亮邊 */
             box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+            
+            /* 強制卡片面處於前景 (修復點 2.1) */
+            transform: translateZ(1px); 
         }
 
-        /* 為了讓半透明感更明顯，圖片可以稍微縮小一點點留白邊，
-           或是維持 100% 填滿，妳可以根據立繪是否有透明背景來決定 */
-        .card-face img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover;
-            /* 如果立繪本身是去背的 PNG，半透明底色就會透出來 */
-        }
+        .card-face img { width: 100%; height: 100%; object-fit: cover; }
+        .card-back { transform: rotateY(180deg) translateZ(1px); /* 背面也要強制 translateZ */ }
 
         /* --- 2. 角色背後半透明字 --- */
         .bg-name-deco {
             position: absolute;
             left: 50%;
             top: 40%;
-            transform: translate(-50%, -50%);
+            
+            /* 強制背景字處於後景 (修復點 2.2) */
+            transform: translate(-50%, -50%) translateZ(-100px); /* 在 Z 軸上遠離卡片 */
+            
             font-size: 14rem;
             font-weight: 900;
-            color: rgba(0,0,0,0.04);
+            color: rgba(0,0,0,0.06); /* 稍微加深一點點讓透視更明顯 */
             white-space: nowrap;
             z-index: 1;
             pointer-events: none;
@@ -246,8 +245,9 @@
     </div>
 
     <script>
+        // 腳本邏輯保持不變
         const charData = [
-            { ruby: 'AMANO GAWA SHIORI', short: 'SHIORI', name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。引領團隊前進的北極星。她擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。作為團隊的精神支柱，她總是在成員們感到迷茫時給予最堅定的支持。這段文字已經足夠長度，用來測試滾動條的滑動效果。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
+            { ruby: 'AMANO GAWA SHIORI', short: 'SHIORI', name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。引領團隊前進的北極星。她擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。作為團隊的精神支柱，她總是在成員們感到迷茫時給予最堅定的支持。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
             { ruby: 'YOZAKURA MASHIRO', short: 'MASHIRO', name: '夜桜 真白', title: 'CV. 花澤香菜 / Visual', desc: '溫柔優雅的大家閨秀，在舞台上展現出月下的精靈般的爆發力。她是團隊中不可或缺的視覺與優雅擔當，雖然外表看起來文靜，但私底下對於訓練的要求極高。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
             { ruby: 'RAIKA ANZU', short: 'ANZU', name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '團隊中的帥氣擔當，精通各類現代舞。她的動作充滿力量感與節奏感。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
             { ruby: 'UNABARA NAGISA', short: 'NAGISA', name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。運動神經發達，總是充滿活力。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
@@ -311,4 +311,3 @@
     </script>
 </body>
 </html>
-
