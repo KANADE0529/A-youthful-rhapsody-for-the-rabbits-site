@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Showcase | Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">PORTAL</div>
+        <ul class="nav-links">
+            <li class="dropdown">
+                <a href="#">HOME</a>
+                <ul class="submenu">
+                    <li><a href="#">最新消息</a></li>
+                    <li><a href="#">世界觀介紹</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">隊伍</a>
+                <ul class="submenu">
+                    <li><a href="#">黑羊小隊</a></li>
+                    <li><a href="#">紅狼小隊</a></li>
+                    <li><a href="#">夜梟小隊</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">角色</a>
+                <ul class="submenu">
+                    <li><a href="#">角色列表</a></li>
+                    <li><a href="#">技能展示</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">其他</a>
+                <ul class="submenu">
+                    <li><a href="#">媒體庫</a></li>
+                    <li><a href="#">官方論壇</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <header class="hero-section">
+        <div class="hero-content">
+            <h2>BEYOND THE LIMIT</h2>
+            <p>探索未知的次元力量</p>
+        </div>
+    </header>
+
+    <main class="content-wrapper">
+        <section id="character-intro" class="container">
+            <h2 class="section-title">CHARACTER <span>介紹</span></h2>
+            
+            <div class="char-display-box">
+                <div class="char-image-area">
+                    <img id="char-img" src="https://via.placeholder.com/500x700/000/FFB957?text=Character+Image" alt="Character">
+                </div>
+
+                <div class="char-info-area">
+                    <div class="info-content">
+                        <h3 id="char-name">次元特工 - A</h3>
+                        <p id="char-desc">這是角色的詳細介紹文字。描述角色的戰鬥風格、背景故事以及在隊伍中的定位。這裡的文字會隨著按鈕切換。</p>
+                    </div>
+                    
+                    <div class="char-nav-buttons">
+                        <button onclick="switchChar('A')"><img src="https://via.placeholder.com/80/FFB957/000?text=A" alt="A"></button>
+                        <button onclick="switchChar('B')"><img src="https://via.placeholder.com/80/FF2B5D/000?text=B" alt="B"></button>
+                        <button onclick="switchChar('C')"><img src="https://via.placeholder.com/80/60649D/000?text=C" alt="C"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Developed for GitHub Pages | Project Portfolio</p>
+    </footer>
+
+    <script>
+        const charData = {
+            'A': {
+                name: '次元特工 - 蒼藍',
+                desc: '擅長中距離作戰，擁有極高的機動力，能瞬間穿梭於敵陣之中。',
+                img: 'https://via.placeholder.com/500x700/000/FFB957?text=Agent+Blue'
+            },
+            'B': {
+                name: '重裝隊長 - 緋紅',
+                desc: '隊伍的核心護盾，以巨大的能量巨劍斬斷一切威脅，性格冷靜沉著。',
+                img: 'https://via.placeholder.com/500x700/000/FF2B5D?text=Captain+Red'
+            },
+            'C': {
+                name: '策略家 - 紫夜',
+                desc: '運用高科技儀器進行戰場干擾，是團隊中不可或缺的戰術大腦。',
+                img: 'https://via.placeholder.com/500x700/000/60649D?text=Strategist+Violet'
+            }
+        };
+
+        function switchChar(key) {
+            const char = charData[key];
+            document.getElementById('char-name').innerText = char.name;
+            document.getElementById('char-desc').innerText = char.desc;
+            document.getElementById('char-img').src = char.img;
+        }
+    </script>
+</body>
+</html>
