@@ -48,12 +48,12 @@
         }
         #dynamic-bg.switching { filter: brightness(0.3) grayscale(1); opacity: 0.6; }
 
-        /* --- 角色展示區塊 (1.1倍) --- */
+        /* --- 角色展示區塊 --- */
         .page-container { display: flex; flex-direction: column; align-items: center; margin-top: 100px; width: 100%; }
 
         .char-main-section {
             display: flex; align-items: center; justify-content: center; 
-            width: 95%; max-width: 1650px; height: 668px; gap: 45px; perspective: 2500px;
+            width: 95%; max-width: 1800px; height: 668px; gap: 50px; perspective: 2500px;
         }
 
         .flip-card-container { width: 501px; height: 668px; flex-shrink: 0; z-index: 10; }
@@ -62,15 +62,15 @@
         .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
         .card-back { transform: rotateY(180deg); }
 
-        /* 文字區塊：增加 20pt 寬度 (約 540px -> 567px) */
+        /* 文字區塊：再增加 50pt 寬度 (567px -> 634px) */
         .char-info-area { 
-            width: 567px; 
+            width: 634px; 
             height: 668px;
             z-index: 15; 
             background: rgba(255, 255, 255, 0.4); 
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            padding: 50px 45px; 
+            padding: 50px 50px; 
             border-radius: 20px; 
             border: 1px solid rgba(255, 255, 255, 0.4); 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -84,9 +84,9 @@
             display: inline-block; 
             background: #FF2B5D; 
             color: white; 
-            font-size: 0.9rem; 
-            letter-spacing: 1px;
-            padding: 5px 18px; 
+            font-size: 0.95rem; 
+            letter-spacing: 1.5px;
+            padding: 6px 20px; 
             border-radius: 2px; 
             margin-bottom: 15px;
             font-weight: bold;
@@ -95,7 +95,7 @@
         }
 
         #char-name { 
-            font-size: 4.2rem; 
+            font-size: 4.5rem; 
             margin: 0; 
             font-weight: 800; 
             color: #333;
@@ -106,16 +106,16 @@
             flex-grow: 1;
             overflow-y: auto;
             margin-top: 30px;
-            padding-right: 15px;
+            padding-right: 20px;
         }
         #char-desc { 
-            font-size: 1.15rem; 
+            font-size: 1.2rem; 
             line-height: 2; 
             margin: 0;
             color: #333;
             font-weight: 500;
         }
-        .desc-scroll-box::-webkit-scrollbar { width: 5px; }
+        .desc-scroll-box::-webkit-scrollbar { width: 6px; }
         .desc-scroll-box::-webkit-scrollbar-thumb { background: var(--polaris-pink); border-radius: 10px; }
 
         /* --- 8人按鈕列 --- */
