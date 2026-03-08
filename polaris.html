@@ -16,25 +16,17 @@
         body { background-color: #fcfcfc; margin: 0; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; overflow-x: hidden; }
 
 /* 導覽列與下拉選單專屬樣式 */
-   .navbar {
+/* 導覽列核心樣式：確保 LOGO 與文字靠左，搜尋靠右 */
+        .navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: 70px;
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            display: flex; align-items: center; justify-content: space-between; /* 左右撐開 */
+            display: flex; align-items: center; justify-content: space-between;
             padding: 0 40px; box-sizing: border-box; z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-
-        /* 確保 LOGO 與 文字選項 都在左側 */
         .nav-left-area { display: flex; align-items: center; gap: 40px; }
         .nav-links { display: flex; list-style: none; gap: 35px; margin: 0; padding: 0; }
         .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 1.1rem; }
-
-        /* 搜尋框位置與樣式 */
-        .search-container { display: flex; align-items: center; }
-        .search-bar {
-            padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd;
-            outline: none; font-size: 0.9rem; width: 180px;
-        }
 
         /* 下拉選單 */
         .dropdown { position: relative; }
@@ -45,7 +37,12 @@
         }
         .dropdown:hover .submenu { display: block; }
         .submenu li a { padding: 10px 20px; display: block; font-weight: 500; font-size: 1rem; color: #444 !important; }
-        .submenu li a:hover { background: #fff0f3; color: #FF2B5D !important; }
+
+        /* 搜尋框 */
+        .search-bar { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; width: 180px; }
+
+        /* 關鍵：確保下方的內容（8人Icon、說明）不會被導覽列遮住 */
+        .page-container { margin-top: 110px !important; }
 
         /* 下拉選單容器 */
         .dropdown-content {
@@ -120,7 +117,7 @@
 <nav class="navbar">
         <div class="nav-left-area">
             <a href="index.html" class="logo-link">
-                <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="LOGO">
+                <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" style="height: 40px; width: auto;" alt="LOGO">
             </a>
             <ul class="nav-links">
                 <li><a href="news.html">公告事項</a></li>
@@ -141,7 +138,6 @@
                 </li>
             </ul>
         </div>
-        
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="搜尋角色...">
         </div>
@@ -203,5 +199,6 @@
     </script>
 </body>
 </html>
+
 
 
