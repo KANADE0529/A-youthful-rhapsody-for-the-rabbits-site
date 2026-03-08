@@ -18,7 +18,7 @@
             overflow-x: hidden; 
         }
 
-        /* --- [重要] 導覽列核心樣式 --- */
+        /* --- 1. 導覽列與搜索列 (固定在最右側) --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -32,84 +32,57 @@
             justify-content: space-between;
             padding: 0 40px;
             box-sizing: border-box;
-            z-index: 1000; /* 確保在最頂層 */
+            z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        .logo-img { height: 40px; width: auto; display: block; }
+        .nav-left-area { display: flex; align-items: center; gap: 30px; }
+        .logo-img { height: 40px; width: auto; }
+        .nav-links { display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 0.95rem; }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--polaris-pink); }
-
-        /* 下拉選單 */
-        .dropdown { position: relative; }
-        .submenu {
+        /* --- 搜索列：強制移至右側 --- */
+        .search-container {
             position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            list-style: none;
-            padding: 10px 0;
-            display: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-radius: 4px;
-            min-width: 150px;
+            right: 40px;
+            display: flex;
+            align-items: center;
         }
-        .dropdown:hover .submenu { display: block; }
-        .submenu li a { padding: 8px 20px; display: block; font-weight: 400; }
+        .search-bar {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: rgba(255,255,255,0.7);
+            outline: none;
+        }
 
-        /* --- [重要] 背景與動畫 --- */
+        /* --- 2. 背景與動畫 --- */
         #dynamic-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
             z-index: -2;
             transition: filter 0.6s ease, opacity 0.6s ease;
             filter: brightness(0.9) grayscale(0);
         }
-        #dynamic-bg.switching {
-            filter: brightness(0.3) grayscale(1);
-            opacity: 0.6;
-        }
+        #dynamic-bg.switching { filter: brightness(0.3) grayscale(1); opacity: 0.6; }
 
         .bg-name-deco {
             position: fixed;
-            left: 50%;
-            top: 55%;
+            left: 50%; top: 55%;
             transform: translate(-50%, -50%) translateZ(-300px); 
             font-size: 22vw; 
             max-width: 95vw;
-            text-align: center;
             font-weight: 900;
             color: rgba(255, 255, 255, 0.15);
             white-space: nowrap;
             z-index: -1;
             pointer-events: none;
             text-transform: uppercase;
-            overflow: hidden;
-            transition: 0.4s;
         }
 
-        /* --- 頁面結構 --- */
+        /* --- 3. 內容排版：文字靠左 --- */
         .page-container {
             display: flex;
             flex-direction: column;
@@ -118,7 +91,6 @@
             margin-top: 110px; 
             width: 100%;
             box-sizing: border-box;
-            min-height: 100vh;
         }
 
         .char-main-section {
@@ -128,56 +100,46 @@
             width: 95%; 
             max-width: 1400px;
             height: 580px; 
-            margin-bottom: 20px;
             position: relative;
-            gap: 40px;
+            gap: 60px; /* 增加間距 */
             perspective: 2500px;
             z-index: 5;
         }
 
-        /* --- 透明卡片與圖片 --- */
-        .flip-card-container { width: 380px; height: 506px; flex-shrink: 0; z-index: 10; }
-        .flip-card-inner {
-            position: relative;
-            width: 100%; height: 100%;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
-
-        .card-face {
-            position: absolute;
-            width: 100%; height: 100%;
-            backface-visibility: hidden;
-            border-radius: 20px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        /* 修復砍頭問題 */
-        .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-        .card-back { transform: rotateY(180deg); }
-
-        .char-info-area { flex: 1; max-width: 450px; z-index: 15; color: #333; }
-        .name-ruby { display: inline-block; background: var(--polaris-pink); color: white; font-size: 0.8rem; padding: 3px 12px; border-radius: 4px; margin-bottom: 10px; }
-        #char-name { font-size: 3.5rem; margin: 0; font-weight: bold; text-shadow: 0 2px 10px rgba(255,255,255,0.5); }
-        .desc-scroll-box { height: 160px; overflow-y: auto; margin-top: 15px; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; }
-
-        /* --- 8人按鈕列 --- */
-        .char-nav-wrapper {
+        /* 文字資訊區：強制靠左 */
+        .char-info-area {
+            flex: 1;
+            max-width: 500px;
+            z-index: 15;
+            color: #333;
+            text-align: left; /* 強制文字靠左 */
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-            padding-bottom: 40px;
-            z-index: 100;
+            flex-direction: column;
+            align-items: flex-start; /* 確保內容物也靠左 */
         }
+
+        .name-ruby { display: inline-block; background: var(--polaris-pink); color: white; font-size: 0.8rem; padding: 4px 12px; border-radius: 4px; margin-bottom: 10px; }
+        #char-name { font-size: 4rem; margin: 0; font-weight: bold; text-align: left; }
+        
+        .desc-scroll-box { 
+            width: 100%;
+            height: 180px; 
+            overflow-y: auto; 
+            margin-top: 20px; 
+            text-align: left; /* 描述文字靠左 */
+        }
+        #char-desc { line-height: 1.8; font-size: 1.1rem; margin: 0; }
+
+        /* 卡片 */
+        .flip-card-container { width: 380px; height: 506px; flex-shrink: 0; z-index: 10; }
+        .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+        /* 8人列 */
+        .char-nav-wrapper { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 40px 0; z-index: 100; }
         .char-btn { width: 75px; height: 75px; border-radius: 50%; border: 2px solid #fff; overflow: hidden; cursor: pointer; transition: 0.3s; background: none; padding: 0; }
         .char-btn.active { border-color: var(--polaris-pink); transform: scale(1.1); }
         .char-btn img { width: 100%; height: 100%; object-fit: cover; }
-
+        
         .fade-out { opacity: 0; transition: 0.3s; }
     </style>
 </head>
@@ -186,56 +148,49 @@
     <div id="dynamic-bg"></div>
 
     <nav class="navbar">
-        <a href="index.html" class="logo-link">
-            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
-        </a>
-        <ul class="nav-links">
-            <li><a href="news.html">公告事項</a></li>
-            <li class="dropdown">
-                <a href="#">介紹</a>
-                <ul class="submenu">
-                    <li><a href="world.html">世界觀背景</a></li>
-                    <li><a href="story.html">故事背景</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">藝能事務所</a>
-                <ul class="submenu">
-                    <li><a href="polaris.html">波拉里斯藝能</a></li>
-                    <li><a href="stellar.html">星異界藝能</a></li>
-                    <li><a href="others.html">其他或未知</a></li>
-                </ul>
-            </li>
-        </ul>
+        <div class="nav-left-area">
+            <a href="index.html" class="logo-link">
+                <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
+            </a>
+            <ul class="nav-links">
+                <li><a href="news.html">公告事項</a></li>
+                <li><a href="world.html">介紹</a></li>
+                <li><a href="polaris.html">藝能事務所</a></li>
+            </ul>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="搜尋角色...">
+        </div>
     </nav>
 
     <div class="page-container">
         <div class="char-main-section">
-            <button class="side-nav-btn" style="background:rgba(255,255,255,0.8); border:none; width:50px; height:50px; border-radius:50%; cursor:pointer; z-index:20;" onclick="prevChar()">&#10094;</button>
-
-            <div class="bg-name-deco" id="bg-name">TSUBAME</div>
-
-            <div class="flip-card-container">
-                <div class="flip-card-inner" id="flip-inner">
-                    <div class="card-face card-front">
-                        <img id="img-front" src="https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png">
-                    </div>
-                    <div class="card-face card-back">
-                        <img id="img-back" src="https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png">
-                    </div>
-                </div>
-            </div>
+            <button onclick="prevChar()" style="background:none; border:none; font-size:2rem; cursor:pointer; z-index:20;">&#10094;</button>
 
             <div class="char-info-area" id="info-box">
                 <span class="name-ruby" id="char-ruby">TACHIBANA TSUBAME</span>
                 <h3 id="char-name">立花 つばめ</h3>
-                <span id="char-title">CV. 佐藤利奈 / Center</span>
+                <span id="char-title" style="font-size:1.5rem; color:#666; margin-top:10px;">CV. 佐藤利奈 / Center</span>
                 <div class="desc-scroll-box">
                     <p id="char-desc">Project POLARIS 的中心人物，引領團隊前進的北極星。</p>
                 </div>
             </div>
 
-            <button class="side-nav-btn" style="background:rgba(255,255,255,0.8); border:none; width:50px; height:50px; border-radius:50%; cursor:pointer; z-index:20;" onclick="nextChar()">&#10095;</button>
+            <div class="bg-name-deco" id="bg-name">TSUBAME</div>
+
+            <div class="flip-card-container">
+                <div class="flip-card-inner" id="flip-inner" style="position:relative; width:100%; height:100%; transition:0.8s; transform-style:preserve-3d;">
+                    <div class="card-face" style="position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius:20px; overflow:hidden; background:rgba(255,255,255,0.1); backdrop-filter:blur(5px); border:1px solid rgba(255,255,255,0.2);">
+                        <img id="img-front" src="https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png">
+                    </div>
+                    <div class="card-face" id="card-back-div" style="position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius:20px; overflow:hidden; transform:rotateY(180deg); background:rgba(255,255,255,0.1); backdrop-filter:blur(5px);">
+                        <img id="img-back" src="https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png">
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="nextChar()" style="background:none; border:none; font-size:2rem; cursor:pointer; z-index:20;">&#10095;</button>
         </div>
 
         <div class="char-nav-wrapper" id="icon-list"></div>
@@ -243,18 +198,8 @@
 
     <script>
         const charData = [
-            { 
-                ruby: 'TACHIBANA TSUBAME', short: 'TSUBAME', name: '立花 つばめ', title: 'CV. 佐藤利奈 / Center', 
-                desc: 'Project POLARIS 的核心，引領團隊前進。', 
-                img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png',
-                bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' 
-            },
-            { 
-                ruby: 'SA-TAN MARRY', short: 'MARRY', name: '咲丹 マリア', title: 'CV. 花澤香菜 / Visual', 
-                desc: '雖然名字帶點惡魔的氣息，卻是舞台上最耀眼的存在。', 
-                img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png',
-                bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' 
-            },
+            { ruby: 'TACHIBANA TSUBAME', short: 'TSUBAME', name: '立花 つばめ', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的核心，擁有如雨後陽光般的感染力。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' },
+            { ruby: 'SA-TAN MARRY', short: 'MARRY', name: '咲丹 マリア', title: 'CV. 花澤香菜 / Visual', desc: '雖然名字帶點惡魔的氣息，卻是舞台上最耀眼的存在。', img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png', bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' },
             { ruby: 'RAIKA ANZU', short: 'ANZU', name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '團隊中的帥氣擔當。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
             { ruby: 'UNABARA NAGISA', short: 'NAGISA', name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
             { ruby: 'HIMURO REINA', short: 'REINA', name: '氷室 玲奈', title: 'CV. 石川由依 / Vocal', desc: '冷靜沉著的高冷才女。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
