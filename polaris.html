@@ -7,19 +7,14 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="index.html" class="logo-link">
-            <img src="https://via.placeholder.com/150x50?text=PORTAL" alt="LOGO" class="logo-img">
-        </a>
+        <a href="index.html"><img src="https://via.placeholder.com/150x50?text=PORTAL" class="logo-img"></a>
         <ul class="nav-links">
-            <li class="dropdown">
-                <a href="index.html">首頁介紹</a>
-            </li>
-            <li class="dropdown">
-                <a href="#">藝能事務所</a>
+            <li><a href="index.html">首頁</a></li>
+            <li class="dropdown"><a href="#">藝能事務所</a>
                 <ul class="submenu">
                     <li><a href="polaris.html">波拉里斯藝能</a></li>
                     <li><a href="stellar.html">星異界藝能</a></li>
-                    <li><a href="others.html">其他或位置</a></li>
+                    <li><a href="others.html">其他或未知</a></li>
                 </ul>
             </li>
         </ul>
@@ -29,32 +24,32 @@
         </div>
     </nav>
 
-    <main class="content-wrapper" style="margin-top: 100px;">
+    <main class="content-wrapper" style="margin-top: 80px;">
         <section class="container">
             <h2 class="section-title">POLARIS <span>波拉里斯藝能</span></h2>
-            
             <div class="char-display-box">
-                <div class="char-image-area">
-                    <img id="char-img" src="https://via.placeholder.com/500x700/000/FFB957?text=POLARIS+CHAR" alt="Character">
-                </div>
-
+                <div class="char-image-area"><img id="char-img" src="https://via.placeholder.com/500x700/000/FFB957?text=POLARIS"></div>
                 <div class="char-info-area">
-                    <div class="info-content">
-                        <h3 id="char-name">藝人檔案載入中</h3>
-                        <p id="char-desc">波拉里斯藝能以「知性」與「海軍威嚴」為核心風格。請點擊下方頭像按鍵查看細節。</p>
-                    </div>
-                    
+                    <h3 id="char-name">藝人檔案</h3>
+                    <p id="char-desc">請選擇下方頭像切換介紹。</p>
                     <div class="char-nav-buttons">
-                        <button onclick="updateChar('P1')"><img src="https://via.placeholder.com/100?text=Polaris+1"></button>
-                        <button onclick="updateChar('P2')"><img src="https://via.placeholder.com/100?text=Polaris+2"></button>
+                        <button onclick="update('P1')"><img src="https://via.placeholder.com/100?text=P1"></button>
+                        <button onclick="update('P2')"><img src="https://via.placeholder.com/100?text=P2"></button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
     <script>
-        const polarisData = {
-            'P1': { 
-                name: '波拉里斯 - 旗艦藝人 P1', 
-                desc: '具備海軍艦長風範
+        const data = {
+            'P1': { name: '波拉里斯 P1', desc: '海軍風格知性角色介紹。', img: 'https://via.placeholder.com/500x700/000/FFB957?text=P1' },
+            'P2': { name: '波拉里斯 P2', desc: '性格頑固的角色設定。', img: 'https://via.placeholder.com/500x700/000/FFB957?text=P2' }
+        };
+        function update(k) {
+            document.getElementById('char-name').innerText = data[k].name;
+            document.getElementById('char-desc').innerText = data[k].desc;
+            document.getElementById('char-img').src = data[k].img;
+        }
+    </script>
+</body>
+</html>
