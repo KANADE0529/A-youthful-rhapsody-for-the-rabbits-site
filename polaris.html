@@ -1,69 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project POLARIS | 官方角色展示</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        :root {
-            --polaris-pink: #FF2B5D;
-            --polaris-gold: #FFD666;
-        }
-
-        body { background-color: #fcfcfc; margin: 0; font-family: sans-serif; overflow-x: hidden; }
-        .logo-img { height: 45px; width: auto; display: block; }
-
-        .page-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-            padding: 0 20px;
-            margin-top: 100px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .page-title {
-            align-self: flex-start;
-            margin-left: 5%;
-            margin-bottom: 30px;
-        }
-
-        /* --- 主區域 --- */
-        .char-main-section {
-            display: flex;
-            align-items: center;
-            justify-content: center; 
-            width: 95%; 
-            max-width: 1400px;
-            height: 650px;
-            margin-bottom: 40px;
-            position: relative;
-            gap: 40px;
-            
-            /* --- (深度穩定修復 1) --- */
-            /* 給予 Z 軸深度基礎，讓 translateZ 能正確運作 */
-            perspective: 2500px; 
-        }
-
-        /* --- 1. 角色卡片化 (3:4 比例) --- */
-        .flip-card-container {
-            width: 420px; 
-            height: 560px;
-            flex-shrink: 0;
-            z-index: 2;
-        }
-
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
-
-        .card-face {
+.card-face {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -71,251 +6,35 @@
             border-radius: 20px;
             overflow: hidden;
             
-            /* --- 毛玻璃質感更新 --- */
-            /* 顏色設為極淡的粉白色 rgba(255, 245, 247, 0.25) */
-            background: rgba(255, 245, 247, 0.25); 
-            backdrop-filter: blur(12px);          /* 模糊度稍微調小 */
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+            /* --- 高清透明質感修復 --- */
+            /* 降低 A 值 (0.1)，讓底色極薄 */
+            background: rgba(255, 255, 255, 0.1); 
             
-            /* --- (深度穩定修復 2: 解決 PNG 透白底問題) --- */
-            /* 我們不再對 .card-face 做 translateZ(1px)，而是將卡片面固定在 Z=0 */
+            /* 降低模糊值 (4px)，讓後方字體的輪廓與毛邊清晰可見 */
+            backdrop-filter: blur(4px);          
+            -webkit-backdrop-filter: blur(4px);
+            
+            /* 邊框改為更細的半透明感 */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            
             transform: translateZ(0); 
         }
 
-        /* 圖片填滿，因為 3:4 很長，建議使用 object-fit: cover */
-        .card-face img { width: 100%; height: 100%; object-fit: cover; }
-        
-        /* 背面卡片：在 rotateY(180deg) 狀態下，依然保持 translateZ(0) */
-        .card-back { transform: rotateY(180deg) translateZ(0); }
-
-        /* --- 2. 角色背後半透明字 --- */
+        /* 為了讓透過去的字體更清晰，我們稍微加深背景大字的顏色 */
         .bg-name-deco {
             position: absolute;
             left: 50%;
             top: 40%;
-            
-            /* --- (深度穩定修復 3: 強制推向遠方) --- */
-            /* 將 Z 軸深度推得更遠 (-200px)，確保卡片透明區域絕對不會透出卡片底色 */
             transform: translate(-50%, -50%) translateZ(-200px); 
-            
             font-size: 14rem;
             font-weight: 900;
-            color: rgba(0,0,0,0.06); /* 稍微加深一點點讓透視感更明顯 */
+            
+            /* 顏色稍微從 0.06 加深到 0.1，這樣透過去時毛邊會更明顯 */
+            color: rgba(0,0,0,0.1); 
+            
             white-space: nowrap;
             z-index: 1;
             pointer-events: none;
             text-transform: uppercase;
         }
-
-        /* 側邊切換按鈕 */
-        .side-nav-btn {
-            background: #fff;
-            border: 1px solid #eee;
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: 0.3s;
-            color: #333;
-            z-index: 10;
-            flex-shrink: 0;
-        }
-        .side-nav-btn:hover { background: var(--polaris-pink); color: white; }
-
-        /* 文字資訊區 */
-        .char-info-area {
-            flex: 1;
-            max-width: 450px;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .name-ruby {
-            display: inline-block;
-            background: var(--polaris-pink);
-            color: white;
-            font-size: 0.9rem;
-            padding: 4px 15px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-        }
-
-        #char-name { font-size: 4rem; color: #333; margin: 0; font-weight: bold; line-height: 1; }
-        #char-title { font-size: 1.5rem; color: #999; margin: 20px 0; display: block; }
-
-        /* 滾動條介紹區塊 */
-        .desc-scroll-box {
-            height: 200px;
-            overflow-y: auto;
-            padding-right: 15px;
-        }
-        .desc-scroll-box::-webkit-scrollbar { width: 4px; }
-        .desc-scroll-box::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
-        #char-desc { font-size: 1.1rem; line-height: 1.9; color: #555; margin: 0; }
-
-        /* 下方頭像列 */
-        .char-nav-wrapper {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-            width: 100%;
-            padding-bottom: 50px;
-        }
-
-        .char-btn {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            overflow: hidden;
-            cursor: pointer;
-            padding: 0;
-            background: none;
-            transition: 0.3s;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-        }
-        .char-btn.active { border-color: var(--polaris-pink); transform: scale(1.1); }
-        .char-btn img { width: 100%; height: 100%; object-fit: cover; }
-
-        .fade-out { opacity: 0; transition: 0.3s; }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar">
-        <a href="index.html" class="logo-link">
-            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
-        </a>
-        <ul class="nav-links">
-            <li><a href="news.html">公告事項</a></li>
-            <li class="dropdown">
-                <a href="#">介紹</a>
-                <ul class="submenu">
-                    <li><a href="world.html">世界觀背景</a></li>
-                    <li><a href="story.html">故事背景</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">藝能事務所</a>
-                <ul class="submenu">
-                    <li><a href="polaris.html">波拉里斯藝能</a></li>
-                    <li><a href="stellar.html">星異界藝能</a></li>
-                    <li><a href="others.html">其他或未知</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="page-container">
-        <h2 class="page-title">Project POLARIS <span style="color: var(--polaris-gold);">波拉里斯藝能</span></h2>
-
-        <div class="char-main-section">
-            <button class="side-nav-btn" onclick="prevChar()">&#10094;</button>
-
-            <div class="bg-name-deco" id="bg-name">SHIORI</div>
-
-            <div class="flip-card-container">
-                <div class="flip-card-inner" id="flip-inner">
-                    <div class="card-face card-front">
-                        <img id="img-front" src="https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png">
-                    </div>
-                    <div class="card-face card-back">
-                        <img id="img-back" src="https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png">
-                    </div>
-                </div>
-            </div>
-
-            <div class="char-info-area" id="info-box">
-                <span class="name-ruby" id="char-ruby">AMANO GAWA SHIORI</span>
-                <h3 id="char-name">天ノ川 詩織</h3>
-                <span id="char-title">CV. 佐藤利奈 / Center</span>
-                <div class="desc-scroll-box">
-                    <p id="char-desc">
-                        Project POLARIS 的中心人物。引領團隊前進的北極星。她擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。作為團隊的精神支柱，她總是在成員們感到迷茫時給予最堅定的支持。這裡加入了長文本測試，確保滾動條正常運作。這段描述將會超過八十個字，以便觀察右側滾動條的顯示效果，並且確保下方所有的 ICON 位置保持穩定不變。
-                    </p>
-                </div>
-            </div>
-
-            <button class="side-nav-btn" onclick="nextChar()">&#10095;</button>
-        </div>
-
-        <div class="char-nav-wrapper" id="icon-list"></div>
-    </div>
-
-    <script>
-        // 腳本邏輯不變
-        const charData = [
-            { ruby: 'AMANO GAWA SHIORI', short: 'SHIORI', name: '天ノ川 詩織', title: 'CV. 佐藤利奈 / Center', desc: 'Project POLARIS 的中心人物。引領團隊前進的北極星。她擁有清澈如水的嗓音，雖然性格有些笨拙，但對舞台的熱情比任何人都強烈。作為團隊的精神支柱，她總是在成員們感到迷茫時給予最堅定的支持。這段文字已經足夠長度，用來測試滾動條的滑動效果。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'YOZAKURA MASHIRO', short: 'MASHIRO', name: '夜桜 真白', title: 'CV. 花澤香菜 / Visual', desc: '溫柔優雅的大家閨秀，在舞台上展現出月下的精靈般的爆發力。她是團隊中不可或缺的視覺與優雅擔當，雖然外表看起來文靜，但私底下對於訓練的要求極高。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'RAIKA ANZU', short: 'ANZU', name: '雷火 杏', title: 'CV. 澤城美雪 / Dancer', desc: '團隊中的帥氣擔當，精通各類現代舞。她的動作充滿力量感與節奏感。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'UNABARA NAGISA', short: 'NAGISA', name: '海原 凪沙', title: 'CV. 悠木碧 / Variety', desc: '活潑好動的氣氛帶動者。運動神經發達，總是充滿活力。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' },
-            { ruby: 'HIMURO REINA', short: 'REINA', name: '氷室 玲奈', title: 'CV. 石川由依 / Vocal', desc: '冷靜沉著的高冷才女，負責團隊的編曲工作。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' }, // 範例 PNG，妳再更換
-            { ruby: 'MOMONO MONAMI', short: 'MONAMI', name: '桃乃 萌波', title: 'CV. 小倉唯 / Cute', desc: '正統派小惡惡系少女。外表甜美，內心是努力家。', img: 'https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png' }, // 範例 PNG，妳再更換
-            { ruby: 'KAMI SHIRO HISUI', short: 'HISUI', name: '神代 翡翠', title: 'CV. 早見沙織 / Mystery', desc: '充滿神祕感的少女。', img: 'https://images.plurk.com/1BriLOWn3Sarsj78cU6Z2R.png' }, // 範例 PNG，妳再更換
-            { ruby: 'KOHAKU RUI', short: 'RUI', name: '琥珀 琉衣', title: 'CV. 內田真禮 / Energy', desc: '性格率直的陽光女孩。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png' } // 範例 PNG，妳再更換
-        ];
-
-        let currentIndex = 0;
-        let isFlipped = false;
-        const iconImg = "https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png";
-
-        const iconList = document.getElementById('icon-list');
-        charData.forEach((char, index) => {
-            const btn = document.createElement('button');
-            btn.className = `char-btn ${index === 0 ? 'active' : ''}`;
-            btn.innerHTML = `<img src="${iconImg}">`;
-            btn.onclick = () => updateDisplay(index);
-            iconList.appendChild(btn);
-        });
-
-        function updateDisplay(index) {
-            if (index === currentIndex) return;
-            const cardInner = document.getElementById('flip-inner');
-            const infoBox = document.getElementById('info-box');
-            const bgName = document.getElementById('bg-name');
-            const data = charData[index];
-
-            infoBox.classList.add('fade-out');
-            bgName.classList.add('fade-out');
-
-            if (!isFlipped) {
-                document.getElementById('img-back').src = data.img;
-                cardInner.style.transform = "rotateY(180deg)";
-            } else {
-                document.getElementById('img-front').src = data.img;
-                cardInner.style.transform = "rotateY(0deg)";
-            }
-            isFlipped = !isFlipped;
-
-            setTimeout(() => {
-                document.getElementById('char-ruby').innerText = data.ruby;
-                document.getElementById('char-name').innerText = data.name;
-                document.getElementById('char-title').innerText = data.title;
-                document.getElementById('char-desc').innerText = data.desc;
-                bgName.innerText = data.short;
-                
-                infoBox.classList.remove('fade-out');
-                bgName.classList.remove('fade-out');
-            }, 300);
-
-            const btns = document.querySelectorAll('.char-btn');
-            btns[currentIndex].classList.remove('active');
-            btns[index].classList.add('active');
-            currentIndex = index;
-        }
-
-        function nextChar() { updateDisplay((currentIndex + 1) % charData.length); }
-        function prevChar() { updateDisplay((currentIndex - 1 + charData.length) % charData.length); }
-    </script>
-</body>
-</html>
