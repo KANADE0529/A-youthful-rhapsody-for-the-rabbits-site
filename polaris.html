@@ -64,10 +64,19 @@
         .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
         .card-back { transform: rotateY(180deg); }
 
-        .char-info-area { width: 540px; z-index: 15; color: #333; }
-        .name-ruby { display: inline-block; background: var(--polaris-pink); color: white; font-size: 0.95rem; padding: 4px 14px; border-radius: 4px; margin-bottom: 12px; }
-        #char-name { font-size: 4.2rem; margin: 0; font-weight: bold; }
-        #char-desc { font-size: 1.15rem; line-height: 1.8; margin-top: 20px; }
+/* 貼在 <style> 標籤內，替換掉原本的 .char-info-area */
+        .char-info-area { 
+            width: 540px; 
+            z-index: 15; 
+            background: rgba(255, 255, 255, 0.4); /* 毛玻璃板的白色半透明度 */
+            backdrop-filter: blur(15px);         /* 模糊強度 */
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px; 
+            border-radius: 20px;                 /* 圓角 */
+            border: 1px solid rgba(255, 255, 255, 0.3); 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
 
         /* --- 8人按鈕列 --- */
         .char-nav-wrapper { display: flex; justify-content: center; gap: 18px; width: 100%; padding: 40px 0; }
@@ -185,3 +194,4 @@
     </script>
 </body>
 </html>
+
