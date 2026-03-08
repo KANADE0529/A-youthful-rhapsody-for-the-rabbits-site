@@ -48,30 +48,29 @@
         }
         #dynamic-bg.switching { filter: brightness(0.3) grayscale(1); opacity: 0.6; }
 
-        /* --- 角色展示區塊 (1.1倍放大) --- */
+        /* --- 角色展示區塊 (1.1倍) --- */
         .page-container { display: flex; flex-direction: column; align-items: center; margin-top: 100px; width: 100%; }
 
         .char-main-section {
             display: flex; align-items: center; justify-content: center; 
-            width: 95%; max-width: 1600px; height: 668px; gap: 40px; perspective: 2500px;
+            width: 95%; max-width: 1650px; height: 668px; gap: 45px; perspective: 2500px;
         }
 
-        /* 放大後的卡片寬高 */
         .flip-card-container { width: 501px; height: 668px; flex-shrink: 0; z-index: 10; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; }
         .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; overflow: hidden; background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .card-face img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
         .card-back { transform: rotateY(180deg); }
 
-        /* 文字區塊高度與人物同長 (668px) */
+        /* 文字區塊：增加 20pt 寬度 (約 540px -> 567px) */
         .char-info-area { 
-            width: 540px; 
+            width: 567px; 
             height: 668px;
             z-index: 15; 
             background: rgba(255, 255, 255, 0.4); 
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            padding: 50px 40px; 
+            padding: 50px 45px; 
             border-radius: 20px; 
             border: 1px solid rgba(255, 255, 255, 0.4); 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -96,14 +95,13 @@
         }
 
         #char-name { 
-            font-size: 4rem; 
+            font-size: 4.2rem; 
             margin: 0; 
             font-weight: 800; 
             color: #333;
             line-height: 1.1;
         }
 
-        /* 捲動容器高度適配長邊 */
         .desc-scroll-box {
             flex-grow: 1;
             overflow-y: auto;
