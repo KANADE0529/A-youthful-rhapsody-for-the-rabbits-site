@@ -11,7 +11,7 @@
             --polaris-gold: #FFD666;
         }
 
-        /* --- 全局背景圖容器 --- */
+        /* --- D 方案：灰階過渡背景層 --- */
         #dynamic-bg {
             position: fixed;
             top: 0;
@@ -21,16 +21,16 @@
             background-size: cover;
             background-position: center;
             z-index: -2;
-            transition: 0.8s ease-in-out; /* 背景淡入淡出 */
-            filter: brightness(0.9); /* 稍微調暗一點讓前景更清晰 */
+            transition: filter 0.5s ease, opacity 0.5s ease;
+            filter: brightness(0.9) grayscale(0);
+        }
+        /* 當切換時觸發的類別 */
+        #dynamic-bg.switching {
+            filter: brightness(0.4) grayscale(1); /* 瞬間變暗且失去飽和度 */
+            opacity: 0.5;
         }
 
-        body { 
-            background-color: #fcfcfc; 
-            margin: 0; 
-            font-family: sans-serif; 
-            overflow-x: hidden; 
-        }
+        body { background-color: #fcfcfc; margin: 0; font-family: sans-serif; overflow-x: hidden; }
 
         .page-container {
             display: flex;
@@ -43,20 +43,23 @@
             min-height: 100vh;
         }
 
-        /* --- 1. 背景半透明字加大 (佔據畫面一半) --- */
+        /* --- 1. 背景字優化：收納不超出畫面 --- */
         .bg-name-deco {
-            position: fixed; /* 改為 fixed 讓它在大圖上方漂浮 */
+            position: fixed;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%) translateZ(-300px); 
-            font-size: 35vw; /* 使用 vw 讓它寬度佔據螢幕大半 */
+            font-size: 22vw; /* 調小比例確保收納 */
+            max-width: 95vw; /* 限制最大寬度 */
+            text-align: center;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.15); /* 因為有背景圖，改用白色透明更有層次 */
+            color: rgba(255, 255, 255, 0.12);
             white-space: nowrap;
             z-index: -1;
             pointer-events: none;
             text-transform: uppercase;
-            transition: 0.5s opacity;
+            overflow: hidden; /* 確保不溢出螢幕 */
+            transition: opacity 0.4s;
         }
 
         /* --- 主展示區域 --- */
@@ -105,10 +108,16 @@
             transform: translateZ(0); 
         }
 
-        .card-face img { width: 100%; height: 100%; object-fit: cover; }
+        /* --- 修復點：角色圖片頂部對齊，避免砍頭 --- */
+        .card-face img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            object-position: top; /* 關鍵：從頭部開始顯示 */
+        }
+        
         .card-back { transform: rotateY(180deg) translateZ(0); }
 
-        /* 文字資訊區 (增加陰影確保在背景圖上清晰) */
         .char-info-area {
             flex: 1;
             max-width: 450px;
@@ -125,11 +134,10 @@
             padding: 3px 12px;
             border-radius: 4px;
             margin-bottom: 10px;
-            text-shadow: none;
         }
 
         #char-name { font-size: 3.5rem; margin: 0; font-weight: bold; }
-        #char-title { font-size: 1.3rem; color: #444; margin: 15px 0; display: block; font-weight: 500; }
+        #char-title { font-size: 1.3rem; color: #444; margin: 15px 0; display: block; }
 
         .desc-scroll-box {
             height: 180px;
@@ -138,21 +146,6 @@
         }
         #char-desc { font-size: 1rem; line-height: 1.8; color: #222; margin: 0; }
 
-        .side-nav-btn {
-            background: rgba(255,255,255,0.8);
-            border: 1px solid #eee;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
-        }
-
-        /* 8人 ICON 列 */
         .char-nav-wrapper {
             display: flex;
             justify-content: center;
@@ -184,19 +177,13 @@
 
     <div id="dynamic-bg"></div>
 
-    <nav class="navbar">
-        <a href="index.html" class="logo-link">
-            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="PORTAL HOME">
-        </a>
-        </nav>
-
     <div class="page-container">
         <h2 class="page-title" style="color: #333; background: rgba(255,255,255,0.6); padding: 5px 15px; border-radius: 8px;">
             Project POLARIS <span style="color: var(--polaris-pink);">波拉里斯藝能</span>
         </h2>
 
         <div class="char-main-section">
-            <button class="side-nav-btn" onclick="prevChar()">&#10094;</button>
+            <button class="side-nav-btn" style="background:rgba(255,255,255,0.8); border:none; width:50px; height:50px; border-radius:50%; cursor:pointer;" onclick="prevChar()">&#10094;</button>
 
             <div class="bg-name-deco" id="bg-name">TSUBAME</div>
 
@@ -216,13 +203,11 @@
                 <h3 id="char-name">立花 つばめ</h3>
                 <span id="char-title">CV. 佐藤利奈 / Center</span>
                 <div class="desc-scroll-box">
-                    <p id="char-desc">
-                        Project POLARIS 的中心人物。引領團隊前進的北極星。
-                    </p>
+                    <p id="char-desc">引領團隊前進的北極星。</p>
                 </div>
             </div>
 
-            <button class="side-nav-btn" onclick="nextChar()">&#10095;</button>
+            <button class="side-nav-btn" style="background:rgba(255,255,255,0.8); border:none; width:50px; height:50px; border-radius:50%; cursor:pointer;" onclick="nextChar()">&#10095;</button>
         </div>
 
         <div class="char-nav-wrapper" id="icon-list"></div>
@@ -232,7 +217,7 @@
         const charData = [
             { 
                 ruby: 'TACHIBANA TSUBAME', short: 'TSUBAME', name: '立花 つばめ', title: 'CV. 佐藤利奈 / Center', 
-                desc: 'Project POLARIS 的核心，擁有如雨後陽光般的渲染力。', 
+                desc: 'Project POLARIS 的核心，引領團隊前進。', 
                 img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png',
                 bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' 
             },
@@ -254,7 +239,6 @@
         let isFlipped = false;
         const iconImg = "https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png";
 
-        // 初始化
         const bgElement = document.getElementById('dynamic-bg');
         bgElement.style.backgroundImage = `url('${charData[0].bg}')`;
 
@@ -274,15 +258,22 @@
             const bgName = document.getElementById('bg-name');
             const data = charData[index];
 
-            // 動態更換背景圖
-            if(data.bg) {
-                bgElement.style.backgroundImage = `url('${data.bg}')`;
-            } else {
-                bgElement.style.backgroundImage = 'none';
-            }
+            // D 方案切換動畫：加入 switching 類別觸發灰階與變暗
+            bgElement.classList.add('switching');
 
             infoBox.classList.add('fade-out');
             bgName.classList.add('fade-out');
+
+            setTimeout(() => {
+                // 在變黑時更換圖片
+                if(data.bg) {
+                    bgElement.style.backgroundImage = `url('${data.bg}')`;
+                } else {
+                    bgElement.style.backgroundImage = 'none';
+                }
+                // 恢復色彩
+                bgElement.classList.remove('switching');
+            }, 300);
 
             if (!isFlipped) {
                 document.getElementById('img-back').src = data.img;
@@ -299,7 +290,6 @@
                 document.getElementById('char-title').innerText = data.title;
                 document.getElementById('char-desc').innerText = data.desc;
                 bgName.innerText = data.short;
-                
                 infoBox.classList.remove('fade-out');
                 bgName.classList.remove('fade-out');
             }, 300);
