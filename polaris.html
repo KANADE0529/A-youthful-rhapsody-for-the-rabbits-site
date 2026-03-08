@@ -6,7 +6,6 @@
     <title>Project POLARIS | 官方角色展示</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* 僅保留此頁面核心展示功能的必要 CSS */
         :root {
             --glass-bg: rgba(255, 255, 255, 0.1);
             --glass-blur: blur(12px);
@@ -46,7 +45,7 @@
         }
 
         .name-ruby { 
-            display: inline-block; background: var(--point-pink); /* 同步使用全局變數 */
+            display: inline-block; background: var(--point-pink); 
             color: white; font-size: 1.1rem; letter-spacing: 2px;
             padding: 6px 24px; border-radius: 2px; margin-bottom: 20px;
             font-weight: bold; text-transform: uppercase; align-self: flex-start;
@@ -119,16 +118,21 @@
     </div>
 
     <script>
-        /* 保持原有的 JavaScript 邏輯不變 */
         const charData = [
             { 
                 ruby: 'TACHIBANA TSUBAME', 
                 name: '立花 つばめ', 
-                desc: 'Project POLARIS 的中心人物...', 
+                desc: 'Project POLARIS 的中心人物，也是引領團隊前進的北極星。她擁有極強的責任感與親和力，總能在關鍵時刻凝聚眾人的意志。雖然在舞台上散發著無與倫比的領袖氣場，私底下卻也有著喜歡照顧人、甚至偶爾有些愛操心的一面。她深信偶像的力量能照亮每個人的內心，因此不論面對多大的挑戰，始終保持著堅定不移的笑容與勇氣，是所有成員最信賴的精神支柱。', 
                 img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', 
                 bg: 'https://images.plurk.com/3bj46MotmrAkG8sKlFGvtT.png' 
             },
-            /* ...其餘角色資料... */
+            { ruby: 'SA-TAN MARRY', name: '咲丹 マリア', desc: '視覺擔當，優雅且神祕。她擁有一種讓人移不開視線的高貴氣息，在舞台上的每一舉手一投足都像是藝術品。雖然表面冷靜，但對音樂的熱情比任何人都強烈。', img: 'https://images.plurk.com/20jEywXwwqtax4bSOxPnpH.png', bg: 'https://images.plurk.com/18jtvvVET9JtUZg8IJsRmH.png' },
+            { ruby: 'RAIKA ANZU', name: '雷火 杏', desc: '團隊中的帥氣擔當。擁有爆發性的舞蹈能量與爽朗的性格，是舞台上最耀眼的熱力源。私底下的她性格直率，雖然有時候說話太直接，但其實內心非常溫柔且容易害羞。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'UNABARA NAGISA', name: '海原 凪沙', desc: '活潑好動的氣氛帶動者。就像夏日的海洋般充滿活力，總能用她的笑容感染身邊的所有人。雖然看起來大大咧咧，其實對於舞台上的小細節非常在意，是個努力家。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'HIMURO REINA', name: '氷室 玲奈', desc: '冷靜沉著的高冷才女。負責團隊的曲風分析與和聲編排，音樂素養極高。雖然給人一種難以親近的感覺，但其實是個對貓完全沒有抵抗力的女孩子。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'MOMONO MONAMI', name: '桃乃 萌波', desc: '正統派小惡魔系少女。擅長透過眼神與歌聲與台下的粉絲進行心靈交流，在握手會的人氣居高不下。她深知自己的魅力所在，並完美地將其轉化為舞台上的武器。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'KAMI SHIRO HISUI', name: '神代 翡翠', desc: '充滿神祕感的少女。她擁有一種超脫塵世的歌聲，彷彿能洗滌聽眾的靈魂。平日沈默寡言，似乎生活在自己的世界中，只有在舞台上才能見到她最真實、最燦爛的一面。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' },
+            { ruby: 'KOHAKU RUI', name: '琥珀 琉衣', desc: '性格率直的陽光女孩。團隊中的運動好手，擁有驚人的肺活量與嗓音。不論遇到多大的挫折，她總能快速振作，並用她的正面能量帶領團隊走過低谷。', img: 'https://images.plurk.com/7vNuI6xzCTxVeDQNdo7tQz.png', bg: '' }
         ];
 
         let currentIndex = -1;
@@ -139,6 +143,7 @@
         charData.forEach((char, i) => {
             const btn = document.createElement('button');
             btn.className = 'char-btn';
+            // 這裡使用了妳提供的預設頭像圖片
             btn.innerHTML = `<img src="https://images.plurk.com/6tKH0Wf5CF9tSkSsFFsUr0.png">`;
             btn.onclick = () => updateDisplay(i);
             iconList.appendChild(btn);
@@ -174,6 +179,7 @@
             currentIndex = index;
         }
 
+        // 預設載入第一位
         updateDisplay(0);
     </script>
 </body>
