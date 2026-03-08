@@ -1,4 +1,3 @@
-/* style.css 通用樣式 */
 :root {
     --bg-black: #000000;
     --accent-gold: #FFB957;
@@ -10,12 +9,14 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg-black); color: var(--text-white); overflow-x: hidden; }
 
-/* 導航列與透明搜尋框 */
-.navbar { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background: rgba(0,0,0,0.9); z-index: 1000; border-bottom: 1px solid var(--accent-gold); }
+/* 導航列 */
+.navbar { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background: rgba(0,0,0,0.95); z-index: 1000; border-bottom: 1px solid var(--accent-gold); }
 .logo-img { height: 40px; }
 .nav-links { list-style: none; display: flex; gap: 30px; margin-right: auto; margin-left: 50px; }
 .nav-links a { text-decoration: none; color: white; transition: 0.3s; }
 .nav-links a:hover { color: var(--accent-gold); }
+
+/* 搜尋框 */
 .search-container { display: flex; align-items: center; border-bottom: 2px solid var(--search-blue); background: transparent; padding: 2px 5px; }
 .search-input { background: transparent; border: none; color: white; padding: 5px; outline: none; width: 120px; }
 .search-btn { background: transparent; border: none; color: white; cursor: pointer; }
@@ -26,37 +27,38 @@ body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg-black); col
 .submenu li a { padding: 10px 20px; display: block; font-size: 14px; }
 .dropdown:hover .submenu { display: block; }
 
-/* --- 核心修改：首頁大圖區背景 --- */
+/* --- 圖片修復區塊 --- */
 .hero-section { 
-    height: 65vh; /* 稍微拉高一點展示圖片 */
-    /* 使用你提供的兔女郎合圖 */
-    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://reurl.cc/5dYk6R'); 
-    background-size: cover;       /* 圖片填滿整個區域 */
-    background-position: center;   /* 圖片置中 */
-    background-attachment: fixed;  /* 滾動時圖片固定，增加層次感 */
+    height: 70vh; 
+    /* 我已經將你的圖片轉為直連網址 */
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
+                url('https://images.weserv.nl/?url=reurl.cc/5dYk6R'); 
+    background-size: cover;
+    background-position: center 20%; /* 稍微往上一點，確保能看到兔女郎的臉 */
+    background-repeat: no-repeat;
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    margin-top: 60px; /* 避開固定導航列 */
+    margin-top: 60px;
 }
 
 .hero-section h2 { 
-    font-size: 3.5rem; /* 字體放大 */
+    font-size: 3.5rem; 
     color: var(--accent-gold); 
-    text-shadow: 0 0 15px rgba(255, 185, 87, 0.7); /* 金色發光 */
-    letter-spacing: 3px; /* 字距拉開 */
-    text-transform: uppercase; /* 全大寫 */
+    text-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 10px var(--accent-gold);
+    letter-spacing: 5px;
+    font-weight: bold;
 }
 
-/* 內容區通用樣式 */
-.content-wrapper { padding: 80px 0; }
+/* 內容區塊 */
+.content-wrapper { padding: 60px 0; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-.section-title { font-size: 2rem; border-left: 5px solid var(--point-pink); padding-left: 15px; margin-bottom: 50px; }
+.section-title { font-size: 2rem; border-left: 5px solid var(--point-pink); padding-left: 15px; margin-bottom: 40px; }
 .section-title span { color: var(--accent-gold); }
 
-/* 近期更新事项的正方形按鍵 */
+/* 更新事項網格 */
 .update-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 .update-item { text-decoration: none; color: white; text-align: center; }
-.update-img-box { aspect-ratio: 1/1; overflow: hidden; border: 2px solid #333; transition: 0.3s; margin-bottom: 10px; }
+.update-img-box { aspect-ratio: 1/1; background: #222; border: 2px solid #333; transition: 0.3s; margin-bottom: 10px; overflow: hidden; }
 .update-item:hover .update-img-box { border-color: var(--accent-gold); transform: translateY(-5px); }
 .update-img-box img { width: 100%; height: 100%; object-fit: cover; }
