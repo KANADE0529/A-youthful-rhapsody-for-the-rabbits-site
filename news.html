@@ -5,10 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal | News</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* 專屬 news.html 的去圓角毛玻璃修正 */
+        body.news-page {
+            background-image: url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png') !important;
+            background-attachment: fixed !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        .news-page .content-wrapper {
+            /* 1. 50% 白色半透明 + 毛玻璃模糊 */
+            background: rgba(255, 255, 255, 0.5) !important;
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            
+            /* 2. 移除圓角：設定為 0 */
+            border-radius: 0 !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.4) !important;
+            
+            /* 3. 增加 350px 區塊高度 */
+            min-height: calc(100vh + 350px) !important;
+            
+            /* 調整間距，確保從導覽列下方平整開始 */
+            margin-top: 70px !important; 
+            padding: 80px 0 !important;
+            box-shadow: none; /* 去掉圓角後，通常不需要陰影才不會有斷層感 */
+        }
+
+        /* 確保公告標題顏色 */
+        .news-page .update-item h3 {
+            color: var(--news-item-title) !important;
+        }
+    </style>
 </head>
 <body class="news-page">
     <nav class="navbar">
-        <a href="index.html" class="logo-link"><img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="LOGO"></a>
+        <a href="index.html" class="logo-link">
+            <img src="https://images.plurk.com/7EV1yEtW45zX2qhRu9jjrO.png" class="logo-img" alt="LOGO">
+        </a>
         <ul class="nav-links">
             <li><a href="news.html">公告事項</a></li>
             <li class="dropdown">
@@ -33,16 +68,18 @@
         </div>
     </nav>
 
-    <main class="content-wrapper" style="margin-top:70px;">
+    <main class="content-wrapper">
         <section class="container">
             <h2 class="section-title">NEWS <span>公告事項</span></h2>
             
             <div class="update-grid">
                 <a href="#" class="update-item">
-                    <div class="update-img-box"><img src="https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png" alt="News"></div>
+                    <div class="update-img-box">
+                        <img src="https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png" alt="News">
+                    </div>
                     <h3>近期公告標題文字</h3>
                 </a>
-                </div>
+            </div>
         </section>
     </main>
 </body>
