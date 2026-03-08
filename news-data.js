@@ -1,28 +1,27 @@
-// 這裡就是妳的「公告資料庫」
-// 以後要換圖、換標題，改這裡就好！
+// 以後要改公告、換圖片，或是增加第四則公告，都只改這裡！
 const newsData = [
     {
-        title: "近期公告標題文字",
-        img: "https://images.plurk.com/3QiuSynz4HmCSdgxZgplaj.jpg",
-        link: "news.html"
+        title: "近期公告 A",
+        img: "https://images.plurk.com/3QiuSynz4HmCSdgxZgplaj.jpg", // 妳那張帥氣的意識圖
+        link: "news-a.html" // 連結到公告 A 的頁面
     },
-    // 如果以後有第二則公告，可以像這樣增加：
-    /*
     {
-        title: "第二次公告測試",
-        img: "其他網址",
-        link: "news-2.html"
+        title: "近期公告 B",
+        img: "https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png",
+        link: "news-b.html"
+    },
+    {
+        title: "近期公告 C",
+        img: "https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png",
+        link: "news-c.html"
     }
-    */
 ];
 
-// 這段程式碼負責把資料塞進網頁裡的 .update-grid 區塊
+// 下面這段渲染邏輯不用動它，它會自動抓上面的資料
 function renderNews() {
     const grids = document.querySelectorAll('.update-grid');
-    
     grids.forEach(grid => {
-        grid.innerHTML = ""; // 先清空原本的手寫內容
-        
+        grid.innerHTML = ""; 
         newsData.forEach(item => {
             const newsHtml = `
                 <a href="${item.link}" class="update-item">
@@ -36,6 +35,4 @@ function renderNews() {
         });
     });
 }
-
-// 當網頁載入完成後執行
 document.addEventListener('DOMContentLoaded', renderNews);
