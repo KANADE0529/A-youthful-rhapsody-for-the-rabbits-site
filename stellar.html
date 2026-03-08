@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>星異界藝能 | Portal</title>
+    <title>其他單位 | Portal</title>
     <link rel="stylesheet" href="style.css">
     <style>.logo-img { height: 45px; width: auto; display: block; }</style>
 </head>
@@ -38,29 +38,24 @@
 
     <main class="content-wrapper" style="margin-top: 80px;">
         <section class="container">
-            <h2 class="section-title" style="border-left-color: var(--point-pink);">STELLAR <span style="color: var(--point-pink);">星異界藝能</span></h2>
+            <h2 class="section-title">OTHERS <span>其他或未知</span></h2>
             <div class="char-display-box">
-                <div class="char-image-area"><img id="char-img" src="https://via.placeholder.com/500x700/000/FF2B5D?text=STELLAR"></div>
+                <div class="char-image-area"><img id="char-img" src="https://via.placeholder.com/500x700/111/999?text=UNKNOWN"></div>
                 <div class="char-info-area">
-                    <h3 id="char-name">星異界藝人檔案</h3>
+                    <h3 id="char-name">分類：未定</h3>
                     <p id="char-desc">請選擇下方頭像查看細節。</p>
                     <div class="char-nav-buttons">
-                        <button onclick="update('S1')"><img src="https://via.placeholder.com/100?text=S1"></button>
-                        <button onclick="update('S2')"><img src="https://via.placeholder.com/100?text=S2"></button>
+                        <button onclick="update('X')"><img src="https://via.placeholder.com/100?text=X"></button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
     <script>
-        const data = {
-            'S1': { name: '星異界 - S1', desc: '來自未知次元的電音藝人。', img: 'https://via.placeholder.com/500x700/000/FF2B5D?text=S1' },
-            'S2': { name: '星異界 - S2', desc: '擅長高頻率演出。', img: 'https://via.placeholder.com/500x700/000/FF2B5D?text=S2' }
-        };
         function update(k) {
-            document.getElementById('char-name').innerText = data[k].name;
-            document.getElementById('char-desc').innerText = data[k].desc;
-            document.getElementById('char-img').src = data[k].img;
+            document.getElementById('char-name').innerText = "未知對象 X";
+            document.getElementById('char-desc').innerText = "這是一位背景神祕的角色，目前資料檔案受損。";
+            document.getElementById('char-img').src = "https://via.placeholder.com/500x700/111/999?text=X_FILES";
         }
     </script>
 </body>
