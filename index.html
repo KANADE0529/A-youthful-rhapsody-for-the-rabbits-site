@@ -86,3 +86,63 @@
         </section>
     </main>
 
+<script>
+        /* 1. 角色資料庫：你之後畫好的圖和寫好的故事都填在這裡 */
+        const charData = {
+            'A': { 
+                name: '波拉里斯 - 角色 A', 
+                desc: '這裡是 A 角色的詳細設定文字。描述她的戰鬥風格、性格以及在事務所的定位。', 
+                img: 'https://via.placeholder.com/500x700/000/FFB957?text=Polaris+A' 
+            },
+            'B': { 
+                name: '星異界 - 角色 B', 
+                desc: '這裡是 B 角色的背景故事。當你點擊下方的頭像按鍵時，這裡的文字會與圖片同步切換。', 
+                img: 'https://via.placeholder.com/500x700/000/FF2B5D?text=Stellar+B' 
+            },
+            'C': { 
+                name: '其他單位 - 角色 C', 
+                desc: '第三位角色的介紹。我們使用了圖文分離的設計，讓你的 1/7 比例模型風插畫能有最好的展示空間。', 
+                img: 'https://via.placeholder.com/500x700/000/60649D?text=Others+C' 
+            }
+        };
+        
+        /* 2. 切換邏輯：負責把資料庫的東西抓出來放到網頁上 */
+        function switchChar(key) {
+            const char = charData[key];
+            // 更新右側名稱與描述
+            document.getElementById('char-name').innerText = char.name;
+            document.getElementById('char-desc').innerText = char.desc;
+            // 更新左側大圖
+            document.getElementById('char-img').src = char.img;
+        }
+
+        /* 3. 實際搜尋功能：在頁面中尋找關鍵字並跳轉 */
+        function executeSearch() {
+            const query = document.getElementById('site-search').value.toLowerCase();
+            if (!query) return;
+
+            const contentElements = document.querySelectorAll('h2, h3, p, a');
+            let found = false;
+
+            for (let el of contentElements) {
+                if (el.innerText.toLowerCase().includes(query)) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // 使用你的點綴色 #FFB957 進行高亮
+                    el.style.backgroundColor = '#FFB957';
+                    el.style.color = '#000';
+                    setTimeout(() => {
+                        el.style.backgroundColor = '';
+                        el.style.color = '';
+                    }, 2000);
+                    found = true;
+                    break; 
+                }
+            }
+            if (!found) alert('找不到相關內容！');
+        }
+
+        // 支援鍵盤 Enter 鍵搜尋
+        document.getElementById('site-search').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') executeSearch();
+        });
+    </script>
