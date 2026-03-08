@@ -22,7 +22,7 @@ body {
     overflow-x: hidden;
 }
 
-/* --- 導覽列：25% 毛玻璃 --- */
+/* --- 導覽列：毛玻璃與懸浮效果 --- */
 .navbar { 
     position: fixed; top: 0; width: 100%; 
     height: 70px; 
@@ -42,10 +42,8 @@ body {
 .nav-links { 
     list-style: none; display: flex; gap: 15px; height: 100%; margin-right: auto;
 }
-
 .nav-links > li { display: flex; align-items: center; position: relative; height: 70px; }
 
-/* 修正：讓 A 標籤有空間顯示底色，並加上圓角 */
 .nav-links a { 
     text-decoration: none; 
     color: var(--main-text); 
@@ -55,13 +53,13 @@ body {
     border-radius: 8px; 
 }
 
-/* 懸浮效果：滑鼠放在大分類（li）上時，a 變粉底白字 */
+/* 懸浮效果：大分類變粉底白字 */
 .nav-links > li:hover > a { 
     background-color: var(--point-pink);
     color: #FFFFFF !important; 
 }
 
-/* --- 下拉選單修正 --- */
+/* --- 下拉選單 --- */
 .submenu { 
     position: absolute; top: 70px; left: 0; 
     background: rgba(255, 255, 255, 0.95); 
@@ -70,18 +68,14 @@ body {
     border-top: 2px solid var(--point-pink);
     border-radius: 0 0 8px 8px;
 }
-
 .nav-links > li:hover .submenu { display: block; }
 
-/* 子選單內的文字不需要大粉紅底色，改回原本的懸浮變色感 */
 .submenu li a { 
-    display: block; 
-    padding: 12px 20px; 
+    display: block; padding: 12px 20px; 
     color: #333 !important; 
     background-color: transparent !important; 
     border-radius: 0;
 }
-
 .submenu li a:hover { 
     color: var(--point-pink) !important; 
     background-color: #FFF0F3 !important; 
@@ -94,23 +88,16 @@ body {
 
 /* --- 視差滾動 Hero --- */
 .hero-section { 
-    height: 100vh; 
-    width: 100%;
+    height: 100vh; width: 100%;
     background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.plurk.com/4VX24XWkEtnvB1Lvj3PqDF.png'); 
-    background-size: cover; 
-    background-position: center; 
-    background-attachment: fixed; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
+    background-size: cover; background-position: center; background-attachment: fixed; 
+    display: flex; justify-content: center; align-items: center;
 }
 .hero-section h2 { font-size: 4rem; color: white; text-shadow: 3px 3px 20px rgba(0,0,0,0.4); letter-spacing: 12px; font-weight: bold; }
 
-/* --- 內容區塊 --- */
+/* --- 內容區塊與公告同步機制樣式 --- */
 .content-wrapper { 
-    position: relative; 
-    z-index: 10; 
-    margin-top: 0; 
+    position: relative; z-index: 10; margin-top: 0; 
     background-color: var(--main-bg); 
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
@@ -121,23 +108,39 @@ body {
 }
 
 .container { 
-    max-width: 1200px; 
-    margin: 0 auto; 
-    padding: 0 20px; 
+    max-width: 1200px; margin: 0 auto; padding: 0 20px; 
     min-height: calc(100vh + 350px); 
 }
 
 .section-title { font-size: 2.2rem; border-left: 6px solid var(--point-pink); padding-left: 15px; margin-bottom: 60px; font-weight: bold; }
 
-.update-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.update-item { text-decoration: none; color: inherit; display: block; padding: 15px; border-radius: 20px; transition: 0.3s ease; }
+/* 公告網格設定 */
+.update-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; 
+}
+
+/* 這是 news-data.js 生成的物件樣式 */
+.update-item { 
+    text-decoration: none; color: inherit; display: block; 
+    padding: 15px; border-radius: 20px; transition: 0.3s ease; 
+}
 .update-item:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-10px); }
 
-.update-img-box { width: 100%; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; margin-bottom: 20px; background-color: rgba(0,0,0,0.05); }
+.update-img-box { 
+    width: 100%; aspect-ratio: 4 / 3; 
+    border-radius: 12px; overflow: hidden; 
+    margin-bottom: 20px; background-color: rgba(0,0,0,0.05); 
+}
 .update-img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-.update-item h3 { font-size: 1.6rem; text-align: left; font-weight: bold; transition: color 0.3s; }
+.update-item h3 { 
+    font-size: 1.6rem; text-align: left; 
+    font-weight: bold; transition: color 0.3s; 
+    color: var(--main-text); /* 預設顏色 */
+}
 
-/* --- 專屬顏色設定 --- */
+/* --- 頁面專屬修正 --- */
 .news-page .update-item h3 { color: var(--news-item-title); }
 .polaris-page .section-title span.highlight-yellow { color: var(--polaris-highlight); }
